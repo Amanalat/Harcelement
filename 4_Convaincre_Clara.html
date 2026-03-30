@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convaincre Clara</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#07090f;--surface:#0d1119;--card:#121826;--border:rgba(255,255,255,.055);
+  --text:#d8d0c2;--dim:#575060;--accent:#c4865a;
+  --aunt:#8ab4d4;--lea:#c49ab8;--thomas:#c4865a;--narrator:#3a4255;
+  --green:#6db890;--yellow:#d4b464;--red:#c06860;
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);}
+body{font-family:'Playfair Display',Georgia,serif;color:var(--text);display:flex;align-items:center;justify-content:center;}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9999;
+}
+body::after{
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse 78% 88% at 50% 50%,transparent 22%,rgba(0,0,0,.72) 100%);
+  pointer-events:none;z-index:9998;
+}
+
+/* ─── SCREENS ─── */
+.screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .7s ease;z-index:10;}
+.screen.active{opacity:1;pointer-events:all;}
+
+/* ─── TITLE ─── */
+#screen-title{flex-direction:column;text-align:center;padding:40px;gap:24px;}
+.t-eyebrow{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);}
+.t-main{font-size:clamp(28px,6vw,44px);font-weight:300;font-style:italic;line-height:1.2;}
+.t-sub{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;color:var(--dim);line-height:1.75;max-width:380px;}
+.phone-icon{font-size:30px;animation:ring 2.4s ease-in-out infinite;}
+@keyframes ring{0%,88%,100%{transform:rotate(0);}90%{transform:rotate(-12deg);}93%{transform:rotate(12deg);}96%{transform:rotate(-7deg);}98%{transform:rotate(5deg);}}
+.legend{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);}
+.leg-dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:middle;}
+.btn-start{background:none;border:1px solid rgba(196,134,90,.35);color:var(--accent);font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.22em;text-transform:uppercase;padding:13px 36px;cursor:pointer;transition:all .3s;}
+.btn-start:hover{background:rgba(196,134,90,.07);border-color:rgba(196,134,90,.6);transform:translateY(-2px);}
+
+/* ─── GAME ─── */
+#screen-game{align-items:stretch;justify-content:stretch;flex-direction:column;}
+.game-wrap{width:100%;max-width:600px;height:100vh;margin:0 auto;display:flex;flex-direction:column;padding:0 22px;position:relative;z-index:1;}
+
+.ghdr{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:18px 0 14px;border-bottom:1px solid var(--border);}
+.ghdr-left{font-family:'Jost',sans-serif;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--dim);}
+.emp-area{display:flex;align-items:center;gap:10px;}
+.emp-lbl{font-family:'Jost',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);}
+.hearts{display:flex;gap:3px;}
+.hrt{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.07);transition:background .4s,transform .35s;}
+.hrt.on{transform:scale(1.2);}
+.hrt.lv1.on{background:var(--red);}
+.hrt.lv2.on{background:var(--yellow);}
+.hrt.lv3.on{background:var(--green);}
+
+.phase-row{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:11px 0 4px;}
+.phase-lbl{font-family:'Jost',sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);}
+.pdots{display:flex;gap:5px;}
+.pdot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.07);transition:background .4s;}
+.pdot.done{background:rgba(196,134,90,.3);}
+.pdot.active{background:var(--accent);}
+
+.feed{flex:1;overflow-y:auto;scrollbar-width:none;display:flex;flex-direction:column;gap:15px;padding:16px 0 8px;}
+.feed::-webkit-scrollbar{display:none;}
+.dline{opacity:0;transform:translateY(8px);animation:lineIn .45s ease forwards;}
+@keyframes lineIn{to{opacity:1;transform:translateY(0);}}
+.spk{font-family:'Jost',sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;margin-bottom:4px;}
+.spk.aunt{color:var(--aunt);}.spk.lea{color:var(--lea);}.spk.thomas{color:var(--thomas);}
+.bbl{font-size:16px;line-height:1.72;font-weight:300;}
+.bbl.aunt{color:var(--aunt);}.bbl.lea{color:var(--lea);}.bbl.thomas{color:var(--thomas);}
+.bbl.narrator{color:var(--narrator);font-style:italic;font-size:13px;letter-spacing:.02em;}
+
+.ix{flex-shrink:0;padding:12px 0 20px;border-top:1px solid var(--border);}
+.q-prompt{font-family:'Jost',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;}
+.choices{display:flex;flex-direction:column;gap:8px;}
+.choices.anim{animation:fadeUp .45s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.cbtn{background:var(--card);border:1px solid var(--border);border-radius:3px;padding:12px 16px 12px 22px;color:var(--text);font-family:'Playfair Display',serif;font-size:14.5px;font-weight:300;line-height:1.55;text-align:left;cursor:pointer;transition:all .22s;position:relative;}
+.cbtn::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);border-radius:3px 0 0 3px;transform:scaleY(0);transition:transform .22s;}
+.cbtn:hover{border-color:rgba(196,134,90,.28);background:rgba(196,134,90,.045);transform:translateX(4px);}
+.cbtn:hover::before{transform:scaleY(1);}
+
+
+.fb{font-family:'Jost',sans-serif;font-size:10.5px;letter-spacing:.1em;padding:7px 13px;border-radius:2px;display:inline-flex;align-items:center;gap:6px;opacity:0;transition:opacity .4s;margin-bottom:9px;}
+.fb.show{opacity:1;}
+.fb.good{color:var(--green);background:rgba(109,184,144,.07);border:1px solid rgba(109,184,144,.15);}
+.fb.ok{color:var(--yellow);background:rgba(212,180,100,.07);border:1px solid rgba(212,180,100,.15);}
+.fb.bad{color:var(--red);background:rgba(192,104,96,.07);border:1px solid rgba(192,104,96,.15);}
+
+.btn-continue{background:none;border:1px solid var(--border);color:var(--dim);font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;padding:12px 28px;cursor:pointer;transition:all .25s;display:none;}
+.btn-continue.show{display:inline-flex;align-items:center;gap:8px;}
+.btn-continue:hover{color:var(--text);border-color:rgba(255,255,255,.2);}
+
+/* ─── GAMEOVER ─── */
+#screen-gameover{flex-direction:column;gap:22px;text-align:center;padding:40px 28px;}
+.go-icon{font-size:34px;opacity:.6;}
+.go-title{font-size:clamp(20px,4vw,28px);font-weight:300;font-style:italic;color:var(--red);opacity:.85;}
+.go-body{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;line-height:1.8;color:var(--dim);max-width:380px;}
+.go-lesson{font-family:'Jost',sans-serif;font-size:11px;color:rgba(192,104,96,.6);border:1px solid rgba(192,104,96,.15);padding:10px 18px;border-radius:2px;letter-spacing:.04em;max-width:380px;line-height:1.65;}
+
+/* ─── ENDING ─── */
+#screen-end{flex-direction:column;gap:22px;text-align:center;padding:40px 28px;}
+.end-icon{font-size:36px;}
+.end-title{font-size:clamp(22px,4vw,32px);font-weight:300;font-style:italic;line-height:1.25;}
+.end-title.good{color:var(--green);}.end-title.ok{color:var(--yellow);}.end-title.bad{color:var(--red);}
+.end-body{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;line-height:1.8;color:var(--dim);max-width:420px;white-space:pre-line;}
+.end-quote{border-left:2px solid var(--border);padding:8px 0 8px 18px;font-style:italic;font-size:15px;color:rgba(196,134,90,.55);text-align:left;max-width:380px;white-space:pre-line;}
+.end-score{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);}
+.end-score span{color:var(--accent);}
+.btn-retry{background:none;border:1px solid rgba(196,134,90,.35);color:var(--accent);font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.22em;text-transform:uppercase;padding:12px 32px;cursor:pointer;transition:all .3s;}
+.btn-retry:hover{background:rgba(196,134,90,.07);transform:translateY(-2px);}
+@media(max-width:480px){.bbl{font-size:15px;}.cbtn{font-size:14px;padding:11px 14px 11px 18px;}}
+</style>
+</head>
+<body>
+
+<!-- TITLE -->
+<div id="screen-title" class="screen active">
+  <div class="t-eyebrow">Un jeu sur l'empathie — Harcèlement scolaire</div>
+  <div class="phone-icon">📞</div>
+  <div class="t-main">Convaincre Clara</div>
+  <div class="t-sub">Clara a quitté le lycée depuis trois semaines sans explication.<br>Tu es Léo, son ami. Tu décides de l'appeler.</div>
+  <div class="legend">
+    <span><span class="leg-dot" style="background:var(--aunt)"></span>La tante</span>
+    <span><span class="leg-dot" style="background:var(--lea)"></span>Clara</span>
+    <span><span class="leg-dot" style="background:var(--thomas)"></span>Toi — Léo</span>
+  </div>
+  <button class="btn-start" onclick="startGame()">☎&nbsp;&nbsp;Décrocher</button>
+</div>
+
+<!-- GAME -->
+<div id="screen-game" class="screen">
+  <div class="game-wrap">
+    <div class="ghdr">
+      <div class="ghdr-left" id="phase-label">Phase 1 — La tante</div>
+      <div class="emp-area">
+        <div class="emp-lbl">Empathie</div>
+        <div class="hearts" id="hearts"></div>
+      </div>
+    </div>
+    <div class="phase-row">
+      <div class="phase-lbl" id="step-label"></div>
+      <div class="pdots" id="pdots"></div>
+    </div>
+    <div class="feed" id="feed"></div>
+    <div class="ix" id="ix">
+      <div class="fb" id="fb-toast"></div>
+      <div class="q-prompt" id="q-prompt"></div>
+      <div class="choices" id="choices"></div>
+      <button class="btn-continue" id="btn-continue" onclick="nextStep()">Continuer →</button>
+    </div>
+  </div>
+</div>
+
+<!-- GAMEOVER -->
+<div id="screen-gameover" class="screen">
+  <div class="go-icon">📵</div>
+  <div class="go-title">La tante a raccroché.</div>
+  <div class="go-body">Elle a senti que tu n'étais pas prêt à comprendre ce que Clara traversait.<br><br>Pour protéger sa nièce encore fragile, elle a préféré mettre fin à la conversation.</div>
+  <div class="go-lesson">💡 L'empathie, ce n'est pas seulement vouloir aider.<br>C'est écouter avant de parler. Sentir avant d'agir.</div>
+  <button class="btn-retry" onclick="retryGame()" style="margin-top:8px">↩ Recommencer</button>
+</div>
+
+<!-- ENDING -->
+<div id="screen-end" class="screen">
+  <div class="end-icon" id="end-icon"></div>
+  <div class="end-title" id="end-title"></div>
+  <div class="end-body" id="end-body"></div>
+  <div class="end-quote" id="end-quote"></div>
+  <div class="end-score" id="end-score"></div>
+  <button class="btn-retry" onclick="retryGame()">↩ Rejouer</button>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+//  UTILS
+// ═══════════════════════════════════════════════════════════════
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SCENES
+// ═══════════════════════════════════════════════════════════════
+const SCENES = [
+
+  // ── PHASE 1 : La tante ───────────────────────────────────────
+
+  { id:'A1', phase:'1', phaseName:'Phase 1 — La tante', stepLabel:'Question 1 / 3',
+    pdotCount:3, pdotActive:0,
+    dialogueBefore:[
+      {spk:'narrator', txt:'[ Le téléphone sonne… déclic. ]'},
+      {spk:'aunt',     txt:'Allô ?'},
+      {spk:'thomas',   txt:'Bonjour madame… excusez-moi de vous déranger. Je m\'appelle Léo, je suis un ami de Clara. Est-ce que je pourrais lui parler, s\'il vous plaît ?'},
+      {spk:'aunt',     txt:'Léo… Oui, elle m\'a parlé de toi.\nMais… je préfère être honnête : ce n\'est pas un bon moment.'},
+    ],
+    prompt:'Comment répondre ?',
+    choices:[
+      { emp:2, txt:'« Je comprends tout à fait. Je ne veux pas la brusquer. Mais elle me manque, et j\'ai peur pour elle. »',
+        fb:{type:'good', msg:'Tu montres que sa protection passe avant ton besoin.'},
+        reply:{spk:'aunt', txt:'(un silence) C\'est gentil de le dire comme ça.'}},
+      { emp:1, txt:'« Je comprends. Mais c\'est important — ça ne prendra pas longtemps. »',
+        fb:{type:'ok', msg:'Honnête, mais centré sur toi plutôt que sur Clara.'},
+        reply:{spk:'aunt', txt:'Hmm… d\'accord. Je t\'écoute.'}},
+      { emp:0, txt:'« J\'ai besoin de lui parler maintenant, c\'est urgent. »',
+        fb:{type:'bad', msg:'L\'insistance brusque met la tante sur la défensive.'},
+        reply:{spk:'aunt', txt:'(froid) Urgent… pour toi, peut-être.'},
+        recovery:{
+          auntLine:'Ce n\'est pas une urgence pour moi, Léo. Et pour l\'instant, c\'est ce qui compte.',
+          prompt:'La tante attend. Que dis-tu ?',
+          good:{ txt:'« Vous avez raison. Je suis désolé. C\'est elle qui compte, pas moi. »',
+                 reply:{spk:'aunt', txt:'(légèrement adoucie) …D\'accord. Continue.'} },
+          bad: { txt:'« Mais vous ne comprenez pas, c\'est vraiment important. »',
+                 reply:{spk:'aunt', txt:'(sèchement) Je comprends très bien. Et ça ne me rassure pas.'} }
+        }
+      },
+    ]
+  },
+
+  { id:'A2', phase:'1', phaseName:'Phase 1 — La tante', stepLabel:'Question 2 / 3',
+    pdotCount:3, pdotActive:1,
+    dialogueBefore:[
+      {spk:'aunt', txt:'Tu sais, depuis qu\'elle est arrivée ici… Clara n\'est plus la même.\nElle pleure beaucoup. Elle fait des cauchemars. Elle se réveille paniquée la nuit.\nEt surtout… elle culpabilise. Elle pense que tout est de sa faute.'},
+    ],
+    prompt:'Que réponds-tu ?',
+    choices:[
+      { emp:2, txt:'« Qu\'elle culpabilise… c\'est ce qui me fait le plus mal. Elle n\'a absolument rien fait. »',
+        fb:{type:'good', msg:'Tu défends Clara directement. La tante le ressent.'},
+        reply:{spk:'aunt', txt:'(souffle) C\'est exactement ce qu\'elle a besoin d\'entendre.'}},
+      { emp:1, txt:'« Je savais pas que c\'était à ce point… c\'est vraiment grave. »',
+        fb:{type:'ok', msg:'Sincère, mais tu restes en surface.'},
+        reply:{spk:'aunt', txt:'Oui. C\'est très grave.'}},
+      { emp:0, txt:'« Elle aurait dû m\'en parler avant d\'en arriver là. »',
+        fb:{type:'bad', msg:'Cela ressemble à un reproche. La tante le perçoit clairement.'},
+        reply:{spk:'aunt', txt:'(sèchement) Elle n\'osait pas. C\'est précisément le problème.'},
+        recovery:{
+          auntLine:'Si tu lui faisais des reproches maintenant… tu la blesserais encore plus, Léo.',
+          prompt:'Comment réagis-tu à ça ?',
+          good:{ txt:'« Vous avez raison. Ce n\'est pas ce que je voulais dire. Elle ne méritait rien de tout ça. »',
+                 reply:{spk:'aunt', txt:'(pause) …C\'est mieux. J\'entends de la sincérité.'} },
+          bad: { txt:'« Je fais juste remarquer que si elle m\'avait parlé, on aurait pu éviter ça. »',
+                 reply:{spk:'aunt', txt:'(froid) Éviter ça. Tu penses vraiment que c\'était si simple.'} }
+        }
+      },
+    ]
+  },
+
+  { id:'A3', phase:'1', phaseName:'Phase 1 — La tante', stepLabel:'Question 3 / 3',
+    pdotCount:3, pdotActive:2,
+    dialogueBefore:[
+      {spk:'aunt', txt:'Le harcèlement, ça détruit lentement. Ça te fait douter de ta valeur…\nElle s\'est renfermée. Elle évite même de regarder son téléphone.\nSi tu veux vraiment l\'aider… il faudra être patient. Très patient.'},
+    ],
+    prompt:'Avant qu\'elle aille demander à Clara…',
+    choices:[
+      { emp:2, txt:'« Je le serai. Dites-lui juste que je suis là, sans pression. Elle n\'a rien à prouver. »',
+        fb:{type:'good', msg:'Tu enlèves toute pression. C\'est exactement ce qu\'il fallait.'},
+        reply:{spk:'aunt', txt:'(plus douce) Je vais lui dire ça. Attends.'}},
+      { emp:1, txt:'« Je vous promets d\'être doux. Merci de me donner cette chance. »',
+        fb:{type:'ok', msg:'Sincère. La tante apprécie l\'honnêteté.'},
+        reply:{spk:'aunt', txt:'D\'accord… je vais lui demander.'}},
+      { emp:0, txt:'« Je vais lui dire que tout va s\'arranger, que j\'ai un plan. »',
+        fb:{type:'bad', msg:'Tu parles de toi et de ton plan — pas d\'elle.'},
+        reply:{spk:'aunt', txt:'(froide) Un plan. Clara n\'a pas besoin d\'un plan. Elle a besoin d\'être entendue.'},
+        recovery:{
+          auntLine:'Est-ce que tu comprends la différence, Léo ?',
+          prompt:'',
+          good:{ txt:'« Oui… vous avez raison. Je voulais juste l\'aider mais je suis allé trop vite. »',
+                 reply:{spk:'aunt', txt:'(longue pause) …Je vais lui demander. Mais ne la brusque pas.'} },
+          bad: { txt:'« Je pense que ça lui ferait du bien d\'avoir un objectif concret. »',
+                 reply:{spk:'aunt', txt:'(ferme) Je ne crois pas que tu sois prêt à lui parler ce soir.'} }
+        }
+      },
+    ]
+  },
+
+  // PIVOT
+  { id:'PIVOT', phase:'pivot', phaseName:'En attente…', stepLabel:'',
+    pdotCount:0, pdotActive:-1,
+    dialogueBefore:[
+      {spk:'narrator', txt:'[ Bruits étouffés… la tante s\'éloigne… murmures au loin… ]'},
+    ],
+    prompt:null, choices:[], isContinue:true
+  },
+
+  // ── PHASE 2 : Clara ────────────────────────────────────────────
+
+  { id:'L1', phase:'2', phaseName:'Phase 2 — Clara', stepLabel:'Question 1 / 4',
+    pdotCount:4, pdotActive:0,
+    dialogueBefore:[
+      {spk:'narrator', txt:'[ Un froissement de téléphone… ]'},
+      {spk:'lea',      txt:'Allô… ?'},
+      {spk:'thomas',   txt:'Clara… c\'est moi. Léo.'},
+      {spk:'lea',      txt:'… Salut.'},
+      {spk:'thomas',   txt:'Je suis désolé d\'appeler comme ça. Je ne savais pas comment faire autrement.'},
+      {spk:'lea',      txt:'C\'est… c\'est pas grave.'},
+      {spk:'thomas',   txt:'Tu m\'as manqué.'},
+      {spk:'lea',      txt:'(souffle) Toi aussi…'},
+      {spk:'thomas',   txt:'Pourquoi tu n\'as rien dit ? Tu sais que tu pouvais me parler…'},
+      {spk:'lea',      txt:'J\'y ai pensé… plein de fois.\nJ\'ai même commencé à écrire des messages… et puis je les supprimais.'},
+    ],
+    prompt:'Que lui réponds-tu ?',
+    choices:[
+      { emp:2, txt:'« Tu n\'as pas à trouver les bons mots avec moi. Je t\'aurais écoutée, même sans explication. »',
+        fb:{type:'good', msg:'Tu lèves la pression des mots. Elle peut souffler.'},
+        reply:{spk:'lea', txt:'(silence) …Je sais. Je crois que j\'avais honte.'}},
+      { emp:1, txt:'« Je comprends… c\'est dur de savoir comment dire ces choses. »',
+        fb:{type:'ok', msg:'Vrai, mais un peu général.'},
+        reply:{spk:'lea', txt:'Ouais… c\'est ça.'}},
+      { emp:0, txt:'« Pourquoi tu as supprimé ces messages ? J\'aurais répondu, tu sais. »',
+        fb:{type:'bad', msg:'Tu mets l\'accent sur toi, pas sur ce qu\'elle vivait.'},
+        reply:{spk:'lea', txt:'(froide) J\'en sais rien…'}},
+    ]
+  },
+
+  { id:'L2', phase:'2', phaseName:'Phase 2 — Clara', stepLabel:'Question 2 / 4',
+    pdotCount:4, pdotActive:1,
+    dialogueBefore:[
+      {spk:'lea', txt:'Au début, c\'était juste des remarques… des petites piques.\nJe me disais que ça allait passer.\nMais après… ça a empiré. Des moqueries en groupe. Des commentaires sur tout.\nEt ensuite, ça a continué en ligne. Des messages. Des captures. Des rumeurs.\nJe ne pouvais plus y échapper… même chez moi.'},
+    ],
+    prompt:'Que ressens-tu à l\'entendre ?',
+    choices:[
+      { emp:2, txt:'« Plus de refuge nulle part — ni au lycée, ni chez toi. C\'est une violence totale. Je suis tellement désolé. »',
+        fb:{type:'good', msg:'Tu nommes sa réalité avec précision. Elle se sent comprise.'},
+        reply:{spk:'lea', txt:'(voix qui se brise) Oui… c\'est exactement ça.'}},
+      { emp:1, txt:'« C\'est horrible… être harcelée même à la maison. »',
+        fb:{type:'ok', msg:'Sincère, mais tu restes en surface.'},
+        reply:{spk:'lea', txt:'Ouais…'}},
+      { emp:0, txt:'« T\'aurais pu bloquer ces gens, désactiver tes réseaux. »',
+        fb:{type:'bad', msg:'Un conseil non demandé, qui ressemble à un reproche.'},
+        reply:{spk:'lea', txt:'(froid) Merci, j\'y avais pas pensé.'}},
+    ]
+  },
+
+  { id:'L3', phase:'2', phaseName:'Phase 2 — Clara', stepLabel:'Question 3 / 4',
+    pdotCount:4, pdotActive:2,
+    dialogueBefore:[
+      {spk:'lea', txt:'Le pire, tu sais quoi ?\nC\'est quand j\'ai commencé à y croire.\nQuand je me regardais dans le miroir et que je voyais ce qu\'ils disaient.'},
+    ],
+    prompt:'Comment lui répondre ?',
+    choices:[
+      { emp:2, txt:'« Ce qu\'ils t\'ont fait, c\'est du conditionnement. Ils t\'ont menti sur toi-même, encore et encore. Ce miroir ne te montre pas toi. »',
+        fb:{type:'good', msg:'Tu expliques le mécanisme. Tu lui rends la réalité.'},
+        reply:{spk:'lea', txt:'(longue pause) Personne ne l\'avait dit comme ça avant.'}},
+      { emp:1, txt:'« Non. Ce que tu voyais, c\'est leurs mensonges — pas toi. »',
+        fb:{type:'ok', msg:'Clair et direct. Utile.'},
+        reply:{spk:'lea', txt:'J\'essaie de me le dire… c\'est dur.'}},
+      { emp:0, txt:'« Tu sais bien que c\'est faux ce qu\'ils disent. »',
+        fb:{type:'bad', msg:'"Tu sais bien" minimise sa douleur sans le vouloir.'},
+        reply:{spk:'lea', txt:'(silence) Si je le savais vraiment, j\'aurais pas craqué.'}},
+    ]
+  },
+
+  { id:'L4', phase:'2', phaseName:'Phase 2 — Clara', stepLabel:'Question 4 / 4',
+    pdotCount:4, pdotActive:3,
+    dialogueBefore:[
+      {spk:'lea', txt:'Ça fait trois semaines que je suis ici…\nAu début, je n\'arrivais même pas à sortir de la chambre.\nMaintenant… ça va un peu mieux. Mais j\'ai encore peur.\nPeur de retourner au lycée. Peur que ça recommence. Peur que rien ne change.'},
+    ],
+    prompt:'Dernière réponse — la plus importante.',
+    choices:[
+      { emp:2, txt:'« Je ne te promets pas que ce sera facile. Mais je te promets que tu n\'affronteras plus ça seule. À chaque étape, je serai là — vraiment là. »',
+        fb:{type:'good', msg:'Honnête et solide. Pas de fausse promesse, juste une présence réelle.'},
+        reply:{spk:'lea', txt:'(voix tremblante, puis stable) …D\'accord. Je veux bien essayer.'}},
+      { emp:1, txt:'« Je vais parler aux profs, à la direction. Ça ne peut pas rester comme ça. »',
+        fb:{type:'ok', msg:'Concret. Mais elle a surtout besoin de savoir qu\'elle n\'est plus seule.'},
+        reply:{spk:'lea', txt:'(hésitante) D\'accord… si tu penses que ça peut aider.'}},
+      { emp:0, txt:'« T\'inquiète, je vais régler ça. Ces gens vont avoir des problèmes. »',
+        fb:{type:'bad', msg:'Cela sonne comme de la colère, pas de la présence. Elle a peur que ça empire.'},
+        reply:{spk:'lea', txt:'(froid) Non… s\'il te plaît, fais rien. Ça va juste empirer.'}},
+    ]
+  },
+];
+
+// ═══════════════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════════════
+let empathy = 0;
+let sceneIndex = 0;
+let auntScore = 0;       // 0–9+ (base choices + recovery bonuses)
+let auntStrikes = 0;     // consecutive bad recoveries
+const MAX_EMP = 10;
+
+function startGame(){
+  empathy=0; sceneIndex=0; auntScore=0; auntStrikes=0;
+  buildHearts();
+  switchScreen('game');
+  loadScene(0);
+}
+function retryGame(){ startGame(); }
+
+function switchScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+id).classList.add('active');
+}
+
+// ═══ HEARTS ═══
+function buildHearts(){
+  const c=document.getElementById('hearts'); c.innerHTML='';
+  for(let i=0;i<MAX_EMP;i++){
+    const d=document.createElement('div');
+    d.className='hrt'+(i<4?' lv1':i<7?' lv2':' lv3');
+    c.appendChild(d);
+  }
+  updateHearts();
+}
+function updateHearts(){
+  document.querySelectorAll('.hrt').forEach((d,i)=>{
+    i<empathy ? d.classList.add('on') : d.classList.remove('on');
+  });
+}
+function addEmpathy(n){ empathy=Math.min(MAX_EMP,empathy+n); updateHearts(); }
+
+// ═══ LOAD SCENE ═══
+function loadScene(idx){
+  sceneIndex=idx;
+  const scene=SCENES[idx];
+  if(!scene){ showEnding(); return; }
+
+  document.getElementById('phase-label').textContent=scene.phaseName;
+  document.getElementById('step-label').textContent=scene.stepLabel;
+
+  // progress dots
+  const pdotsEl=document.getElementById('pdots'); pdotsEl.innerHTML='';
+  for(let i=0;i<scene.pdotCount;i++){
+    const d=document.createElement('div');
+    d.className='pdot'+(i<scene.pdotActive?' done':i===scene.pdotActive?' active':'');
+    pdotsEl.appendChild(d);
+  }
+
+  const feed=document.getElementById('feed'); feed.innerHTML='';
+  clearIx();
+
+  // staggered dialogue
+  let delay=150;
+  scene.dialogueBefore.forEach(line=>{
+    const dur = 500 + line.txt.length*9;
+    setTimeout(()=>{ appendLine(line.spk,line.txt); scrollFeed(); }, delay);
+    delay += dur;
+  });
+
+  if(scene.isContinue){
+    setTimeout(()=>{
+      document.getElementById('btn-continue').className='btn-continue show';
+    }, delay+300);
+  } else if(scene.choices.length>0){
+    setTimeout(()=>showChoices(scene.choices, scene.prompt, (choice)=>onMainChoice(scene,choice)), delay+350);
+  }
+}
+
+function clearIx(){
+  document.getElementById('fb-toast').className='fb';
+  document.getElementById('fb-toast').textContent='';
+  document.getElementById('choices').innerHTML='';
+  document.getElementById('q-prompt').textContent='';
+  document.getElementById('btn-continue').className='btn-continue';
+}
+
+// ═══ APPEND LINE ═══
+function appendLine(spk,txt){
+  const feed=document.getElementById('feed');
+  const div=document.createElement('div');
+  div.className='dline';
+  if(spk==='narrator'){
+    div.innerHTML=`<div class="bbl narrator">${txt.replace(/\n/g,'<br>')}</div>`;
+  } else {
+    const label={aunt:'La tante',lea:'Clara',thomas:'Léo'}[spk]||spk;
+    div.innerHTML=`<div class="spk ${spk}">${label}</div><div class="bbl ${spk}">${txt.replace(/\n/g,'<br>')}</div>`;
+  }
+  feed.appendChild(div);
+}
+function scrollFeed(){ const f=document.getElementById('feed'); setTimeout(()=>{f.scrollTop=f.scrollHeight;},60); }
+
+// ═══ SHOW CHOICES (generic, shuffled) ═══
+function showChoices(choices, prompt, callback){
+  if(prompt) document.getElementById('q-prompt').textContent=prompt;
+  const wrap=document.getElementById('choices');
+  wrap.innerHTML=''; wrap.className='choices anim';
+  void wrap.offsetWidth;
+
+  const shuffled=shuffle(choices);
+  shuffled.forEach((c,i)=>{
+    const btn=document.createElement('button');
+    btn.className='cbtn'; btn.dataset.emp=c.emp!==undefined?c.emp:'?';
+    btn.innerHTML=c.txt;
+    btn.onclick=()=>{
+      // highlight chosen, fade others
+      wrap.querySelectorAll('.cbtn').forEach((b,j)=>{b.disabled=true; b.style.opacity=j===i?'1':'.38';});
+      callback(c,i);
+    };
+    wrap.appendChild(btn);
+  });
+}
+
+// ═══ MAIN CHOICE HANDLER ═══
+function onMainChoice(scene, choice){
+  // feedback toast
+  const fb=document.getElementById('fb-toast');
+  fb.className='fb show '+(choice.emp===2?'good':choice.emp===1?'ok':'bad');
+  fb.textContent=choice.fb.msg;
+
+  if(scene.phase==='1') auntScore+=choice.emp;
+  addEmpathy(choice.emp);
+
+  setTimeout(()=>{
+    document.getElementById('choices').innerHTML='';
+    document.getElementById('q-prompt').textContent='';
+    // Léo line
+    const thomasTxt=choice.txt.replace(/^«\s*/,'').replace(/\s*»$/,'');
+    appendLine('thomas',thomasTxt);
+    scrollFeed();
+
+    setTimeout(()=>{
+      if(choice.reply){ appendLine(choice.reply.spk,choice.reply.txt); scrollFeed(); }
+
+      // If bad choice in aunt phase AND recovery available → show recovery
+      if(choice.emp===0 && scene.phase==='1' && choice.recovery){
+        setTimeout(()=>showRecovery(scene, choice.recovery), 900);
+      } else {
+        setTimeout(()=>checkGate(scene), 850);
+      }
+    }, 700);
+  }, 380);
+}
+
+// ═══ RECOVERY ═══
+function showRecovery(scene, rec){
+  appendLine('aunt', rec.auntLine);
+  scrollFeed();
+
+  setTimeout(()=>{
+    document.getElementById('fb-toast').className='fb';
+    const recoveryChoices=[
+      { emp:'good', txt: rec.good.txt, _reply: rec.good.reply },
+      { emp:'bad',  txt: rec.bad.txt,  _reply: rec.bad.reply  },
+    ];
+    showChoices(recoveryChoices, rec.prompt||'', (choice)=>onRecoveryChoice(scene, choice));
+  }, 900);
+}
+
+function onRecoveryChoice(scene, choice){
+  setTimeout(()=>{
+    document.getElementById('choices').innerHTML='';
+    document.getElementById('q-prompt').textContent='';
+
+    const thomasTxt=choice.txt.replace(/^«\s*/,'').replace(/\s*»$/,'');
+    appendLine('thomas', thomasTxt);
+    scrollFeed();
+
+    setTimeout(()=>{
+      appendLine(choice._reply.spk, choice._reply.txt);
+      scrollFeed();
+
+      if(choice.emp==='good'){
+        auntScore+=1; // partial recovery
+        addEmpathy(1);
+        auntStrikes=0;
+      } else {
+        // bad recovery — strike
+        auntStrikes++;
+        // if 2 consecutive bad recoveries → immediate gameover
+        if(auntStrikes>=2){
+          setTimeout(()=>{
+            appendLine('aunt','(ton ferme) Je pense qu\'il vaut mieux en rester là, Léo.\nClara n\'est pas en état pour ça. Pas ce soir.');
+            appendLine('narrator','[ Elle raccroche. ]');
+            scrollFeed();
+            setTimeout(()=>switchScreen('gameover'), 2000);
+          }, 800);
+          return;
+        }
+      }
+      setTimeout(()=>checkGate(scene), 850);
+    }, 700);
+  }, 380);
+}
+
+// ═══ GATES ═══
+function checkGate(scene){
+  if(scene.id==='A3'){
+    if(auntScore<=1){
+      setTimeout(()=>{
+        appendLine('aunt','(longue pause)\nJe suis désolée, Léo. Je ne crois pas que ce soit une bonne idée ce soir.\nPeut-être une autre fois.');
+        appendLine('narrator','[ Elle raccroche doucement. ]');
+        scrollFeed();
+        setTimeout(()=>switchScreen('gameover'), 2000);
+      }, 400);
+    } else {
+      setTimeout(()=>nextStep(), 500);
+    }
+    return;
+  }
+  if(scene.id==='PIVOT'){
+    const auntLine = auntScore>=5
+      ? '(revenue) Elle hésite…\n… Attends.'
+      : '(revenue) Elle n\'est pas sûre… mais elle accepte de te parler.';
+    appendLine('aunt', auntLine);
+    scrollFeed();
+    setTimeout(()=>nextStep(), 900);
+    return;
+  }
+  // default — show continue
+  document.getElementById('btn-continue').className='btn-continue show';
+}
+
+function nextStep(){
+  clearIx();
+  const next=sceneIndex+1;
+  if(next>=SCENES.length) showEnding();
+  else loadScene(next);
+}
+
+// ═══ ENDING ═══
+function showEnding(){
+  const s=empathy;
+  let icon,titleTxt,cls,body,quote;
+
+  if(s>=13){
+    icon='🌿'; cls='good'; titleTxt='Ensemble.';
+    body='Tu as su trouver les mots justes à chaque instant.\nNi trop forts, ni trop légers — juste présents.\n\nLa tante t\'a fait confiance. Clara a raccroché avec quelque chose qu\'elle n\'avait plus depuis des semaines : l\'espoir de ne plus être seule.';
+    quote='« Merci de ne pas m\'avoir oubliée. »\n— Clara';
+  } else if(s>=7){
+    icon='🕯️'; cls='ok'; titleTxt='Un espoir fragile.';
+    body='Tu as montré de la bonne volonté, même si certaines réponses manquaient de profondeur.\n\nClara a accepté de parler, hésitante. La confiance se reconstruit lentement. Continue d\'être là — vraiment là.';
+    quote='« Je veux bien essayer… »\n— Clara';
+  } else {
+    icon='🌧️'; cls='bad'; titleTxt='La distance reste.';
+    body='Tu voulais bien faire, mais tes mots ont parfois sonné comme des reproches ou de l\'impatience.\n\nClara reste fermée. Elle a besoin de temps — et de quelqu\'un qui écoute vraiment avant de parler.';
+    quote='« J\'avais juste besoin que tu m\'écoutes. »\n— Clara';
+  }
+
+  document.getElementById('end-icon').textContent=icon;
+  document.getElementById('end-title').textContent=titleTxt;
+  document.getElementById('end-title').className='end-title '+cls;
+  document.getElementById('end-body').textContent=body;
+  document.getElementById('end-quote').textContent=quote;
+  document.getElementById('end-score').innerHTML=`Score d'empathie : <span>${s} / ${MAX_EMP}</span>`;
+  switchScreen('end');
+}
+</script>
+</body>
+</html>

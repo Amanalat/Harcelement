@@ -1,0 +1,306 @@
+
+<style>
+.pw{display:flex;justify-content:center;padding:1.5rem 1rem;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);}
+.ph{width:296px;background:#0d0d0d;border-radius:38px;border:7px solid #1c1c1c;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;}
+.sb{background:#000;display:flex;justify-content:space-between;align-items:flex-end;padding:11px 18px 5px;}
+.nt{width:104px;height:24px;background:#000;border-radius:0 0 14px 14px;align-self:flex-start;border:1.5px solid #1a1a1a;border-top:none;}
+.chdr{background:#111;padding:9px 13px;display:flex;align-items:center;gap:10px;border-bottom:0.5px solid #1e1e1e;}
+.av{width:32px;height:32px;border-radius:50%;background:#5e5ce6;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;}
+.tbar{background:#111;padding:5px 12px 6px;display:flex;align-items:center;gap:7px;border-bottom:0.5px solid #1e1e1e;}
+.tbarr{flex:1;height:5px;background:#1e1e1e;border-radius:3px;overflow:hidden;position:relative;}
+.tmark{position:absolute;left:50%;top:0;width:1.5px;height:100%;background:#333;z-index:1;}
+.tbarf{height:100%;border-radius:3px;transition:width .65s cubic-bezier(.4,0,.2,1),background .4s;}
+.ma{height:268px;overflow-y:auto;background:#000;padding:10px;display:flex;flex-direction:column;gap:5px;scrollbar-width:none;}
+.ma::-webkit-scrollbar{display:none}
+.bb{max-width:82%;padding:7px 11px;border-radius:17px;font-size:12.5px;line-height:1.45;animation:pop .2s;}
+.bb.s{background:#0b84ff;color:#fff;align-self:flex-end;border-bottom-right-radius:3px;}
+.bb.r{background:#1c1c1e;color:#e5e5ea;align-self:flex-start;border-bottom-left-radius:3px;}
+.bb.sy{align-self:center;background:transparent;color:#444;font-size:10.5px;font-style:italic;padding:3px 6px;}
+.bb.cr{background:#2c1a1a;color:#ff9f9f;align-self:flex-start;border-bottom-left-radius:3px;border:0.5px solid #5a2020;}
+@keyframes pop{from{transform:scale(.87);opacity:0}to{transform:scale(1);opacity:1}}
+.tyi{display:flex;gap:3px;padding:6px 10px;background:#1c1c1e;border-radius:17px;width:fit-content;border-bottom-left-radius:3px;animation:pop .2s;}
+.tyi span{width:5px;height:5px;background:#555;border-radius:50%;animation:td 1.2s infinite;}
+.tyi span:nth-child(2){animation-delay:.2s}
+.tyi span:nth-child(3){animation-delay:.4s}
+@keyframes td{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-3px);opacity:1}}
+.ca{background:#111;padding:7px;min-height:108px;border-top:0.5px solid #1e1e1e;}
+.cb{background:#222;border:0.5px solid #2e2e2e;color:#e5e5ea;padding:7px 10px;border-radius:11px;font-size:11.5px;text-align:left;cursor:pointer;display:flex;align-items:flex-start;gap:6px;width:100%;margin-bottom:5px;}
+.cb:last-child{margin-bottom:0}
+.cb.cr-btn{background:#1e1010;border-color:#3a1515;}
+.cb:hover{background:#2c2c2c}
+.cb.cr-btn:hover{background:#2a1414}
+.cb:active{transform:scale(.98)}
+.cb:disabled{opacity:.35;cursor:default}
+.cl{font-weight:700;color:#0b84ff;flex-shrink:0;font-size:12px;padding-top:1px;}
+.cr-btn .cl{color:#ff6b6b;}
+.chint{color:#444;font-size:10.5px;text-align:center;padding:2px 0 6px;}
+.chint.cr{color:#7a3333;}
+.ea{background:#000;padding:10px;color:#e5e5ea;font-size:12px;line-height:1.65;}
+.rb{background:#1c1c1e;border:0.5px solid #2e2e2e;color:#0b84ff;padding:8px;border-radius:20px;font-size:12px;cursor:pointer;margin-top:10px;width:100%;}
+.rb:hover{background:#252525}
+.igcard{background:#0a0a0f;border:0.5px solid #2a2a3e;border-radius:10px;padding:8px 10px;margin:7px 0;font-size:12px;color:#e5e5ea;}
+.igusr{color:#c4a5ff;font-weight:600;}
+.igpwd{color:#7b7fff;letter-spacing:.5px;}
+.igwarn{color:#ff453a;font-size:10.5px;margin-top:4px;}
+</style>
+
+<div class="pw"><div class="ph">
+  <div class="sb">
+    <span style="color:#fff;font-size:12px;font-weight:600;">9:41</span>
+    <div class="nt"></div>
+    <div style="display:flex;gap:5px;align-items:center;">
+      <svg width="13" height="10" viewBox="0 0 16 12" fill="none"><rect x="0" y="5" width="3" height="7" rx=".5" fill="white" opacity=".45"/><rect x="4.5" y="3.5" width="3" height="8.5" rx=".5" fill="white" opacity=".65"/><rect x="9" y="1.5" width="3" height="10.5" rx=".5" fill="white" opacity=".85"/><rect x="13.5" y="0" width="2.5" height="12" rx=".5" fill="white"/></svg>
+      <svg width="18" height="10" viewBox="0 0 26 12" fill="none"><rect x=".75" y="1.75" width="19.5" height="8.5" rx="1.75" stroke="white" stroke-width="1.5" opacity=".85"/><rect x="21.5" y="4" width="2.5" height="4" rx="1" fill="white" opacity=".85"/><rect x="2" y="3" width="13" height="6" rx=".75" fill="white"/></svg>
+    </div>
+  </div>
+
+  <div class="chdr">
+    <div class="av">IN</div>
+    <div style="flex:1;">
+      <div style="color:#e5e5ea;font-size:13px;font-weight:600;">Inès</div>
+      <div style="color:#555;font-size:10.5px;" id="st">en ligne</div>
+    </div>
+  </div>
+
+  <div class="tbar">
+    <span id="tlb" style="color:#ff9f0a;font-size:9px;min-width:108px;transition:color .4s;white-space:nowrap;">elle hésite</span>
+    <div class="tbarr"><div class="tmark"></div><div class="tbarf" id="tf" style="width:50%;background:#ff9f0a;"></div></div>
+    <span id="tdl" style="font-size:11px;font-weight:700;min-width:22px;text-align:right;opacity:0;transition:opacity .5s;color:#fff;"></span>
+  </div>
+
+  <div class="ma" id="ma"></div>
+  <div class="ca" id="ca"><div class="chint">…</div></div>
+</div></div>
+
+<script>
+var trust=0,good=0,step=0,crisisUsed=false,phase='story',busy=false,tyEl=null;
+var ma=document.getElementById('ma'),ca=document.getElementById('ca');
+var tf=document.getElementById('tf'),tlb=document.getElementById('tlb'),tdl=document.getElementById('tdl');
+
+// STEP 0 — Pourquoi tu t'en mêles ?
+// A +1 : raison concrète centrée sur Clara (disparition réelle) → Inès entend que c'est sérieux
+// B -1 : met Inès en position d'accusée "t'as forcément des infos" → elle se ferme
+// C  0 : vague, rien à quoi s'accrocher, elle reste méfiante mais pas hostile
+var G=[
+  {c:[
+    {l:'A',t:"Parce qu'elle a disparu et que personne réagit.",e:1},
+    {l:'B',t:"T'es sa meilleure amie, t'as forcément des infos.",e:-1},
+    {l:'C',t:"Je suis inquiet, c'est tout.",e:0}
+  ]},
+  // STEP 1 — Pourquoi toi d'un coup ?
+  // A  0 : excuse honnête mais centrée sur soi, pas sur Clara → Inès s'en fiche un peu
+  // B -1 : accusation directe, elle se sent suspectée alors qu'elle cache par loyauté
+  // C +1 : montre qu'il mesure la gravité → elle sent qu'il peut comprendre
+  {intro:["Pourquoi tu t'en mêles, toi ? Je te connais même pas."],c:[
+    {l:'A',t:"Parce que personne d'autre ne fait rien.",e:0},
+    {l:'B',t:"Parce que toi, t'as l'air de cacher quelque chose.",e:-1},
+    {l:'C',t:"Parce que je pense que c'est plus grave que ce qu'on croit.",e:1}
+  ]},
+  // STEP 2 — C'est compliqué
+  // A +1 : invite à parler sans pression → elle se sent entendue, pas forcée
+  // B -1 : menace voilée "ça va empirer" → lui met la pression, elle se braque
+  // C  0/imm : abandonne → elle pense qu'il n'est pas vraiment là pour aider
+  {intro:["…Tu réalises même pas ce qu'elle a traversé.","C'est pas simple."],c:[
+    {l:'A',t:"Alors explique-moi, je veux vraiment aider.",e:1},
+    {l:'B',t:"Si tu dis rien, ça va empirer.",e:-1},
+    {l:'C',t:"Ok, laisse tomber.",e:0,end:'imm'}
+  ]},
+  // STEP 3 — Inès dit que les réponses sont sur l'Instagram de Clara
+  // Elle précise que c'est pas à elle d'en parler — c'est la vie privée de Clara
+  // A +1 : respecte ça, demande juste l'accès au compte Clara lui avait laissé
+  // B -1 : "peu importe comment" = prêt à violer la vie privée → Inès recule
+  // C  0 : trop passif, elle voit que Léo abandonne la responsabilité sur elle
+  {intro:["…(longtemps sans répondre)","Elle a souffert. Vraiment. Depuis un moment.","C'est pas à moi de tout te raconter.","Mais… il y a peut-être un indice sur son Instagram.","Un endroit mentionné, un message… je sais pas. Quelque chose qui pourrait aider à savoir où elle est.","Clara me l'avait donné au cas où. Mais je sais pas si je devrais te le donner."],c:[
+    {l:'A',t:"Je comprends que c'est sa vie privée. T'as le droit de pas me le donner.",e:1},
+    {l:'B',t:"Donne-le moi, je trouverai ce qu'il faut peu importe comment.",e:-1},
+    {l:'C',t:"C'est toi qui décides. Moi je veux juste la retrouver.",e:0}
+  ]}
+];
+
+var CRISIS={
+  intro:["…","Attends.","T'es là pour quoi exactement ?","J'ai pas confiance en toi."],
+  c:[
+    // A +2 : reconnaît qu'il n'a aucun droit de l'exiger → désamorce, sincère
+    // B  0 : lui laisse la main → stoppe la chute sans reconstruire
+    // C -1 : exige confiance sans l'avoir méritée → aggrave
+    {l:'A',t:"T'as aucune raison de me faire confiance. Je te demande rien, je veux juste que Clara aille bien.",e:2},
+    {l:'B',t:"Ok. Je te force à rien. On peut en rester là si tu veux.",e:0},
+    {l:'C',t:"Mais fais-moi confiance, j'essaie juste d'aider !",e:-1}
+  ]
+};
+
+function sl(ms){return new Promise(function(r){setTimeout(r,ms);});}
+
+function addBub(txt,type){
+  var d=document.createElement('div');
+  d.className='bb '+type;
+  d.textContent=txt;
+  ma.appendChild(d);
+  ma.scrollTop=ma.scrollHeight;
+}
+function showTy(){
+  tyEl=document.createElement('div');
+  tyEl.className='tyi';
+  tyEl.innerHTML='<span></span><span></span><span></span>';
+  ma.appendChild(tyEl);
+  ma.scrollTop=ma.scrollHeight;
+  document.getElementById('st').textContent='écrit\u2026';
+}
+function hideTy(){
+  if(tyEl){tyEl.remove();tyEl=null;}
+  document.getElementById('st').textContent='en ligne';
+}
+function updateBar(prev){
+  var pct=Math.max(5,Math.min(95,(trust+4)/8*100));
+  tf.style.width=pct+'%';
+  tf.style.background=trust>=2?'#30d158':trust>=0?'#ff9f0a':'#ff453a';
+  var labels=["elle ne te fait plus confiance","elle est très méfiante","elle est méfiante","elle hésite","elle t'écoute","elle t'écoute bien","elle te fait confiance","elle te fait confiance","elle te fait vraiment confiance"];
+  tlb.textContent=labels[Math.max(0,Math.min(8,trust+4))];
+  tlb.style.color=trust>=2?'#30d158':trust>=0?'#ff9f0a':'#ff453a';
+  var d=trust-prev;
+  if(d!==0){
+    tdl.textContent=(d>0?'+':'')+d;
+    tdl.style.color=d>0?'#30d158':'#ff453a';
+    tdl.style.opacity='1';
+    clearTimeout(tdl._t);
+    tdl._t=setTimeout(function(){tdl.style.opacity='0';},1600);
+  }
+}
+function showChoices(arr,isCr){
+  ca.innerHTML='<div class="chint'+(isCr?' cr':'')+'">'+( isCr?'Comment réagit Léo ?':'Que répond Léo ?')+'</div>';
+  arr.forEach(function(c){
+    var b=document.createElement('button');
+    b.className='cb'+(isCr?' cr-btn':'');
+    b.innerHTML='<span class="cl">'+c.l+'</span><span>'+c.t+'</span>';
+    b.onclick=function(){pick(c);};
+    ca.appendChild(b);
+  });
+}
+async function showNextStep(){
+  await sl(430);
+  var ns=G[step];
+  if(ns.intro){
+    showTy();
+    var delay=ns.intro.length>2?900:1100;
+    await sl(delay);hideTy();
+    for(var i=0;i<ns.intro.length;i++){
+      if(i>0){
+        await sl(ns.intro[i-1].startsWith('(')?400:700);
+        if(i<ns.intro.length-1){showTy();await sl(800);hideTy();}
+      }
+      addBub(ns.intro[i],ns.intro[i].startsWith('(')? 'sy':'r');
+    }
+    await sl(350);
+  }
+  showChoices(ns.c,false);
+  busy=false;
+}
+async function pick(choice){
+  if(busy)return;
+  busy=true;
+  ca.querySelectorAll('button').forEach(function(b){b.disabled=true;});
+  addBub(choice.t,'s');
+
+  if(choice.end==='imm'){
+    ca.innerHTML='';
+    await sl(600);showTy();await sl(900);hideTy();
+    addBub('\u2026ok','r');
+    await sl(350);addBub('vu \u2714\ufe0f','sy');
+    endGame('imm');return;
+  }
+
+  var prev=trust;
+  if(phase==='story'&&choice.e>0)good++;
+  trust+=choice.e;
+  updateBar(prev);
+  ca.innerHTML='';
+
+  if(trust<=-3){
+    await sl(500);showTy();await sl(1200);hideTy();
+    addBub('Non.','cr');
+    await sl(350);addBub('Arrête de me parler.','cr');
+    await sl(300);addBub('(elle te bloque)','sy');
+    endGame('block');return;
+  }
+
+  if(phase==='crisis'){
+    phase='story';
+    step++;
+    if(step>=G.length){await sl(400);showTy();await sl(1400);hideTy();endGame('final');return;}
+    await showNextStep();return;
+  }
+
+  if(trust<=-2&&!crisisUsed&&step<G.length-1){
+    crisisUsed=true;phase='crisis';
+    await sl(600);showTy();await sl(1400);hideTy();
+    for(var i=0;i<CRISIS.intro.length;i++){
+      addBub(CRISIS.intro[i],'cr');
+      await sl(i<CRISIS.intro.length-1?700:300);
+    }
+    showChoices(CRISIS.c,true);
+    busy=false;return;
+  }
+
+  step++;
+  if(step>=G.length){await sl(400);showTy();await sl(1400);hideTy();endGame('final');return;}
+  await showNextStep();
+}
+
+function endGame(type){
+  var html='';
+  if(type==='imm'){
+    html='<div style="color:#555;font-size:10.5px;font-weight:600;margin-bottom:7px;">\ud83d\udc80 Fin immédiate</div><div style="color:#555;font-size:12px;">(fin de la conversation)</div>';
+  }else if(type==='block'){
+    html='<div style="color:#ff453a;font-size:10.5px;font-weight:600;margin-bottom:7px;">🔴 Confiance brisée</div>'
+      +'<div style="color:#e5e5ea;font-size:12px;line-height:1.65;"><span style="color:#555">Inès :</span> Je t\'avais prévenu.<br><span style="color:#555">(elle te bloque)</span></div>';
+  }else if(good>=3){
+    html='<div style="color:#30d158;font-size:10.5px;font-weight:600;margin-bottom:6px;">🟢 Inès te fait confiance</div>'
+      +'<div style="color:#e5e5ea;font-size:12px;line-height:1.65;">'
+      +'<span style="color:#555">Inès :</span> …Tu promets de faire attention à ce que tu lis ?<br>'
+      +'<span style="color:#555">Léo :</span> Je promets.<br>'
+      +'<span style="color:#555">Inès :</span> Et tu me dis si tu trouves quelque chose.<br>'
+      +'<span style="color:#555">Léo :</span> Oui.<br><br>'
+      +'<span style="color:#555">Inès :</span> …Elle me l\'avait donné au cas où. Tu l\'utilises, t\'en parles à personne.<br>Et cherche bien — il y a peut-être quelque chose qui indique où elle est.'
+      +'<div class="igcard">📱 Instagram de Clara<br><span style="color:#888;font-size:10.5px;">compte :</span> <span class="igusr">@clara.fontaine</span><br><span style="color:#888;font-size:10.5px;">mdp :</span> <span class="igpwd">nuit_rouge17</span><div class="igwarn">⚠ C\'est sa vie privée. Respecte-la.</div></div></div>';
+  }else if(good===2){
+    html='<div style="color:#ff9f0a;font-size:10.5px;font-weight:600;margin-bottom:6px;">🟡 Succès fragile</div>'
+      +'<div style="color:#e5e5ea;font-size:12px;line-height:1.65;">'
+      +'<span style="color:#555">Inès :</span> Je sais vraiment pas si je fais bien…<br>'
+      +'Tu me promets de faire attention ?<br>'
+      +'<span style="color:#555">Léo :</span> Oui.<br>'
+      +'<div class="igcard">📱 Instagram de Clara<br><span style="color:#888;font-size:10.5px;">compte :</span> <span class="igusr">@clara.fontaine</span><br><span style="color:#888;font-size:10.5px;">mdp :</span> <span class="igpwd">nuit_rouge17</span><div class="igwarn">⚠ Sois prudent.</div></div></div>';
+  }else{
+    html='<div style="color:#ff453a;font-size:10.5px;font-weight:600;margin-bottom:6px;">🔴 Échec</div>'
+      +'<div style="color:#e5e5ea;font-size:12px;line-height:1.65;">'
+      +'<span style="color:#555">Inès :</span> Non.<br>Arrête de fouiller.<br>C\'est pas tes affaires.<br><br>'
+      +'<span style="color:#555">(elle ne répond plus)</span></div>';
+  }
+  html+='<button class="rb" onclick="startGame()">\u21ba Recommencer</button>';
+  ca.innerHTML='<div class="ea">'+html+'</div>';
+}
+
+async function startGame(){
+  trust=0;good=0;step=0;crisisUsed=false;phase='story';busy=false;tyEl=null;
+  ma.innerHTML='';ca.innerHTML='<div class="chint">\u2026</div>';
+  tf.style.width='50%';tf.style.background='#ff9f0a';
+  tlb.textContent="elle hésite";tlb.style.color='#ff9f0a';
+  tdl.style.opacity='0';
+  document.getElementById('st').textContent='en ligne';
+  await sl(500);
+  addBub("Hey\u2026 In\u00e8s ?",'s');
+  showTy();await sl(700);hideTy();
+  addBub("Oui, c\u2019est qui ?",'r');
+  await sl(300);
+  addBub("C\u2019est L\u00e9o. Un ami de Clara.",'s');
+  showTy();await sl(1100);hideTy();
+  addBub("L\u00e9o\u2026 (pause) On s\u2019est jamais vraiment parl\u00e9.",'r');
+  await sl(320);
+  addBub("Je sais. Mais Clara a disparu. J\u2019arrive plus \u00e0 la joindre.",'s');
+  showTy();await sl(900);hideTy();
+  addBub("\u2026Pourquoi tu m\u2019appelles, moi ?",'r');
+  await sl(350);
+  showChoices(G[0].c,false);
+  busy=false;
+}
+startGame();
+</script>

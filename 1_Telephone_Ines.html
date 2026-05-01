@@ -61,15 +61,15 @@
   </div>
 
   <div class="chdr">
-    <div class="av">IN</div>
+    <div class="av" id="av"></div>
     <div style="flex:1;">
-      <div style="color:#e5e5ea;font-size:13px;font-weight:600;">Inès</div>
-      <div style="color:#555;font-size:10.5px;" id="st">en ligne</div>
+      <div style="color:#e5e5ea;font-size:13px;font-weight:600;" id="cn"></div>
+      <div style="color:#555;font-size:10.5px;" id="st"></div>
     </div>
   </div>
 
   <div class="tbar">
-    <span id="tlb" style="color:#ff9f0a;font-size:9px;min-width:108px;transition:color .4s;white-space:nowrap;">elle hésite</span>
+    <span id="tlb" style="color:#ff9f0a;font-size:9px;min-width:108px;transition:color .4s;white-space:nowrap;"></span>
     <div class="tbarr"><div class="tmark"></div><div class="tbarf" id="tf" style="width:50%;background:#ff9f0a;"></div></div>
     <span id="tdl" style="font-size:11px;font-weight:700;min-width:22px;text-align:right;opacity:0;transition:opacity .5s;color:#fff;"></span>
   </div>
@@ -78,111 +78,18 @@
   <div class="ca" id="ca"><div class="chint">…</div></div>
 </div></div>
 
+<script src="1_Telephone_Ines_textes.js"></script>
 <script>
+var G=TEXTES.G, CRISIS=TEXTES.CRISIS, REVELATIONS=TEXTES.REVELATIONS;
+
 var trust=0,good=0,step=0,crisisUsed=false,phase='story',busy=false,tyEl=null;
 var ma=document.getElementById('ma'),ca=document.getElementById('ca');
 var tf=document.getElementById('tf'),tlb=document.getElementById('tlb'),tdl=document.getElementById('tdl');
 
-var REVELATIONS=[
-  {icon:'💬',title:'Groupe de moqueries en ligne',txt:'Des élèves ont créé un groupe secret pour se moquer de Clara collectivement. Elle l\'a appris par une capture d\'écran.'},
-  {icon:'👻',title:'Harcèlement anonyme, la nuit',txt:'Des comptes sans identité l\'harcelaient chez elle, la nuit. Ne pas pouvoir identifier l\'agresseur rendait l\'angoisse permanente.'},
-  {icon:'📊',title:'Sondage d\'humiliation publique',txt:'Un sondage la ciblant directement a circulé dans toute la classe. Clara l\'a vu. Elle a fini par intégrer ce regard comme une vérité sur elle-même.'}
-];
-
-// STEP 0 — Premier contact : pourquoi Léo appelle
-// A +1 : raison concrète centrée sur Clara → Inès comprend que c'est sérieux
-// B -1 : accuse Inès d'emblée → elle se ferme
-// C  0 : vague, elle reste méfiante mais neutre
-var G=[
-  {c:[
-    {l:'A',t:"Parce qu'elle a disparu et que personne ne réagit.",e:1},
-    {l:'B',t:"T'es sa meilleure amie, t'as forcément des infos.",e:-1},
-    {l:'C',t:"Je suis inquiet, c'est tout.",e:0}
-  ]},
-
-  // STEP 1 — Le groupe de moqueries
-  // Inès révèle : un groupe de classe créé pour ridiculiser Clara
-  // A +1 : nomme la réalité du harcèlement collectif → Inès sent qu'il comprend
-  // B -1 : réaction de vengeance, pas d'empathie → Inès se méfie
-  // C  0 : minimise involontairement → elle reste froide
-  {intro:[
-    "Pourquoi tu t'en mêles, toi ? Je te connais même pas.",
-    "…",
-    "(voix plus basse) Des gens de la classe ont créé un groupe. Pour parler d'elle. En se moquant.",
-    "Elle l'a su par hasard. Quelqu'un lui a envoyé une capture."
-  ],
-  edu:"💡 Le cyberharcèlement en groupe : quand une communauté en ligne cible une personne, l'humiliation devient collective. La victime se retrouve seule face à tous, sans pouvoir se défendre.",
-  c:[
-    {l:'A',t:"C'est du harcèlement en groupe. Elle a dû se sentir complètement seule face à tout ça.",e:1},
-    {l:'B',t:"Qui a fait ça ? Donne-moi les noms.",e:-1},
-    {l:'C',t:"Ça arrive souvent ce genre de trucs…",e:0}
-  ]},
-
-  // STEP 2 — Les messages anonymes nocturnes
-  // Inès révèle : des comptes sans identité l'harcelaient chez elle, la nuit
-  // A +1 : comprend l'angoisse spécifique de l'anonymat → Inès se sent entendue
-  // B -1 : conseil non demandé qui ressemble à un reproche → elle se braque
-  // C  0 : réaction sincère mais passive → ne fait pas avancer la confiance
-  {intro:[
-    "C'était pas que ça.",
-    "(silence) Elle recevait des messages la nuit. Des comptes sans nom, sans visage.",
-    "Elle savait pas qui c'était. Elle pouvait pas se défendre.",
-    "Elle éteignait son téléphone… mais après elle avait peur de le rallumer."
-  ],
-  edu:"💡 L'anonymat amplifie le harcèlement : sans visage, sans identité, la victime ne sait pas d'où vient l'attaque. Le refuge chez soi n'existe plus — l'angoisse est constante.",
-  c:[
-    {l:'A',t:"Ne pas savoir qui envoie ces messages, c'est encore plus difficile à supporter.",e:1},
-    {l:'B',t:"Elle aurait pu désactiver ses réseaux.",e:-1},
-    {l:'C',t:"C'est grave. Elle en a parlé à quelqu'un ?",e:0}
-  ]},
-
-  // STEP 3 — Le sondage d'humiliation
-  // Inès révèle : un sondage humiliant partagé dans toute la classe
-  // A +1 : nomme l'impact sur l'image de soi → Inès réalise qu'il comprend vraiment
-  // B  0 : réaction correcte mais centrée sur l'action externe, pas sur Clara
-  // C  0 : vrai mais superficiel, ne montre pas de compréhension des mécanismes
-  {intro:[
-    "(longue pause)",
-    "…Il y a eu un sondage. Partagé dans toute la classe.",
-    "« Clara est-elle la personne la plus nulle du collège ? »",
-    "Les gens ont voté. Publiquement.",
-    "Elle l'a vu."
-  ],
-  edu:"💡 Le vote d'humiliation : transformer une personne en objet d'un jugement public collectif. Avec le temps, la victime finit par intégrer ce regard comme une vérité sur elle-même.",
-  c:[
-    {l:'A',t:"Une humiliation publique comme ça, ça touche à l'image qu'on a de soi. Elle a dû finir par y croire.",e:1},
-    {l:'B',t:"C'est illégal. Il faut le signaler à l'école.",e:0},
-    {l:'C',t:"Les gens peuvent être vraiment cruels.",e:0}
-  ]},
-
-  // STEP 4 — Pourquoi elle est partie + accès Instagram
-  // Inès explique que Clara ne pouvait plus y échapper nulle part
-  // A +1 : respecte la vie privée de Clara → Inès lui fait confiance
-  // B -1 : "peu importe comment" = prêt à violer la vie privée → Inès recule
-  // C  0 : passif, lui laisse toute la responsabilité → elle hésite mais cède
-  {intro:[
-    "(longtemps sans répondre)",
-    "Elle pouvait plus y échapper. Ni au collège. Ni chez elle.",
-    "Son téléphone était devenu une source de peur.",
-    "(silence) C'est pas à moi de tout te raconter.",
-    "Mais… il y a peut-être des choses sur son Instagram. Un message, une photo, un endroit mentionné.",
-    "Clara me l'avait donné au cas où. Mais je sais pas si je devrais te le donner."
-  ],
-  c:[
-    {l:'A',t:"Je comprends que c'est sa vie privée. T'as le droit de pas me le donner.",e:1},
-    {l:'B',t:"Donne-le moi, je trouverai ce qu'il faut peu importe comment.",e:-1},
-    {l:'C',t:"C'est toi qui décides. Moi je veux juste la retrouver.",e:0}
-  ]}
-];
-
-var CRISIS={
-  intro:["…","Attends.","T'es là pour quoi exactement ?","J'ai pas confiance en toi."],
-  c:[
-    {l:'A',t:"T'as aucune raison de me faire confiance. Je te demande rien, je veux juste que Clara aille bien.",e:2},
-    {l:'B',t:"Ok. Je te force à rien. On peut en rester là si tu veux.",e:0},
-    {l:'C',t:"Mais fais-moi confiance, j'essaie juste d'aider !",e:-1}
-  ]
-};
+// Initialise les éléments statiques de l'en-tête depuis TEXTES
+document.getElementById('av').textContent=TEXTES.contact.avatar;
+document.getElementById('cn').textContent=TEXTES.contact.name;
+document.getElementById('st').textContent=TEXTES.contact.statusOnline;
 
 function sl(ms){return new Promise(function(r){setTimeout(r,ms);});}
 
@@ -199,18 +106,17 @@ function showTy(){
   tyEl.innerHTML='<span></span><span></span><span></span>';
   ma.appendChild(tyEl);
   ma.scrollTop=ma.scrollHeight;
-  document.getElementById('st').textContent='écrit…';
+  document.getElementById('st').textContent=TEXTES.contact.statusTyping;
 }
 function hideTy(){
   if(tyEl){tyEl.remove();tyEl=null;}
-  document.getElementById('st').textContent='en ligne';
+  document.getElementById('st').textContent=TEXTES.contact.statusOnline;
 }
 function updateBar(prev){
   var pct=Math.max(5,Math.min(95,(trust+4)/8*100));
   tf.style.width=pct+'%';
   tf.style.background=trust>=2?'#30d158':trust>=0?'#ff9f0a':'#ff453a';
-  var labels=["elle ne te fait plus confiance","elle est très méfiante","elle est méfiante","elle hésite","elle t'écoute","elle t'écoute bien","elle te fait confiance","elle te fait confiance","elle te fait vraiment confiance"];
-  tlb.textContent=labels[Math.max(0,Math.min(8,trust+4))];
+  tlb.textContent=TEXTES.trustLabels[Math.max(0,Math.min(8,trust+4))];
   tlb.style.color=trust>=2?'#30d158':trust>=0?'#ff9f0a':'#ff453a';
   var d=trust-prev;
   if(d!==0){
@@ -222,7 +128,8 @@ function updateBar(prev){
   }
 }
 function showChoices(arr,isCr){
-  ca.innerHTML='<div class="chint'+(isCr?' cr':'')+'">'+( isCr?'Comment réagit Léo ?':'Que répond Léo ?')+'</div>';
+  ca.innerHTML='<div class="chint'+(isCr?' cr':'')+'">'+
+    (isCr?TEXTES.choiceHintCrise:TEXTES.choiceHint)+'</div>';
   arr.forEach(function(c){
     var b=document.createElement('button');
     b.className='cb'+(isCr?' cr-btn':'');
@@ -266,8 +173,8 @@ async function pick(choice){
   if(choice.end==='imm'){
     ca.innerHTML='';
     await sl(600);showTy();await sl(900);hideTy();
-    addBub('…ok','r');
-    await sl(350);addBub('vu ✔️','sy');
+    addBub(TEXTES.finImmediate[0].t,TEXTES.finImmediate[0].type);
+    await sl(350);addBub(TEXTES.finImmediate[1].t,TEXTES.finImmediate[1].type);
     endGame('imm');return;
   }
 
@@ -279,9 +186,9 @@ async function pick(choice){
 
   if(trust<=-3){
     await sl(500);showTy();await sl(1200);hideTy();
-    addBub('Non.','cr');
-    await sl(350);addBub('Arrête de me parler.','cr');
-    await sl(300);addBub('(elle te bloque)','sy');
+    addBub(TEXTES.blocageMessages[0].t,TEXTES.blocageMessages[0].type);
+    await sl(350);addBub(TEXTES.blocageMessages[1].t,TEXTES.blocageMessages[1].type);
+    await sl(300);addBub(TEXTES.blocageMessages[2].t,TEXTES.blocageMessages[2].type);
     endGame('block');return;
   }
 
@@ -308,45 +215,61 @@ async function pick(choice){
   await showNextStep();
 }
 
+function buildIgCard(ig){
+  return '<div class="igcard">'+ig.label+'<br>'
+    +'<span style="color:#888;font-size:10.5px;">'+ig.compteLabel+'</span> <span class="igusr">'+ig.compte+'</span><br>'
+    +'<span style="color:#888;font-size:10.5px;">'+ig.mdpLabel+'</span> <span class="igpwd">'+ig.mdp+'</span>'
+    +'<div class="igwarn">'+ig.warn+'</div></div>';
+}
+
 function buildRevCards(){
-  var h='<div style="color:#4dcc70;font-size:10px;font-weight:700;margin-bottom:6px;letter-spacing:.04em;border-bottom:0.5px solid #1a4a1a;padding-bottom:5px;">📋 CE QUE TU AS APPRIS SUR CLARA</div>';
+  var h='<div style="color:#4dcc70;font-size:10px;font-weight:700;margin-bottom:6px;letter-spacing:.04em;border-bottom:0.5px solid #1a4a1a;padding-bottom:5px;">'+TEXTES.revelationsHeader+'</div>';
   REVELATIONS.forEach(function(r){
     h+='<div class="revcard"><div class="revcard-head"><span class="revcard-icon">'+r.icon+'</span><span class="revcard-title">'+r.title+'</span></div><div class="revcard-txt">'+r.txt+'</div></div>';
   });
   return h;
 }
 
+function buildDialogue(lines){
+  var h='';
+  lines.forEach(function(l){
+    h+=(l.gap?'<br>':'')
+      +'<span style="color:#555">'+l.who+' :</span> '
+      +l.t.replace(/\n/g,'<br>')+'<br>';
+  });
+  return h;
+}
+
 function endGame(type){
   var html='';
+  var F=TEXTES.fins;
   if(type==='imm'){
-    html='<div style="color:#555;font-size:10.5px;font-weight:600;margin-bottom:7px;">Fin immédiate</div><div style="color:#555;font-size:12px;">(fin de la conversation)</div>';
+    html='<div style="color:#555;font-size:10.5px;font-weight:600;margin-bottom:7px;">'+F.imm.titre+'</div>'
+      +'<div style="color:#555;font-size:12px;">'+F.imm.corps+'</div>';
   }else if(type==='block'){
-    html='<div style="color:#ff453a;font-size:10.5px;font-weight:600;margin-bottom:7px;">🔴 Confiance brisée</div>'
-      +'<div style="color:#e5e5ea;font-size:12px;line-height:1.65;"><span style="color:#555">Inès :</span> Je t\'avais prévenu.<br><span style="color:#555">(elle te bloque)</span></div>';
-  }else if(good>=3){
-    html='<div style="color:#30d158;font-size:10.5px;font-weight:600;margin-bottom:6px;">🟢 Inès te fait confiance</div>'
-      +buildRevCards()
-      +'<div style="color:#e5e5ea;font-size:12px;line-height:1.65;margin-top:8px;">'
-      +'<span style="color:#555">Inès :</span> …Tu promets de faire attention à ce que tu lis ?<br>'
-      +'<span style="color:#555">Léo :</span> Je promets.<br>'
-      +'<span style="color:#555">Inès :</span> Et tu me dis si tu trouves quelque chose.<br><br>'
-      +'<span style="color:#555">Inès :</span> Elle me l\'avait donné au cas où. Tu l\'utilises, t\'en parles à personne.'
-      +'<div class="igcard">📱 Instagram de Clara<br><span style="color:#888;font-size:10.5px;">compte :</span> <span class="igusr">@clara.fontaine</span><br><span style="color:#888;font-size:10.5px;">mdp :</span> <span class="igpwd">nuit_rouge17</span><div class="igwarn">⚠ C\'est sa vie privée. Respecte-la.</div></div></div>';
-  }else if(good===2){
-    html='<div style="color:#ff9f0a;font-size:10.5px;font-weight:600;margin-bottom:6px;">🟡 Succès fragile</div>'
-      +buildRevCards()
-      +'<div style="color:#e5e5ea;font-size:12px;line-height:1.65;margin-top:8px;">'
-      +'<span style="color:#555">Inès :</span> Je sais vraiment pas si je fais bien…<br>'
-      +'Tu me promets de faire attention ?<br>'
-      +'<span style="color:#555">Léo :</span> Oui.<br>'
-      +'<div class="igcard">📱 Instagram de Clara<br><span style="color:#888;font-size:10.5px;">compte :</span> <span class="igusr">@clara.fontaine</span><br><span style="color:#888;font-size:10.5px;">mdp :</span> <span class="igpwd">nuit_rouge17</span><div class="igwarn">⚠ Sois prudent.</div></div></div>';
-  }else{
-    html='<div style="color:#ff453a;font-size:10.5px;font-weight:600;margin-bottom:6px;">🔴 Échec</div>'
+    html='<div style="color:#ff453a;font-size:10.5px;font-weight:600;margin-bottom:7px;">'+F.blocage.titre+'</div>'
       +'<div style="color:#e5e5ea;font-size:12px;line-height:1.65;">'
-      +'<span style="color:#555">Inès :</span> Non.<br>Arrête de fouiller.<br>C\'est pas tes affaires.<br><br>'
-      +'<span style="color:#555">(elle ne répond plus)</span></div>';
+      +'<span style="color:#555">'+TEXTES.contact.name+' :</span> '+F.blocage.ines+'<br>'
+      +'<span style="color:#555">'+F.blocage.sys+'</span></div>';
+  }else if(good>=3){
+    html='<div style="color:#30d158;font-size:10.5px;font-weight:600;margin-bottom:6px;">'+F.succes.titre+'</div>'
+      +buildRevCards()
+      +'<div style="color:#e5e5ea;font-size:12px;line-height:1.65;margin-top:8px;">'
+      +buildDialogue(F.succes.dialogue)
+      +buildIgCard(F.succes.ig)+'</div>';
+  }else if(good===2){
+    html='<div style="color:#ff9f0a;font-size:10.5px;font-weight:600;margin-bottom:6px;">'+F.fragile.titre+'</div>'
+      +buildRevCards()
+      +'<div style="color:#e5e5ea;font-size:12px;line-height:1.65;margin-top:8px;">'
+      +buildDialogue(F.fragile.dialogue)
+      +buildIgCard(F.fragile.ig)+'</div>';
+  }else{
+    html='<div style="color:#ff453a;font-size:10.5px;font-weight:600;margin-bottom:6px;">'+F.echec.titre+'</div>'
+      +'<div style="color:#e5e5ea;font-size:12px;line-height:1.65;">'
+      +'<span style="color:#555">'+TEXTES.contact.name+' :</span> '+F.echec.ines.replace(/\n/g,'<br>')+'<br><br>'
+      +'<span style="color:#555">'+F.echec.sys+'</span></div>';
   }
-  html+='<button class="rb" onclick="startGame()">↺ Recommencer</button>';
+  html+='<button class="rb" onclick="startGame()">'+TEXTES.restartBtn+'</button>';
   ca.innerHTML='<div class="ea">'+html+'</div>';
 }
 
@@ -354,21 +277,23 @@ async function startGame(){
   trust=0;good=0;step=0;crisisUsed=false;phase='story';busy=false;tyEl=null;
   ma.innerHTML='';ca.innerHTML='<div class="chint">…</div>';
   tf.style.width='50%';tf.style.background='#ff9f0a';
-  tlb.textContent="elle hésite";tlb.style.color='#ff9f0a';
+  tlb.textContent=TEXTES.trustInitial;tlb.style.color='#ff9f0a';
   tdl.style.opacity='0';
-  document.getElementById('st').textContent='en ligne';
+  document.getElementById('st').textContent=TEXTES.contact.statusOnline;
+
+  var O=TEXTES.ouverture;
   await sl(500);
-  addBub("Hey… Inès ?",'s');
+  addBub(O[0].t,O[0].type);
   showTy();await sl(700);hideTy();
-  addBub("Oui, c’est qui ?",'r');
+  addBub(O[1].t,O[1].type);
   await sl(300);
-  addBub("C’est Léo. Un ami de Clara.",'s');
+  addBub(O[2].t,O[2].type);
   showTy();await sl(1100);hideTy();
-  addBub("Léo… (pause) On s’est jamais vraiment parlé.",'r');
+  addBub(O[3].t,O[3].type);
   await sl(320);
-  addBub("Je sais. Mais Clara a disparu. J’arrive plus à la joindre.",'s');
+  addBub(O[4].t,O[4].type);
   showTy();await sl(900);hideTy();
-  addBub("…Pourquoi tu m’appelles, moi ?",'r');
+  addBub(O[5].t,O[5].type);
   await sl(350);
   showChoices(G[0].c,false);
   busy=false;

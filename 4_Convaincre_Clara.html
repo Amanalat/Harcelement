@@ -363,17 +363,19 @@ const SCENES = [
     pdotCount:4, pdotActive:3,
     dialogueBefore:[
       {spk:'lea', txt:'Ça fait trois semaines que je suis ici…\nAu début, je n\'arrivais même pas à sortir de la chambre.\nMaintenant… ça va un peu mieux. Mais j\'ai encore peur.\nPeur de retourner au lycée. Peur que ça recommence. Peur que rien ne change.'},
+      {spk:'thomas', txt:'Tu en as parlé à ta tante ? À tes parents ?'},
+      {spk:'lea', txt:'Ma tante sait un peu… Elle est gentille. Mais je veux pas les inquiéter.\nJ\'ai l\'impression que si j\'en parle vraiment… ça devient réel.'},
     ],
-    prompt:'Dernière réponse — la plus importante.',
+    prompt:'Que lui dire ?',
     choices:[
-      { emp:2, txt:'« Je ne te promets pas que ce sera facile. Mais je te promets que tu n\'affronteras plus ça seule. À chaque étape, je serai là — vraiment là. »',
-        fb:{type:'good', msg:'Honnête et solide. Pas de fausse promesse, juste une présence réelle.'},
-        reply:{spk:'lea', txt:'(voix tremblante, puis stable) …D\'accord. Je veux bien essayer.'}},
-      { emp:1, txt:'« Je vais parler aux profs, à la direction. Ça ne peut pas rester comme ça. »',
-        fb:{type:'ok', msg:'Concret. Mais elle a surtout besoin de savoir qu\'elle n\'est plus seule.'},
-        reply:{spk:'lea', txt:'(hésitante) D\'accord… si tu penses que ça peut aider.'}},
-      { emp:0, txt:'« T\'inquiète, je vais régler ça. Ces gens vont avoir des problèmes. »',
-        fb:{type:'bad', msg:'Cela sonne comme de la colère, pas de la présence. Elle a peur que ça empire.'},
+      { emp:2, txt:'« C\'est déjà réel, Clara. Et justement parce que c\'est réel, tu as besoin d\'adultes qui peuvent agir — le CPE, un psy scolaire, tes parents. Pas pour tout régler d\'un coup. Juste pour ne plus porter ça seule. »',
+        fb:{type:'good', msg:'Tu lui montres que chercher de l\'aide adulte, c\'est un acte de courage — pas une faiblesse.'},
+        reply:{spk:'lea', txt:'(silence) …Peut-être. Ma tante m\'a proposé d\'appeler le lycée.\nJ\'avais dit non. Mais là… peut-être que oui.'}},
+      { emp:1, txt:'« Tu n\'as pas à régler ça toute seule. Si tu veux, je peux être là quand tu en parles à quelqu\'un — n\'importe quel adulte de confiance. »',
+        fb:{type:'ok', msg:'Solidaire. Mais c\'est à elle de faire le premier pas — tu le lui rappelles bien.'},
+        reply:{spk:'lea', txt:'(hésitante) …D\'accord. Je vais y réfléchir.'}},
+      { emp:0, txt:'« T\'inquiète, je vais régler ça moi-même. Ces gens vont avoir des problèmes. »',
+        fb:{type:'bad', msg:'Tu prends tout sur toi. Ce n\'est pas ton rôle — et elle sait que ça risque d\'empirer.'},
         reply:{spk:'lea', txt:'(froid) Non… s\'il te plaît, fais rien. Ça va juste empirer.'}},
     ]
   },
@@ -617,21 +619,28 @@ function nextStep(){
 }
 
 // ═══ ENDING ═══
+const RESOURCES_HTML = `<div style="margin-top:18px;border-top:1px solid rgba(255,255,255,.06);padding-top:14px;font-family:'Jost',sans-serif;font-size:11px;color:rgba(255,255,255,.25);line-height:1.8;text-align:left;">
+  <div style="color:rgba(255,255,255,.4);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:9px;margin-bottom:6px;">Ressources</div>
+  <div><span style="color:rgba(255,255,255,.45);">3018</span> — Net Écoute · cyberharcèlement (gratuit, anonyme)</div>
+  <div><span style="color:rgba(255,255,255,.45);">3114</span> — Numéro national de prévention du suicide</div>
+  <div><span style="color:rgba(255,255,255,.45);">e-enfance.org</span> — conseils et signalement en ligne</div>
+</div>`;
+
 function showEnding(){
   const s=empathy;
   let icon,titleTxt,cls,body,quote;
 
   if(s>=13){
-    icon='🌿'; cls='good'; titleTxt='Ensemble.';
-    body='Tu as su trouver les mots justes à chaque instant.\nNi trop forts, ni trop légers — juste présents.\n\nLa tante t\'a fait confiance. Clara a raccroché avec quelque chose qu\'elle n\'avait plus depuis des semaines : l\'espoir de ne plus être seule.';
-    quote='« Merci de ne pas m\'avoir oubliée. »\n— Clara';
+    icon='🌿'; cls='good'; titleTxt='Clara va demander de l\'aide.';
+    body='Tu as su trouver les mots justes à chaque instant.\nNi trop forts, ni trop légers — juste présents.\n\nLa tante t\'a fait confiance. Clara a raccroché avec une décision concrète : parler à un adulte de confiance, et ne plus porter ça seule.\n\nTon rôle n\'était pas de la sauver. C\'était de lui montrer que demander de l\'aide, c\'est possible.';
+    quote='« Je vais en parler à ma tante. Vraiment parler. »\n— Clara';
   } else if(s>=7){
-    icon='🕯️'; cls='ok'; titleTxt='Un espoir fragile.';
-    body='Tu as montré de la bonne volonté, même si certaines réponses manquaient de profondeur.\n\nClara a accepté de parler, hésitante. La confiance se reconstruit lentement. Continue d\'être là — vraiment là.';
-    quote='« Je veux bien essayer… »\n— Clara';
+    icon='🕯️'; cls='ok'; titleTxt='Un premier pas.';
+    body='Tu as montré de la bonne volonté, même si certaines réponses manquaient de profondeur.\n\nClara hésite encore — mais elle envisage d\'en parler à un adulte. Le chemin est long.\n\nTon rôle était de lui montrer que ce n\'est pas à elle seule de tout porter.';
+    quote='« Peut-être que je vais essayer… »\n— Clara';
   } else {
     icon='🌧️'; cls='bad'; titleTxt='La distance reste.';
-    body='Tu voulais bien faire, mais tes mots ont parfois sonné comme des reproches ou de l\'impatience.\n\nClara reste fermée. Elle a besoin de temps — et de quelqu\'un qui écoute vraiment avant de parler.';
+    body='Tu voulais bien faire, mais tes mots ont parfois sonné comme des reproches ou de l\'impatience.\n\nClara reste fermée. Elle a besoin de temps — et de quelqu\'un qui écoute vraiment avant d\'agir.';
     quote='« J\'avais juste besoin que tu m\'écoutes. »\n— Clara';
   }
 
@@ -640,7 +649,7 @@ function showEnding(){
   document.getElementById('end-title').className='end-title '+cls;
   document.getElementById('end-body').textContent=body;
   document.getElementById('end-quote').textContent=quote;
-  document.getElementById('end-score').innerHTML=`Score d'empathie : <span>${s} / ${MAX_EMP}</span>`;
+  document.getElementById('end-score').innerHTML=`Score d'empathie : <span>${s} / ${MAX_EMP}</span>${RESOURCES_HTML}`;
   switchScreen('end');
 }
 </script>

@@ -17,6 +17,7 @@
 .bb.r{background:#1c1c1e;color:#e5e5ea;align-self:flex-start;border-bottom-left-radius:3px;}
 .bb.sy{align-self:center;background:transparent;color:#444;font-size:10.5px;font-style:italic;padding:3px 6px;}
 .bb.cr{background:#2c1a1a;color:#ff9f9f;align-self:flex-start;border-bottom-left-radius:3px;border:0.5px solid #5a2020;}
+.bb.ed{background:#0d1a0d;color:#4dcc70;align-self:stretch;border:0.5px solid #1a4a1a;font-size:10px;font-style:italic;padding:6px 9px;border-radius:8px;line-height:1.5;max-width:100%;}
 @keyframes pop{from{transform:scale(.87);opacity:0}to{transform:scale(1);opacity:1}}
 .tyi{display:flex;gap:3px;padding:6px 10px;background:#1c1c1e;border-radius:17px;width:fit-content;border-bottom-left-radius:3px;animation:pop .2s;}
 .tyi span{width:5px;height:5px;background:#555;border-radius:50%;animation:td 1.2s infinite;}
@@ -42,6 +43,11 @@
 .igusr{color:#c4a5ff;font-weight:600;}
 .igpwd{color:#7b7fff;letter-spacing:.5px;}
 .igwarn{color:#ff453a;font-size:10.5px;margin-top:4px;}
+.revcard{background:#0a150a;border:0.5px solid #1a3a1a;border-radius:8px;padding:7px 9px;margin:4px 0;}
+.revcard-head{display:flex;align-items:center;gap:5px;margin-bottom:2px;}
+.revcard-icon{font-size:12px;}
+.revcard-title{color:#4dcc70;font-weight:600;font-size:10px;}
+.revcard-txt{color:#666;font-size:10px;line-height:1.4;}
 </style>
 
 <div class="pw"><div class="ph">
@@ -77,40 +83,92 @@ var trust=0,good=0,step=0,crisisUsed=false,phase='story',busy=false,tyEl=null;
 var ma=document.getElementById('ma'),ca=document.getElementById('ca');
 var tf=document.getElementById('tf'),tlb=document.getElementById('tlb'),tdl=document.getElementById('tdl');
 
-// STEP 0 — Pourquoi tu t'en mêles ?
-// A +1 : raison concrète centrée sur Clara (disparition réelle) → Inès entend que c'est sérieux
-// B -1 : met Inès en position d'accusée "t'as forcément des infos" → elle se ferme
-// C  0 : vague, rien à quoi s'accrocher, elle reste méfiante mais pas hostile
+var REVELATIONS=[
+  {icon:'💬',title:'Groupe de moqueries en ligne',txt:'Des élèves ont créé un groupe secret pour se moquer de Clara collectivement. Elle l\'a appris par une capture d\'écran.'},
+  {icon:'👻',title:'Harcèlement anonyme, la nuit',txt:'Des comptes sans identité l\'harcelaient chez elle, la nuit. Ne pas pouvoir identifier l\'agresseur rendait l\'angoisse permanente.'},
+  {icon:'📊',title:'Sondage d\'humiliation publique',txt:'Un sondage la ciblant directement a circulé dans toute la classe. Clara l\'a vu. Elle a fini par intégrer ce regard comme une vérité sur elle-même.'}
+];
+
+// STEP 0 — Premier contact : pourquoi Léo appelle
+// A +1 : raison concrète centrée sur Clara → Inès comprend que c'est sérieux
+// B -1 : accuse Inès d'emblée → elle se ferme
+// C  0 : vague, elle reste méfiante mais neutre
 var G=[
   {c:[
-    {l:'A',t:"Parce qu'elle a disparu et que personne réagit.",e:1},
+    {l:'A',t:"Parce qu'elle a disparu et que personne ne réagit.",e:1},
     {l:'B',t:"T'es sa meilleure amie, t'as forcément des infos.",e:-1},
     {l:'C',t:"Je suis inquiet, c'est tout.",e:0}
   ]},
-  // STEP 1 — Pourquoi toi d'un coup ?
-  // A  0 : excuse honnête mais centrée sur soi, pas sur Clara → Inès s'en fiche un peu
-  // B -1 : accusation directe, elle se sent suspectée alors qu'elle cache par loyauté
-  // C +1 : montre qu'il mesure la gravité → elle sent qu'il peut comprendre
-  {intro:["Pourquoi tu t'en mêles, toi ? Je te connais même pas."],c:[
-    {l:'A',t:"Parce que personne d'autre ne fait rien.",e:0},
-    {l:'B',t:"Parce que toi, t'as l'air de cacher quelque chose.",e:-1},
-    {l:'C',t:"Parce que je pense que c'est plus grave que ce qu'on croit.",e:1}
+
+  // STEP 1 — Le groupe de moqueries
+  // Inès révèle : un groupe de classe créé pour ridiculiser Clara
+  // A +1 : nomme la réalité du harcèlement collectif → Inès sent qu'il comprend
+  // B -1 : réaction de vengeance, pas d'empathie → Inès se méfie
+  // C  0 : minimise involontairement → elle reste froide
+  {intro:[
+    "Pourquoi tu t'en mêles, toi ? Je te connais même pas.",
+    "…",
+    "(voix plus basse) Des gens de la classe ont créé un groupe. Pour parler d'elle. En se moquant.",
+    "Elle l'a su par hasard. Quelqu'un lui a envoyé une capture."
+  ],
+  edu:"💡 Le cyberharcèlement en groupe : quand une communauté en ligne cible une personne, l'humiliation devient collective. La victime se retrouve seule face à tous, sans pouvoir se défendre.",
+  c:[
+    {l:'A',t:"C'est du harcèlement en groupe. Elle a dû se sentir complètement seule face à tout ça.",e:1},
+    {l:'B',t:"Qui a fait ça ? Donne-moi les noms.",e:-1},
+    {l:'C',t:"Ça arrive souvent ce genre de trucs…",e:0}
   ]},
-  // STEP 2 — C'est compliqué
-  // A +1 : invite à parler sans pression → elle se sent entendue, pas forcée
-  // B -1 : menace voilée "ça va empirer" → lui met la pression, elle se braque
-  // C  0/imm : abandonne → elle pense qu'il n'est pas vraiment là pour aider
-  {intro:["…Tu réalises même pas ce qu'elle a traversé.","C'est pas simple."],c:[
-    {l:'A',t:"Alors explique-moi, je veux vraiment aider.",e:1},
-    {l:'B',t:"Si tu dis rien, ça va empirer.",e:-1},
-    {l:'C',t:"Ok, laisse tomber.",e:0,end:'imm'}
+
+  // STEP 2 — Les messages anonymes nocturnes
+  // Inès révèle : des comptes sans identité l'harcelaient chez elle, la nuit
+  // A +1 : comprend l'angoisse spécifique de l'anonymat → Inès se sent entendue
+  // B -1 : conseil non demandé qui ressemble à un reproche → elle se braque
+  // C  0 : réaction sincère mais passive → ne fait pas avancer la confiance
+  {intro:[
+    "C'était pas que ça.",
+    "(silence) Elle recevait des messages la nuit. Des comptes sans nom, sans visage.",
+    "Elle savait pas qui c'était. Elle pouvait pas se défendre.",
+    "Elle éteignait son téléphone… mais après elle avait peur de le rallumer."
+  ],
+  edu:"💡 L'anonymat amplifie le harcèlement : sans visage, sans identité, la victime ne sait pas d'où vient l'attaque. Le refuge chez soi n'existe plus — l'angoisse est constante.",
+  c:[
+    {l:'A',t:"Ne pas savoir qui envoie ces messages, c'est encore plus difficile à supporter.",e:1},
+    {l:'B',t:"Elle aurait pu désactiver ses réseaux.",e:-1},
+    {l:'C',t:"C'est grave. Elle en a parlé à quelqu'un ?",e:0}
   ]},
-  // STEP 3 — Inès dit que les réponses sont sur l'Instagram de Clara
-  // Elle précise que c'est pas à elle d'en parler — c'est la vie privée de Clara
-  // A +1 : respecte ça, demande juste l'accès au compte Clara lui avait laissé
+
+  // STEP 3 — Le sondage d'humiliation
+  // Inès révèle : un sondage humiliant partagé dans toute la classe
+  // A +1 : nomme l'impact sur l'image de soi → Inès réalise qu'il comprend vraiment
+  // B  0 : réaction correcte mais centrée sur l'action externe, pas sur Clara
+  // C  0 : vrai mais superficiel, ne montre pas de compréhension des mécanismes
+  {intro:[
+    "(longue pause)",
+    "…Il y a eu un sondage. Partagé dans toute la classe.",
+    "« Clara est-elle la personne la plus nulle du collège ? »",
+    "Les gens ont voté. Publiquement.",
+    "Elle l'a vu."
+  ],
+  edu:"💡 Le vote d'humiliation : transformer une personne en objet d'un jugement public collectif. Avec le temps, la victime finit par intégrer ce regard comme une vérité sur elle-même.",
+  c:[
+    {l:'A',t:"Une humiliation publique comme ça, ça touche à l'image qu'on a de soi. Elle a dû finir par y croire.",e:1},
+    {l:'B',t:"C'est illégal. Il faut le signaler à l'école.",e:0},
+    {l:'C',t:"Les gens peuvent être vraiment cruels.",e:0}
+  ]},
+
+  // STEP 4 — Pourquoi elle est partie + accès Instagram
+  // Inès explique que Clara ne pouvait plus y échapper nulle part
+  // A +1 : respecte la vie privée de Clara → Inès lui fait confiance
   // B -1 : "peu importe comment" = prêt à violer la vie privée → Inès recule
-  // C  0 : trop passif, elle voit que Léo abandonne la responsabilité sur elle
-  {intro:["…(longtemps sans répondre)","Elle a souffert. Vraiment. Depuis un moment.","C'est pas à moi de tout te raconter.","Mais… il y a peut-être un indice sur son Instagram.","Un endroit mentionné, un message… je sais pas. Quelque chose qui pourrait aider à savoir où elle est.","Clara me l'avait donné au cas où. Mais je sais pas si je devrais te le donner."],c:[
+  // C  0 : passif, lui laisse toute la responsabilité → elle hésite mais cède
+  {intro:[
+    "(longtemps sans répondre)",
+    "Elle pouvait plus y échapper. Ni au collège. Ni chez elle.",
+    "Son téléphone était devenu une source de peur.",
+    "(silence) C'est pas à moi de tout te raconter.",
+    "Mais… il y a peut-être des choses sur son Instagram. Un message, une photo, un endroit mentionné.",
+    "Clara me l'avait donné au cas où. Mais je sais pas si je devrais te le donner."
+  ],
+  c:[
     {l:'A',t:"Je comprends que c'est sa vie privée. T'as le droit de pas me le donner.",e:1},
     {l:'B',t:"Donne-le moi, je trouverai ce qu'il faut peu importe comment.",e:-1},
     {l:'C',t:"C'est toi qui décides. Moi je veux juste la retrouver.",e:0}
@@ -120,9 +178,6 @@ var G=[
 var CRISIS={
   intro:["…","Attends.","T'es là pour quoi exactement ?","J'ai pas confiance en toi."],
   c:[
-    // A +2 : reconnaît qu'il n'a aucun droit de l'exiger → désamorce, sincère
-    // B  0 : lui laisse la main → stoppe la chute sans reconstruire
-    // C -1 : exige confiance sans l'avoir méritée → aggrave
     {l:'A',t:"T'as aucune raison de me faire confiance. Je te demande rien, je veux juste que Clara aille bien.",e:2},
     {l:'B',t:"Ok. Je te force à rien. On peut en rester là si tu veux.",e:0},
     {l:'C',t:"Mais fais-moi confiance, j'essaie juste d'aider !",e:-1}
@@ -144,7 +199,7 @@ function showTy(){
   tyEl.innerHTML='<span></span><span></span><span></span>';
   ma.appendChild(tyEl);
   ma.scrollTop=ma.scrollHeight;
-  document.getElementById('st').textContent='écrit\u2026';
+  document.getElementById('st').textContent='écrit…';
 }
 function hideTy(){
   if(tyEl){tyEl.remove();tyEl=null;}
@@ -176,6 +231,7 @@ function showChoices(arr,isCr){
     ca.appendChild(b);
   });
 }
+
 async function showNextStep(){
   await sl(430);
   var ns=G[step];
@@ -191,10 +247,16 @@ async function showNextStep(){
       addBub(ns.intro[i],ns.intro[i].startsWith('(')? 'sy':'r');
     }
     await sl(350);
+    if(ns.edu){
+      await sl(500);
+      addBub(ns.edu,'ed');
+      await sl(700);
+    }
   }
   showChoices(ns.c,false);
   busy=false;
 }
+
 async function pick(choice){
   if(busy)return;
   busy=true;
@@ -204,8 +266,8 @@ async function pick(choice){
   if(choice.end==='imm'){
     ca.innerHTML='';
     await sl(600);showTy();await sl(900);hideTy();
-    addBub('\u2026ok','r');
-    await sl(350);addBub('vu \u2714\ufe0f','sy');
+    addBub('…ok','r');
+    await sl(350);addBub('vu ✔️','sy');
     endGame('imm');return;
   }
 
@@ -246,25 +308,34 @@ async function pick(choice){
   await showNextStep();
 }
 
+function buildRevCards(){
+  var h='<div style="color:#4dcc70;font-size:10px;font-weight:700;margin-bottom:6px;letter-spacing:.04em;border-bottom:0.5px solid #1a4a1a;padding-bottom:5px;">📋 CE QUE TU AS APPRIS SUR CLARA</div>';
+  REVELATIONS.forEach(function(r){
+    h+='<div class="revcard"><div class="revcard-head"><span class="revcard-icon">'+r.icon+'</span><span class="revcard-title">'+r.title+'</span></div><div class="revcard-txt">'+r.txt+'</div></div>';
+  });
+  return h;
+}
+
 function endGame(type){
   var html='';
   if(type==='imm'){
-    html='<div style="color:#555;font-size:10.5px;font-weight:600;margin-bottom:7px;">\ud83d\udc80 Fin immédiate</div><div style="color:#555;font-size:12px;">(fin de la conversation)</div>';
+    html='<div style="color:#555;font-size:10.5px;font-weight:600;margin-bottom:7px;">Fin immédiate</div><div style="color:#555;font-size:12px;">(fin de la conversation)</div>';
   }else if(type==='block'){
     html='<div style="color:#ff453a;font-size:10.5px;font-weight:600;margin-bottom:7px;">🔴 Confiance brisée</div>'
       +'<div style="color:#e5e5ea;font-size:12px;line-height:1.65;"><span style="color:#555">Inès :</span> Je t\'avais prévenu.<br><span style="color:#555">(elle te bloque)</span></div>';
   }else if(good>=3){
     html='<div style="color:#30d158;font-size:10.5px;font-weight:600;margin-bottom:6px;">🟢 Inès te fait confiance</div>'
-      +'<div style="color:#e5e5ea;font-size:12px;line-height:1.65;">'
+      +buildRevCards()
+      +'<div style="color:#e5e5ea;font-size:12px;line-height:1.65;margin-top:8px;">'
       +'<span style="color:#555">Inès :</span> …Tu promets de faire attention à ce que tu lis ?<br>'
       +'<span style="color:#555">Léo :</span> Je promets.<br>'
-      +'<span style="color:#555">Inès :</span> Et tu me dis si tu trouves quelque chose.<br>'
-      +'<span style="color:#555">Léo :</span> Oui.<br><br>'
-      +'<span style="color:#555">Inès :</span> …Elle me l\'avait donné au cas où. Tu l\'utilises, t\'en parles à personne.<br>Et cherche bien — il y a peut-être quelque chose qui indique où elle est.'
+      +'<span style="color:#555">Inès :</span> Et tu me dis si tu trouves quelque chose.<br><br>'
+      +'<span style="color:#555">Inès :</span> Elle me l\'avait donné au cas où. Tu l\'utilises, t\'en parles à personne.'
       +'<div class="igcard">📱 Instagram de Clara<br><span style="color:#888;font-size:10.5px;">compte :</span> <span class="igusr">@clara.fontaine</span><br><span style="color:#888;font-size:10.5px;">mdp :</span> <span class="igpwd">nuit_rouge17</span><div class="igwarn">⚠ C\'est sa vie privée. Respecte-la.</div></div></div>';
   }else if(good===2){
     html='<div style="color:#ff9f0a;font-size:10.5px;font-weight:600;margin-bottom:6px;">🟡 Succès fragile</div>'
-      +'<div style="color:#e5e5ea;font-size:12px;line-height:1.65;">'
+      +buildRevCards()
+      +'<div style="color:#e5e5ea;font-size:12px;line-height:1.65;margin-top:8px;">'
       +'<span style="color:#555">Inès :</span> Je sais vraiment pas si je fais bien…<br>'
       +'Tu me promets de faire attention ?<br>'
       +'<span style="color:#555">Léo :</span> Oui.<br>'
@@ -275,29 +346,29 @@ function endGame(type){
       +'<span style="color:#555">Inès :</span> Non.<br>Arrête de fouiller.<br>C\'est pas tes affaires.<br><br>'
       +'<span style="color:#555">(elle ne répond plus)</span></div>';
   }
-  html+='<button class="rb" onclick="startGame()">\u21ba Recommencer</button>';
+  html+='<button class="rb" onclick="startGame()">↺ Recommencer</button>';
   ca.innerHTML='<div class="ea">'+html+'</div>';
 }
 
 async function startGame(){
   trust=0;good=0;step=0;crisisUsed=false;phase='story';busy=false;tyEl=null;
-  ma.innerHTML='';ca.innerHTML='<div class="chint">\u2026</div>';
+  ma.innerHTML='';ca.innerHTML='<div class="chint">…</div>';
   tf.style.width='50%';tf.style.background='#ff9f0a';
   tlb.textContent="elle hésite";tlb.style.color='#ff9f0a';
   tdl.style.opacity='0';
   document.getElementById('st').textContent='en ligne';
   await sl(500);
-  addBub("Hey\u2026 In\u00e8s ?",'s');
+  addBub("Hey… Inès ?",'s');
   showTy();await sl(700);hideTy();
-  addBub("Oui, c\u2019est qui ?",'r');
+  addBub("Oui, c’est qui ?",'r');
   await sl(300);
-  addBub("C\u2019est L\u00e9o. Un ami de Clara.",'s');
+  addBub("C’est Léo. Un ami de Clara.",'s');
   showTy();await sl(1100);hideTy();
-  addBub("L\u00e9o\u2026 (pause) On s\u2019est jamais vraiment parl\u00e9.",'r');
+  addBub("Léo… (pause) On s’est jamais vraiment parlé.",'r');
   await sl(320);
-  addBub("Je sais. Mais Clara a disparu. J\u2019arrive plus \u00e0 la joindre.",'s');
+  addBub("Je sais. Mais Clara a disparu. J’arrive plus à la joindre.",'s');
   showTy();await sl(900);hideTy();
-  addBub("\u2026Pourquoi tu m\u2019appelles, moi ?",'r');
+  addBub("…Pourquoi tu m’appelles, moi ?",'r');
   await sl(350);
   showChoices(G[0].c,false);
   busy=false;

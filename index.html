@@ -108,7 +108,7 @@ body::before{
   z-index:1;
 }
 
-@media(max-width:560px){
+@media(max-width:380px){
   .grid{grid-template-columns:1fr;}
 }
 
@@ -228,6 +228,72 @@ body::before{
 
 .card:hover .card-arrow svg{transform:translateX(3px);}
 
+/* ── CARD PREVIEWS ── */
+.card-preview{
+  position:relative;height:148px;
+  margin:-2rem -1.6rem 1.5rem;
+  flex-shrink:0;background:#0a0c14;overflow:hidden;
+}
+
+/* SMS bubbles (carte 1) */
+.prev-sms{
+  position:absolute;inset:0;background:#0a0a0a;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:10px 12px;gap:5px;
+}
+.prev-b{font-size:9px;padding:5px 9px;border-radius:12px;max-width:72%;line-height:1.4;font-family:-apple-system,sans-serif;}
+.prev-b.r{background:#1c1c1e;color:#d4d4d4;align-self:flex-start;border-bottom-left-radius:3px;}
+.prev-b.s{background:#0b84ff;color:#fff;align-self:flex-end;border-bottom-right-radius:3px;}
+.prev-b.sy{font-size:8px;color:#444;align-self:center;background:transparent;font-style:italic;}
+
+/* CTA overlay (carte 1 uniquement) */
+.card-cta{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;
+  background:rgba(7,9,15,.55);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);
+  transition:background .3s;
+}
+.card:hover .card-cta{background:rgba(7,9,15,.32);}
+.cta-label{
+  font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:1.05rem;
+  color:#fff;letter-spacing:.015em;text-shadow:0 1px 8px rgba(0,0,0,.7);
+}
+.cta-btn{
+  font-family:'Jost',sans-serif;font-size:.7rem;font-weight:600;
+  letter-spacing:.13em;text-transform:uppercase;
+  background:var(--blue);color:#fff;
+  padding:5px 16px;border-radius:20px;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 2px 12px rgba(74,144,217,.35);
+}
+.card:hover .cta-btn{transform:scale(1.06);box-shadow:0 4px 18px rgba(74,144,217,.5);}
+
+/* Instagram preview (carte 2) */
+.prev-insta{position:absolute;inset:0;background:#000;overflow:hidden;}
+.prev-ig-hdr{height:38px;background:#121212;border-bottom:0.5px solid #222;display:flex;align-items:center;padding:0 10px;gap:7px;}
+.prev-ig-av{width:22px;height:22px;border-radius:50%;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);flex-shrink:0;}
+.prev-ig-name{font-size:9px;font-weight:600;color:#f5f5f5;font-family:system-ui;}
+.prev-ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;margin-top:1.5px;}
+.prev-ig-cell{aspect-ratio:1;overflow:hidden;}
+.prev-ig-cell img{width:100%;height:100%;object-fit:cover;filter:brightness(.75) saturate(.9);}
+
+/* WhatsApp preview (carte 3) */
+.prev-wa{
+  position:absolute;inset:0;background:#0b141a;
+  display:flex;flex-direction:column;gap:5px;
+  padding:10px 12px;justify-content:flex-end;
+}
+.prev-wa-b{font-size:9px;padding:5px 9px;border-radius:10px;max-width:80%;line-height:1.4;font-family:system-ui;color:#e9edef;background:#202c33;align-self:flex-start;border-top-left-radius:3px;}
+.prev-wa-b .nm{font-size:8px;color:#00a884;display:block;margin-bottom:2px;font-weight:600;}
+
+/* Dialogue preview (carte 4) */
+.prev-dial{
+  position:absolute;inset:0;background:#07090f;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:16px;
+}
+.prev-dl{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:10px;color:rgba(216,208,194,.42);line-height:1.6;text-align:center;}
+.prev-dl.hi{color:rgba(216,208,194,.82);font-size:10.5px;}
+
 .footer{
   margin-top:3rem;
   font-size:.72rem;
@@ -288,8 +354,18 @@ body::before{
 <main class="grid">
 
   <a class="card card-1" href="1_Telephone_Ines.html">
+    <div class="card-preview">
+      <div class="prev-sms">
+        <div class="prev-b r">Elle répond plus à moi non plus.</div>
+        <div class="prev-b s">T'as une idée de ce qui s'est passé&nbsp;?</div>
+        <div class="prev-b sy">Inès écrit…</div>
+      </div>
+      <div class="card-cta">
+        <span class="cta-label">Commencer l'enquête</span>
+        <span class="cta-btn">Partie 1 →</span>
+      </div>
+    </div>
     <span class="card-num">Partie 1</span>
-    <span class="card-icon">📱</span>
     <h2 class="card-title">Le téléphone d'Inès</h2>
     <p class="card-desc">Inès est la meilleure amie de Clara. Parle-lui pour comprendre ce qu'elle sait sur la situation.</p>
     <div class="card-arrow">
@@ -299,8 +375,20 @@ body::before{
   </a>
 
   <a class="card card-2" href="2_Insta_de_Clara.html">
+    <div class="card-preview">
+      <div class="prev-insta">
+        <div class="prev-ig-hdr">
+          <div class="prev-ig-av"></div>
+          <span class="prev-ig-name">@clara.fontaine</span>
+        </div>
+        <div class="prev-ig-grid">
+          <div class="prev-ig-cell"><img src="images_clara/concert.png" alt=""></div>
+          <div class="prev-ig-cell"><img src="images_clara/plage.png" alt=""></div>
+          <div class="prev-ig-cell"><img src="images_clara/fleurs.png" alt=""></div>
+        </div>
+      </div>
+    </div>
     <span class="card-num">Partie 2</span>
-    <span class="card-icon">📸</span>
     <h2 class="card-title">L'Instagram de Clara</h2>
     <p class="card-desc">Observe le compte Instagram de Clara et découvre les traces du harcèlement qu'elle subit en ligne.</p>
     <div class="card-arrow">
@@ -310,8 +398,14 @@ body::before{
   </a>
 
   <a class="card card-3" href="3_WhatsApp_Groupe.html">
+    <div class="card-preview">
+      <div class="prev-wa">
+        <div class="prev-wa-b r"><span class="nm">Mathis</span>t'as vu le post de ce matin 💀</div>
+        <div class="prev-wa-b r"><span class="nm">Léa</span>loool elle est grave</div>
+        <div class="prev-wa-b r"><span class="nm">Mathis</span>quelqu'un lui a répondu&nbsp;???</div>
+      </div>
+    </div>
     <span class="card-num">Partie 3</span>
-    <span class="card-icon">💬</span>
     <h2 class="card-title">Le groupe WhatsApp secret</h2>
     <p class="card-desc">Observe le groupe WhatsApp secret où le harcèlement contre Clara a été organisé.</p>
     <div class="card-arrow">
@@ -321,8 +415,14 @@ body::before{
   </a>
 
   <a class="card card-4" href="4_Convaincre_Clara.html">
+    <div class="card-preview">
+      <div class="prev-dial">
+        <div class="prev-dl">Clara fixe ses mains sans répondre.</div>
+        <div class="prev-dl hi">« Je savais plus à qui faire confiance. »</div>
+        <div class="prev-dl">Il faut trouver les mots justes.</div>
+      </div>
+    </div>
     <span class="card-num">Partie 4</span>
-    <span class="card-icon">🤝</span>
     <h2 class="card-title">Convaincre Clara</h2>
     <p class="card-desc">Clara est sur le point de baisser les bras. Trouve les mots justes pour lui montrer qu'elle n'est pas seule.</p>
     <div class="card-arrow">

@@ -14,7 +14,7 @@ function sl(ms){return new Promise(function(r){setTimeout(r,ms);});}
 function addBub(txt,type){
   var d=document.createElement('div');
   d.className='bb '+type;
-  d.textContent=txt;
+  d.innerHTML=txt.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
   ma.appendChild(d);
   ma.scrollTop=ma.scrollHeight;
 }
@@ -72,11 +72,11 @@ async function showNextStep(){
       addBub(ns.intro[i],ns.intro[i].startsWith('(')? 'sy':'r');
     }
     await sl(350);
-    if(ns.edu){
-      await sl(500);
-      addBub(ns.edu,'ed');
-      await sl(700);
-    }
+  }
+  if(ns.edu){
+    await sl(500);
+    addBub(ns.edu,'ed');
+    await sl(700);
   }
   showChoices(ns.c,false);
   busy=false;
@@ -134,10 +134,31 @@ async function pick(choice){
 }
 
 function buildIgCard(ig){
+  var esc=function(s){return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'");};
   return '<div class="igcard">'+ig.label+'<br>'
-    +'<span style="color:#888;font-size:10.5px;">'+ig.compteLabel+'</span> <span class="igusr">'+ig.compte+'</span><br>'
+    +'<span style="color:#888;font-size:10.5px;">'+ig.compteLabel+'</span> <span class="igusr">'+ig.compte+'</span>'
+    +' <button class="cpbtn" onclick="doCopy(this,\''+esc(ig.compte)+'\')">📋</button><br>'
     +'<span style="color:#888;font-size:10.5px;">'+ig.mdpLabel+'</span> <span class="igpwd">'+ig.mdp+'</span>'
+    +' <button class="cpbtn" onclick="doCopy(this,\''+esc(ig.mdp)+'\')">📋</button>'
     +'<div class="igwarn">'+ig.warn+'</div></div>';
+}
+
+function doCopy(btn,text){
+  var done=function(){
+    var orig=btn.textContent;
+    btn.textContent='✓';btn.classList.add('ok');
+    setTimeout(function(){btn.textContent=orig;btn.classList.remove('ok');},1800);
+  };
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(done).catch(function(){fallbackCopy(text);done();});
+  }else{fallbackCopy(text);done();}
+}
+function fallbackCopy(text){
+  var ta=document.createElement('textarea');
+  ta.value=text;ta.style.cssText='position:fixed;opacity:0;top:0;left:0;';
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');}catch(e){}
+  document.body.removeChild(ta);
 }
 
 function buildRevCards(){
@@ -148,46 +169,78 @@ function buildRevCards(){
   return h;
 }
 
-function buildDialogue(lines){
-  var h='';
-  lines.forEach(function(l){
-    h+=(l.gap?'<br>':'')
-      +'<span style="color:#555">'+l.who+' :</span> '
-      +l.t.replace(/\n/g,'<br>')+'<br>';
-  });
-  return h;
-}
-
 function endGame(type){
   var html='';
   var F=TEXTES.fins;
   if(type==='imm'){
     html='<div style="color:#555;font-size:10.5px;font-weight:600;margin-bottom:7px;">'+F.imm.titre+'</div>'
       +'<div style="color:#555;font-size:12px;">'+F.imm.corps+'</div>';
+    html+='<button class="rb js-restart">'+TEXTES.restartBtn+'</button>';
+    ca.innerHTML='<div class="ea">'+html+'</div>';
   }else if(type==='block'){
     html='<div style="color:#ff453a;font-size:10.5px;font-weight:600;margin-bottom:7px;">'+F.blocage.titre+'</div>'
       +'<div style="color:#e5e5ea;font-size:12px;line-height:1.65;">'
       +'<span style="color:#555">'+TEXTES.contact.name+' :</span> '+F.blocage.ines+'<br>'
       +'<span style="color:#555">'+F.blocage.sys+'</span></div>';
-  }else if(good>=3){
-    html='<div style="color:#30d158;font-size:10.5px;font-weight:600;margin-bottom:6px;">'+F.succes.titre+'</div>'
-      +buildRevCards()
-      +'<div style="color:#e5e5ea;font-size:12px;line-height:1.65;margin-top:8px;">'
-      +buildDialogue(F.succes.dialogue)
-      +buildIgCard(F.succes.ig)+'</div>';
-  }else if(good===2){
-    html='<div style="color:#ff9f0a;font-size:10.5px;font-weight:600;margin-bottom:6px;">'+F.fragile.titre+'</div>'
-      +buildRevCards()
-      +'<div style="color:#e5e5ea;font-size:12px;line-height:1.65;margin-top:8px;">'
-      +buildDialogue(F.fragile.dialogue)
-      +buildIgCard(F.fragile.ig)+'</div>';
+    html+='<button class="rb js-restart">'+TEXTES.restartBtn+'</button>';
+    ca.innerHTML='<div class="ea">'+html+'</div>';
+  }else if(good>=2){
+    finalSuccessPhase(good>=3);
   }else{
     html='<div style="color:#ff453a;font-size:10.5px;font-weight:600;margin-bottom:6px;">'+F.echec.titre+'</div>'
       +'<div style="color:#e5e5ea;font-size:12px;line-height:1.65;">'
       +'<span style="color:#555">'+TEXTES.contact.name+' :</span> '+F.echec.ines.replace(/\n/g,'<br>')+'<br><br>'
       +'<span style="color:#555">'+F.echec.sys+'</span></div>';
+    html+='<button class="rb js-restart">'+TEXTES.restartBtn+'</button>';
+    ca.innerHTML='<div class="ea">'+html+'</div>';
   }
-  html+='<button class="rb js-restart">'+TEXTES.restartBtn+'</button>';
+}
+
+async function finalSuccessPhase(isSuccess){
+  var F=TEXTES.fins;
+  var fin=isSuccess?F.succes:F.fragile;
+  ca.innerHTML='';
+
+  // Phase 1 — Inès demande de promettre d'être prudent
+  await sl(600);showTy();await sl(1000);hideTy();
+  addBub(fin.p1ines,'r');
+  await sl(400);
+  ca.innerHTML='<div class="chint">'+TEXTES.choiceHint+'</div>'
+    +'<button class="cb js-p1"><span class="cl">→</span><span>'+fin.p1leo+'</span></button>';
+  await new Promise(function(r){
+    ca.querySelector('.js-p1').addEventListener('click',function(){addBub(fin.p1leo,'s');r();});
+  });
+  ca.innerHTML='';
+
+  if(isSuccess&&fin.p1suite){
+    await sl(500);showTy();await sl(700);hideTy();
+    addBub(fin.p1suite,'r');
+    await sl(400);
+  }
+
+  // Phase 2 — Inès demande de respecter la vie privée de Clara
+  showTy();await sl(900);hideTy();
+  addBub(fin.p2ines,'r');
+  await sl(400);
+  ca.innerHTML='<div class="chint">'+TEXTES.choiceHint+'</div>'
+    +'<button class="cb js-p2"><span class="cl">→</span><span>'+fin.p2leo+'</span></button>';
+  await new Promise(function(r){
+    ca.querySelector('.js-p2').addEventListener('click',function(){addBub(fin.p2leo,'s');r();});
+  });
+  ca.innerHTML='';
+
+  // Phase 3 — Inès donne les codes
+  await sl(700);showTy();await sl(1200);hideTy();
+  addBub(fin.codesMsg,'r');
+  await sl(600);
+
+  // Phase 4 — Résumé : codes + bilan + navigation
+  var titleColor=isSuccess?'#30d158':'#ff9f0a';
+  var html='<div style="color:'+titleColor+';font-size:10.5px;font-weight:600;margin-bottom:6px;">'+fin.titre+'</div>';
+  html+=buildIgCard(fin.ig);
+  html+='<div style="margin-top:8px;">'+buildRevCards()+'</div>';
+  html+='<a href="2_Insta_de_Clara.html" class="nxbtn">'+fin.nextPartBtn+'</a>';
+  html+='<button class="rb js-restart" style="margin-top:6px;">'+TEXTES.restartBtn+'</button>';
   ca.innerHTML='<div class="ea">'+html+'</div>';
 }
 
@@ -213,6 +266,7 @@ async function startGame(){
   showTy();await sl(900);hideTy();
   addBub(O[5].t,O[5].type);
   await sl(350);
+  if(G[0].edu){await sl(400);addBub(G[0].edu,'ed');await sl(600);}
   showChoices(G[0].c,false);
   busy=false;
 }
@@ -222,4 +276,20 @@ ca.addEventListener('click', function(e){
   if(e.target.closest('.js-restart')) startGame();
 });
 
-startGame();
+try { localStorage.setItem('rc_p1_visited','1'); } catch(e) {}
+
+var intro1El = document.getElementById('intro1');
+if(intro1El){
+  function dismissIntro(){
+    intro1El.style.transition='opacity .9s ease';
+    intro1El.style.opacity='0';
+    intro1El.style.pointerEvents='none';
+    setTimeout(function(){intro1El.style.display='none';startGame();},900);
+  }
+  document.getElementById('intro1-btn').addEventListener('click',function(e){
+    e.stopPropagation();dismissIntro();
+  });
+  intro1El.addEventListener('click',dismissIntro);
+}else{
+  startGame();
+}

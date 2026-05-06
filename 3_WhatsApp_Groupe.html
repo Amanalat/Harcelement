@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simulation – Groupe WhatsApp secret</title>
 <script src="3_WhatsApp_Groupe_textes.js"></script>
 <script src="3_WhatsApp_Groupe_Structure.js" defer></script>
@@ -51,7 +51,7 @@ body {
 
 /* ── PHONE WRAPPER ── */
 #phone {
-  width: 100%; max-width: 390px;
+  width: 100%; max-width: clamp(320px, 100%, 480px);
   min-height: calc(100vh - 44px);
   background: var(--wa-bg);
   display: flex; flex-direction: column;
@@ -494,9 +494,29 @@ body {
   font-size: .85rem; font-weight: 700; cursor: pointer;
 }
 #quiz-continue:hover { background: #2a5fee; }
+.menu-btn{position:fixed;top:14px;left:14px;z-index:10000;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.8);font-family:-apple-system,system-ui,sans-serif;font-size:.72rem;font-weight:500;letter-spacing:.06em;padding:7px 13px;border-radius:20px;text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:color .2s,border-color .2s,background .2s;line-height:1;}
+.menu-btn:hover{color:#fff;border-color:rgba(255,255,255,.35);background:rgba(0,0,0,.85);}
+@keyframes i1slide{to{opacity:1;transform:translateY(0);}}
+@keyframes i1fade{to{opacity:1;}}
+#intro3{position:fixed;inset:0;background:#000;z-index:9999;display:flex;align-items:center;justify-content:center;padding:2rem;cursor:pointer;}
+.i1-inner{max-width:460px;text-align:center;}
+.i1-line{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:300;font-size:clamp(.95rem,2.6vw,1.25rem);color:#c8c0b2;line-height:1.85;margin-bottom:.9rem;opacity:0;transform:translateY(9px);animation:i1slide 1.1s ease forwards;}
+.i1-sep{display:block;width:32px;height:1px;background:rgba(196,134,90,.5);margin:1.4rem auto 1.8rem;}
+.i1-btn{font-family:-apple-system,sans-serif;font-size:.72rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.65);padding:10px 26px;border-radius:24px;cursor:pointer;opacity:0;animation:i1fade .8s ease forwards;transition:color .2s,border-color .2s;}
+.i1-btn:hover{color:#fff;border-color:rgba(255,255,255,.5);}
+.i1-skip{display:block;margin-top:.9rem;font-family:-apple-system,sans-serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#2a2a2a;opacity:0;animation:i1fade .8s ease forwards;}
 </style>
 </head>
 <body>
+
+<div id="intro3">
+  <div class="i1-inner">
+    <p class="i1-line" style="animation-delay:.7s">Je dois lire les messages de ce groupe pour comprendre ce qui a poussé ces élèves à faire autant de mal à mon amie.</p>
+    <span class="i1-sep"></span>
+    <button id="intro3-btn" class="i1-btn" style="animation-delay:3s">Accéder au groupe →</button>
+    <span class="i1-skip" style="animation-delay:3.5s">appuyer pour continuer</span>
+  </div>
+</div>
 
 <!-- Bandeau pédagogique -->
 <div id="banner">
@@ -635,5 +655,20 @@ body {
 
 <!-- ── SCRIPTS ── -->
 
+<a href="index.html" class="menu-btn">← Menu</a>
+<script>
+(function(){
+  var ov=document.getElementById('intro3');
+  if(!ov)return;
+  function dismiss(){
+    ov.style.transition='opacity .9s ease';
+    ov.style.opacity='0';
+    ov.style.pointerEvents='none';
+    setTimeout(function(){ov.style.display='none';},900);
+  }
+  document.getElementById('intro3-btn').addEventListener('click',function(e){e.stopPropagation();dismiss();});
+  ov.addEventListener('click',dismiss);
+})();
+</script>
 </body>
 </html>

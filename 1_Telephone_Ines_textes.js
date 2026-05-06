@@ -78,6 +78,7 @@ var TEXTES = {
 
     // Étape 0 — Pourquoi Léo contacte Inès
     {
+      edu: "Je dois être le plus honnête possible, et le plus sincère — c'est ma seule chance qu'elle m'aide.",
       c: [
         { l: 'A', t: "Parce que t'es son amie. Si quelqu'un sait quelque chose, c'est toi.", e: -1 },
         { l: 'B', t: "Je savais pas à qui d'autre m'adresser.",                              e:  0 },
@@ -90,6 +91,7 @@ var TEXTES = {
       intro: [
         "Tu la connais comment toi, Clara ?"
       ],
+      edu: "Je la connais depuis quelques années. On se croisait souvent à l'école. Il faut que je le lui montre.",
       c: [
         { l: 'A', t: "On se croise souvent. Je l'aimais bien.",                               e:  1 },
         { l: 'B', t: "Pas super bien. Mais j'ai entendu parler d'elle ces derniers temps.",   e: -1 },
@@ -148,6 +150,7 @@ var TEXTES = {
         "Je sais pas si je devrais te raconter tout ça.",
         "Je te connais même pas."
       ],
+      edu: "Elle a raison de se méfier. Je dois la rassurer sans la brusquer.",
       c: [
         { l: 'A', t: "T'es obligée à rien. C'est toi qui décides.",                    e:  1 },
         { l: 'B', t: "Dis-moi juste ce que tu sais.",                                  e: -1 },
@@ -188,13 +191,15 @@ var TEXTES = {
     },
 
     succes: {
-      titre: "🟢 Inès te fait confiance",
-      dialogue: [
-        { who: 'Inès', t: "Tu promets de faire attention à ce que tu lis ?" },
-        { who: 'Léo',  t: "Je promets." },
-        { who: 'Inès', t: "Et tu me dis si tu trouves quelque chose." },
-        { who: 'Inès', t: "Elle me l'avait donné au cas où. Tu l'utilises, t'en parles à personne.", gap: true }
-      ],
+      titre:      "🟢 Inès te fait confiance",
+      p1ines:     "Tu promets de faire attention à ce que tu lis ?",
+      p1leo:      "Je promets.",
+      p1suite:    "Et tu me dis si tu trouves quelque chose.",
+      p2ines:     "Tu promets de respecter la vie privée de Clara ?",
+      p2leo:      "Je le promets.",
+      codesMsg:   "Elle me l'avait donné au cas où. Tu l'utilises, t'en parles à personne.",
+      nextPartBtn:"▶ Voir l'Instagram de Clara",
+      copied:     "✓ Copié !",
       ig: {
         label:       "📱 Instagram de Clara",
         compteLabel: "compte :",
@@ -206,11 +211,14 @@ var TEXTES = {
     },
 
     fragile: {
-      titre: "🟡 Succès fragile",
-      dialogue: [
-        { who: 'Inès', t: "Je sais vraiment pas si je fais bien.\nTu me promets de faire attention ?" },
-        { who: 'Léo',  t: "Oui." }
-      ],
+      titre:      "🟡 Succès fragile",
+      p1ines:     "Je sais vraiment pas si je fais bien.\nTu me promets de faire attention ?",
+      p1leo:      "Oui.",
+      p2ines:     "Tu promets de respecter la vie privée de Clara ?",
+      p2leo:      "Oui.",
+      codesMsg:   "Elle me l'avait donné au cas où. Tu l'utilises, t'en parles à personne.",
+      nextPartBtn:"▶ Voir l'Instagram de Clara",
+      copied:     "✓ Copié !",
       ig: {
         label:       "📱 Instagram de Clara",
         compteLabel: "compte :",

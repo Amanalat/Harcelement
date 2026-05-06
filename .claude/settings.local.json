@@ -10,7 +10,11 @@
       "Bash(git reset *)",
       "PowerShell(Get-Item *)",
       "Bash(python extract_images.py)",
-      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\ASUS\\\\Documents\\\\Web apps\\\\Wordpress\\\\Harcèlement Croatie\\\\images_clara\" | Select-Object Name, @{N='Ko';E={[Math]::Round\\($_.Length/1KB\\)}})"
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\ASUS\\\\Documents\\\\Web apps\\\\Wordpress\\\\Harcèlement Croatie\\\\images_clara\" | Select-Object Name, @{N='Ko';E={[Math]::Round\\($_.Length/1KB\\)}})",
+      "Bash(python *)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(git add *)",
+      "Bash(git check-ignore *)"
     ]
   }
 }

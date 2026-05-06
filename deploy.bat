@@ -1,5 +1,6 @@
 @echo off
-cd /d "C:\Users\ASUS\Documents\Web apps\Wordpress\Harcèlement Croatie"
+cd /d "%~dp0"
+set GIT_PAGER=
 
 echo.
 echo === Deploiement Harcelement ===
@@ -11,7 +12,7 @@ git diff --cached --quiet
 if %errorlevel%==0 goto :push
 
 echo Fichiers inclus dans ce commit :
-git diff --cached --name-only
+git --no-pager diff --cached --name-only
 echo.
 git commit -m "maj"
 if %errorlevel% neq 0 (

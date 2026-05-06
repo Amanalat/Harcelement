@@ -5,7 +5,7 @@ var TEXTES = {
   titre: {
     eyebrow: "Un jeu sur l'empathie — Harcèlement scolaire",
     main:    "Convaincre Clara",
-    sub:     "Clara a quitté le lycée depuis trois semaines sans explication.\nTu es Léo, son ami. Tu décides de l'appeler.",
+    sub:     "Clara a quitté le collège depuis trois semaines sans explication.\nTu es Léo, son ami. Tu décides de l'appeler.",
     legende: ["La tante", "Clara", "Toi — Léo"],
     bouton:  "☎  Décrocher"
   },
@@ -210,7 +210,7 @@ var TEXTES = {
       ],
       prompt:"Que ressens-tu à l'entendre ?",
       choices:[
-        { emp:2, txt:"« Plus de refuge nulle part — ni au lycée, ni chez toi. C'est une violence totale. Je suis tellement désolé. »",
+        { emp:2, txt:"« Plus de refuge nulle part — ni au collège, ni chez toi. C'est une violence totale. Je suis tellement désolé. »",
           fb:{type:'good', msg:'Tu nommes sa réalité avec précision. Elle se sent comprise.'},
           reply:{spk:'lea', txt:"(voix qui se brise) Oui… c'est exactement ça."}},
         { emp:1, txt:"« C'est horrible… être harcelée même à la maison. »",
@@ -244,7 +244,7 @@ var TEXTES = {
     { id:'L4', phase:'2', phaseName:'Phase 2 — Clara', stepLabel:'Question 4 / 4',
       pdotCount:4, pdotActive:3,
       dialogueBefore:[
-        {spk:'lea',    txt:"Ça fait trois semaines que je suis ici…\nAu début, je n'arrivais même pas à sortir de la chambre.\nMaintenant… ça va un peu mieux. Mais j'ai encore peur.\nPeur de retourner au lycée. Peur que ça recommence. Peur que rien ne change."},
+        {spk:'lea',    txt:"Ça fait trois semaines que je suis ici…\nAu début, je n'arrivais même pas à sortir de la chambre.\nMaintenant… ça va un peu mieux. Mais j'ai encore peur.\nPeur de retourner au collège. Peur que ça recommence. Peur que rien ne change."},
         {spk:'thomas', txt:"Tu en as parlé à ta tante ? À tes parents ?"},
         {spk:'lea',    txt:"Ma tante sait un peu… Elle est gentille. Mais je veux pas les inquiéter.\nJ'ai l'impression que si j'en parle vraiment… ça devient réel."},
       ],
@@ -252,7 +252,7 @@ var TEXTES = {
       choices:[
         { emp:2, txt:"« C'est déjà réel, Clara. Et justement parce que c'est réel, tu as besoin d'adultes qui peuvent agir — le CPE, un psy scolaire, tes parents. Pas pour tout régler d'un coup. Juste pour ne plus porter ça seule. »",
           fb:{type:'good', msg:"Tu lui montres que chercher de l'aide adulte, c'est un acte de courage — pas une faiblesse."},
-          reply:{spk:'lea', txt:"(silence) …Peut-être. Ma tante m'a proposé d'appeler le lycée.\nJ'avais dit non. Mais là… peut-être que oui."}},
+          reply:{spk:'lea', txt:"(silence) …Peut-être. Ma tante m'a proposé d'appeler le collège.\nJ'avais dit non. Mais là… peut-être que oui."}},
         { emp:1, txt:"« Tu n'as pas à régler ça toute seule. Si tu veux, je peux être là quand tu en parles à quelqu'un — n'importe quel adulte de confiance. »",
           fb:{type:'ok', msg:"Solidaire. Mais c'est à elle de faire le premier pas — tu le lui rappelles bien."},
           reply:{spk:'lea', txt:"(hésitante) …D'accord. Je vais y réfléchir."}},

@@ -11,17 +11,17 @@ var TEXTES = {
 
   // Index 0 = trust -4, index 4 = trust 0, index 8 = trust +4
   trustLabels: [
-    "elle ne te fait plus confiance",
-    "elle est très méfiante",
-    "elle est méfiante",
-    "elle hésite",
+    "elle ne veut plus te parler",
+    "elle est sur le point de raccrocher",
+    "elle se méfie de toi",
+    "elle hésite à répondre",
     "elle t'écoute",
-    "elle t'écoute bien",
+    "elle commence à te faire confiance",
     "elle te fait confiance",
     "elle te fait confiance",
     "elle te fait vraiment confiance"
   ],
-  trustInitial: "elle hésite",
+  trustInitial: "elle hésite à répondre",
 
   choiceHint:       "Que répond Léo ?",
   choiceHintCrise:  "Comment réagit Léo ?",
@@ -31,125 +31,127 @@ var TEXTES = {
   // ─── Séquence d'ouverture ─────────────────────────────────────────────────
 
   ouverture: [
-    { t: "Hey… Inès ?",                                                type: 's' },
-    { t: "Oui, c'est qui ?",                                           type: 'r' },
-    { t: "C'est Léo. Un ami de Clara.",                                type: 's' },
-    { t: "Léo… (pause) On s'est jamais vraiment parlé.",               type: 'r' },
-    { t: "Je sais. Mais Clara a disparu. J'arrive plus à la joindre.", type: 's' },
-    { t: "…Pourquoi tu m'appelles, moi ?",                             type: 'r' }
+    { t: "Inès ?",                                                                    type: 's' },
+    { t: "Oui c'est qui",                                                             type: 'r' },
+    { t: "C'est Léo. On est dans la même école que Clara.",                           type: 's' },
+    { t: "Je te connais pas.",                                                        type: 'r' },
+    { t: "Je sais. J'arrive plus à la joindre depuis hier soir. T'as eu de ses nouvelles ?", type: 's' },
+    { t: "Pourquoi tu me demandes ça à moi",                                         type: 'r' }
   ],
 
   // ─── Messages de fin rapide / blocage ────────────────────────────────────
 
   finImmediate: [
-    { t: "…ok",   type: 'r'  },
+    { t: "ok",    type: 'r'  },
     { t: "vu ✔️", type: 'sy' }
   ],
 
   blocageMessages: [
-    { t: "Non.",                 type: 'cr' },
-    { t: "Arrête de me parler.", type: 'cr' },
-    { t: "(elle te bloque)",     type: 'sy' }
+    { t: "Arrête de me parler.",  type: 'cr' },
+    { t: "Je te répondrai plus.", type: 'cr' },
+    { t: "(elle ne répond plus)", type: 'sy' }
   ],
 
-  // ─── Révélations (résumé de ce qu'on apprend sur Clara) ──────────────────
+  // ─── Révélations ─────────────────────────────────────────────────────────
 
   REVELATIONS: [
     {
-      icon:  '💬',
-      title: 'Groupe de moqueries en ligne',
-      txt:   "Des élèves ont créé un groupe secret pour se moquer de Clara collectivement. Elle l'a appris par une capture d'écran."
+      icon:  '📵',
+      title: 'Elle fuyait son téléphone',
+      txt:   "Depuis plusieurs semaines, Clara laissait son téléphone retourné, ignorait ses notifications — même celles d'Inès."
     },
     {
-      icon:  '👻',
-      title: 'Harcèlement anonyme, la nuit',
-      txt:   "Des comptes sans identité l'harcelaient chez elle, la nuit. Ne pas pouvoir identifier l'agresseur rendait l'angoisse permanente."
+      icon:  '🔒',
+      title: 'Elle avait disparu des réseaux',
+      txt:   "Clara avait arrêté de poster, d'ouvrir ses applis. Quelque chose en ligne la faisait fuir. Inès ne sait pas exactement quoi."
     },
     {
-      icon:  '📊',
-      title: "Sondage d'humiliation publique",
-      txt:   "Un sondage la ciblant directement a circulé dans toute la classe. Clara l'a vu. Elle a fini par intégrer ce regard comme une vérité sur elle-même."
+      icon:  '❓',
+      title: "Inès ne sait pas tout",
+      txt:   "Même sa meilleure amie n'a pas eu les détails. Clara voulait protéger Inès — ou avait trop honte pour en parler."
     }
   ],
 
-  // ─── Scénario principal (G) ───────────────────────────────────────────────
-  // Chaque étape peut avoir : intro (tableau de répliques), edu (note pédagogique), c (choix A/B/C)
-  // e = effet sur la confiance : +1 bon, -1 mauvais, 0 neutre
+  // ─── Scénario principal ───────────────────────────────────────────────────
 
   G: [
 
-    // Étape 0 — Premier contact : pourquoi Léo appelle
+    // Étape 0 — Pourquoi Léo contacte Inès
     {
       c: [
-        { l: 'A', t: "Parce qu'elle a disparu et que personne ne réagit.", e:  1 },
-        { l: 'B', t: "T'es sa meilleure amie, t'as forcément des infos.",  e: -1 },
-        { l: 'C', t: "Je suis inquiet, c'est tout.",                       e:  0 }
+        { l: 'A', t: "Parce que t'es son amie. Si quelqu'un sait quelque chose, c'est toi.", e: -1 },
+        { l: 'B', t: "Je savais pas à qui d'autre m'adresser.",                              e:  0 },
+        { l: 'C', t: "Je suis inquiet. J'arrive plus à dormir depuis hier soir.",            e:  1 }
       ]
     },
 
-    // Étape 1 — Le groupe de moqueries
+    // Étape 1 — Inès vérifie qui est Léo
     {
       intro: [
-        "Pourquoi tu t'en mêles, toi ? Je te connais même pas.",
-        "…",
-        "(voix plus basse) Des gens de la classe ont créé un groupe. Pour parler d'elle. En se moquant.",
-        "Elle l'a su par hasard. Quelqu'un lui a envoyé une capture."
+        "Tu la connais comment toi, Clara ?"
       ],
-      edu: "💡 Le cyberharcèlement en groupe : quand une communauté en ligne cible une personne, l'humiliation devient collective. La victime se retrouve seule face à tous, sans pouvoir se défendre.",
       c: [
-        { l: 'A', t: "C'est du harcèlement en groupe. Elle a dû se sentir complètement seule face à tout ça.", e:  1 },
-        { l: 'B', t: "Qui a fait ça ? Donne-moi les noms.",                                                    e: -1 },
-        { l: 'C', t: "Ça arrive souvent ce genre de trucs…",                                                    e:  0 }
+        { l: 'A', t: "On se croise souvent. Je l'aimais bien.",                               e:  1 },
+        { l: 'B', t: "Pas super bien. Mais j'ai entendu parler d'elle ces derniers temps.",   e: -1 },
+        { l: 'C', t: "On est dans des classes différentes mais on se parle des fois.",        e:  0 }
       ]
     },
 
-    // Étape 2 — Les messages anonymes nocturnes
+    // Étape 2 — Clara ne répond plus à personne
     {
       intro: [
-        "C'était pas que ça.",
-        "(silence) Elle recevait des messages la nuit. Des comptes sans nom, sans visage.",
-        "Elle savait pas qui c'était. Elle pouvait pas se défendre.",
-        "Elle éteignait son téléphone… mais après elle avait peur de le rallumer."
+        "Elle répond plus à moi non plus.",
+        "Depuis quelques jours."
       ],
-      edu: "💡 L'anonymat amplifie le harcèlement : sans visage, sans identité, la victime ne sait pas d'où vient l'attaque. Le refuge chez soi n'existe plus — l'angoisse est constante.",
       c: [
-        { l: 'A', t: "Ne pas savoir qui envoie ces messages, c'est encore plus difficile à supporter.", e:  1 },
-        { l: 'B', t: "Elle aurait pu désactiver ses réseaux.",                                           e: -1 },
-        { l: 'C', t: "C'est grave. Elle en a parlé à quelqu'un ?",                                       e:  0 }
+        { l: 'A', t: "Ça lui arrivait déjà avant ?",      e:  1 },
+        { l: 'B', t: "Peut-être qu'elle vous a bloqués.", e: -1 },
+        { l: 'C', t: "Vous vous parliez souvent ?",       e:  0 }
       ]
     },
 
-    // Étape 3 — Le sondage d'humiliation
+    // Étape 3 — Ça faisait un moment qu'elle n'allait pas bien
     {
       intro: [
-        "(longue pause)",
-        "…Il y a eu un sondage. Partagé dans toute la classe.",
-        "« Clara est-elle la personne la plus nulle du collège ? »",
-        "Les gens ont voté. Publiquement.",
-        "Elle l'a vu."
+        "Non. Jamais.",
+        "Ça faisait un moment qu'elle était pas bien.",
+        "Depuis le mois dernier au moins.",
+        "Elle manquait des cours. Elle répondait plus aux messages.",
+        "Elle disait que c'était rien."
       ],
-      edu: "💡 Le vote d'humiliation : transformer une personne en objet d'un jugement public collectif. Avec le temps, la victime finit par intégrer ce regard comme une vérité sur elle-même.",
       c: [
-        { l: 'A', t: "Une humiliation publique comme ça, ça touche à l'image qu'on a de soi. Elle a dû finir par y croire.", e: 1 },
-        { l: 'B', t: "C'est illégal. Il faut le signaler à l'école.",                                                        e: 0 },
-        { l: 'C', t: "Les gens peuvent être vraiment cruels.",                                                               e: 0 }
+        { l: 'A', t: "Tu sais ce qui s'est passé ?",              e:  1 },
+        { l: 'B', t: "Et t'as pas essayé d'en parler avec elle ?", e: -1 },
+        { l: 'C', t: "Elle avait l'air d'avoir peur de quelque chose ?", e: 0 }
       ]
     },
 
-    // Étape 4 — Pourquoi elle est partie + accès Instagram
+    // Étape 4 — La peur du téléphone (sans explication)
     {
       intro: [
-        "(longtemps sans répondre)",
-        "Elle pouvait plus y échapper. Ni au collège. Ni chez elle.",
-        "Son téléphone était devenu une source de peur.",
-        "(silence) C'est pas à moi de tout te raconter.",
-        "Mais… il y a peut-être des choses sur son Instagram. Un message, une photo, un endroit mentionné.",
-        "Clara me l'avait donné au cas où. Mais je sais pas si je devrais te le donner."
+        "Si j'ai essayé.",
+        "Elle voulait pas.",
+        "Mais je voyais bien.",
+        "Elle laissait son téléphone retourné sur la table. Elle regardait plus ses applis.",
+        "Des fois je lui envoyais un message, je voyais qu'elle l'avait lu… et elle répondait pas pendant des heures."
       ],
       c: [
-        { l: 'A', t: "Je comprends que c'est sa vie privée. T'as le droit de pas me le donner.",  e:  1 },
-        { l: 'B', t: "Donne-le moi, je trouverai ce qu'il faut peu importe comment.",              e: -1 },
-        { l: 'C', t: "C'est toi qui décides. Moi je veux juste la retrouver.",                     e:  0 }
+        { l: 'A', t: "On dirait qu'elle voulait s'éloigner de son téléphone.", e:  1 },
+        { l: 'B', t: "C'est bizarre comme comportement.",                      e:  0 },
+        { l: 'C', t: "C'est peut-être juste une mauvaise période.",            e: -1 }
+      ]
+    },
+
+    // Étape 5 — Inès hésite à en dire plus
+    {
+      intro: [
+        "Je sais pas si je devrais te raconter tout ça.",
+        "Je te connais même pas."
+      ],
+      c: [
+        { l: 'A', t: "T'es obligée à rien. C'est toi qui décides.",                    e:  1 },
+        { l: 'B', t: "Dis-moi juste ce que tu sais.",                                  e: -1 },
+        { l: 'C', t: "Je veux juste savoir si elle va bien. Rien d'autre.",            e:  0 }
       ]
     }
 
@@ -159,15 +161,14 @@ var TEXTES = {
 
   CRISIS: {
     intro: [
-      "…",
       "Attends.",
-      "T'es là pour quoi exactement ?",
-      "J'ai pas confiance en toi."
+      "T'es dans quelle classe ?",
+      "Tu connais qui dans la sienne ?"
     ],
     c: [
-      { l: 'A', t: "T'as aucune raison de me faire confiance. Je te demande rien, je veux juste que Clara aille bien.", e:  2 },
-      { l: 'B', t: "Ok. Je te force à rien. On peut en rester là si tu veux.",                                          e:  0 },
-      { l: 'C', t: "Mais fais-moi confiance, j'essaie juste d'aider !",                                                 e: -1 }
+      { l: 'A', t: "T'as raison d'être méfiante. Tu me connais pas.",                     e:  2 },
+      { l: 'B', t: "Je fais pas partie des gens qui lui ont fait du mal.",                e:  1 },
+      { l: 'C', t: "Fais-moi confiance, j'essaie juste d'aider.",                        e: -1 }
     ]
   },
 
@@ -176,21 +177,20 @@ var TEXTES = {
   fins: {
 
     imm: {
-      titre: "Fin immédiate",
-      corps: "(fin de la conversation)"
+      titre: "Fin de conversation",
+      corps: "(elle ne répond plus)"
     },
 
     blocage: {
-      titre: "🔴 Confiance brisée",
-      ines:  "Je t'avais prévenu.",
-      sys:   "(elle te bloque)"
+      titre: "🔴 Confiance perdue",
+      ines:  "Je t'avais dit que je savais pas si je pouvais te faire confiance.",
+      sys:   "(elle ne répond plus)"
     },
 
     succes: {
       titre: "🟢 Inès te fait confiance",
-      // gap:true = saut de ligne supplémentaire avant la réplique
       dialogue: [
-        { who: 'Inès', t: "…Tu promets de faire attention à ce que tu lis ?" },
+        { who: 'Inès', t: "Tu promets de faire attention à ce que tu lis ?" },
         { who: 'Léo',  t: "Je promets." },
         { who: 'Inès', t: "Et tu me dis si tu trouves quelque chose." },
         { who: 'Inès', t: "Elle me l'avait donné au cas où. Tu l'utilises, t'en parles à personne.", gap: true }
@@ -207,9 +207,8 @@ var TEXTES = {
 
     fragile: {
       titre: "🟡 Succès fragile",
-      // \n à l'intérieur d'une réplique = même locuteur, retour à la ligne
       dialogue: [
-        { who: 'Inès', t: "Je sais vraiment pas si je fais bien…\nTu me promets de faire attention ?" },
+        { who: 'Inès', t: "Je sais vraiment pas si je fais bien.\nTu me promets de faire attention ?" },
         { who: 'Léo',  t: "Oui." }
       ],
       ig: {
@@ -224,8 +223,8 @@ var TEXTES = {
 
     echec: {
       titre: "🔴 Échec",
-      ines: "Non.\nArrête de fouiller.\nC'est pas tes affaires.",
-      sys:  "(elle ne répond plus)"
+      ines:  "Non.\nArrête de fouiller.\nC'est pas tes affaires.",
+      sys:   "(elle ne répond plus)"
     }
 
   }

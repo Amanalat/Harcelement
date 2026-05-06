@@ -26,14 +26,14 @@ const WA_DATA = {
   warning: {
     icon:  "⚠️",
     title: "Simulation pédagogique",
-    body:  "Tu vas observer un groupe secret dont Clara ne fait pas partie.\n\nCes échanges montrent comment le harcèlement se coordonne en coulisse — comment des comptes anonymes sont créés pour attaquer et comment les agression sont organisées collectivement.",
+    body:  "Je vais observer un groupe secret dont Clara ne fait pas partie.\n\nCes échanges montrent comment le harcèlement se coordonne en coulisse — comment des comptes anonymes sont créés pour attaquer et comment les agressions sont organisées collectivement.",
     btn:   "Continuer →"
   },
 
   mission: {
     icon:  "👁",
     title: "Ce qu'il faut comprendre",
-    body:  "Tu vas observer comment les membres de ce groupe ont organisé le harcèlement contre Clara.\n\nDes questions apparaîtront pendant la lecture pour t'aider à analyser ce qui se passe.\n\nÀ la fin, tu auras une vue complète de ce qui s'est passé.",
+    body:  "Je vais observer comment les membres de ce groupe ont organisé le harcèlement contre Clara.\n\nDes questions apparaîtront pendant la lecture pour m'aider à analyser ce qui se passe.\n\nÀ la fin, j'aurai une vue complète de ce qui s'est passé.",
     btn:   "Commencer →"
   },
 

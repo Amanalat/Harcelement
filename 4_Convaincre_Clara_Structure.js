@@ -207,10 +207,6 @@ function showChoices(choices, prompt, callback){
 
 // ═══ MAIN CHOICE HANDLER ═══
 function onMainChoice(scene, choice){
-  const fb=document.getElementById('fb-toast');
-  fb.className='fb show '+(choice.emp===2?'good':choice.emp===1?'ok':'bad');
-  fb.textContent=choice.fb.msg;
-
   if(scene.phase==='1') auntScore+=choice.emp;
   addEmpathy(choice.emp);
 

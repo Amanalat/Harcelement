@@ -1,4 +1,4 @@
-var TEXTES = {
+{
   "contact": {
     "name": "Inès",
     "avatar": "IN",
@@ -263,7 +263,7 @@ var TEXTES = {
     },
     "blocage": {
       "titre": "🔴 Confiance perdue",
-      "ines": "Je sais qu'on ne pouvait pas te faire confiance.",
+      "ines": "Je t'avais dit que je savais pas si je pouvais te faire confiance.",
       "sys": "(elle ne répond plus)"
     },
     "succes": {
@@ -305,8 +305,8 @@ var TEXTES = {
     },
     "echec": {
       "titre": "🔴 Échec",
-      "ines": "Non. \nArrête de fouiller. C'est pas tes affaires.",
+      "ines": "Non.\nArrête de fouiller.\nC'est pas tes affaires.",
       "sys": "(elle ne répond plus)"
     }
   }
-};
+}

@@ -14,7 +14,9 @@
       "Bash(python *)",
       "Bash(echo \"exit: $?\")",
       "Bash(git add *)",
-      "Bash(git check-ignore *)"
+      "Bash(git check-ignore *)",
+      "Bash(pandoc --version)",
+      "Bash(pip show *)"
     ]
   }
 }

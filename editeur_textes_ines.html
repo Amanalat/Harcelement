@@ -100,15 +100,17 @@ document.getElementById('fi').addEventListener('change', function(e) {
   const reader = new FileReader();
   reader.onload = ev => {
     try {
-      const fn = new Function(ev.target.result + '\nreturn TEXTES;');
+      const content = ev.target.result.replace(/^﻿/, ''); // strip UTF-8 BOM
+      const fn = new Function(content + '\nreturn typeof TEXTES !== "undefined" ? TEXTES : null;');
       T = fn();
+      if (!T) throw new Error('Variable TEXTES introuvable — vérifie que le fichier commence par : var TEXTES = {…}');
       document.getElementById('fname').textContent = loadedFname;
       document.getElementById('bexp').disabled = false;
       document.getElementById('empty').style.display = 'none';
       document.getElementById('editor').style.display = 'block';
       showTab(curTab);
     } catch (err) {
-      alert('Erreur lors du chargement :\n' + err.message);
+      alert('Erreur lors du chargement de « ' + loadedFname + ' » :\n\n' + err.message);
     }
   };
   reader.readAsText(file, 'UTF-8');

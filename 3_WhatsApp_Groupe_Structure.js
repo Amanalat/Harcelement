@@ -1,17 +1,9 @@
 // ── Code Gate ──────────────────────────────────────────────────────────────
 
 function checkCode() {
-  var val = (document.getElementById('gate-input').value || '').replace(/\s/g,'').toUpperCase();
-  var err = document.getElementById('gate-error');
-  if (val === '4827') {
-    document.getElementById('code-gate').style.display = 'none';
-    document.getElementById('warning-overlay').style.display = 'flex';
-    err.style.display = 'none';
-  } else {
-    err.style.display = 'block';
-    document.getElementById('gate-input').style.borderColor = '#e94560';
-    setTimeout(function(){ document.getElementById('gate-input').style.borderColor = '#1a5030'; }, 1500);
-  }
+  // Accès libre temporairement — mot de passe désactivé
+  document.getElementById('code-gate').style.display = 'none';
+  document.getElementById('warning-overlay').style.display = 'flex';
 }
 
 document.getElementById('gate-input').addEventListener('keydown', function(e){
@@ -362,6 +354,7 @@ function closeQuizContinue() {
 function showEndState() {
   document.getElementById('chat-area').style.display = 'none';
   document.getElementById('wa-input').style.display  = 'none';
+  try { localStorage.setItem('rc_p3_done', '1'); } catch(e) {}
 
   var end  = document.getElementById('end-state');
   var data = WA_DATA.endMessage;

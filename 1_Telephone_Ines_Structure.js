@@ -278,6 +278,126 @@ ca.addEventListener('click', function(e){
 
 try { localStorage.setItem('rc_p1_visited','1'); } catch(e) {}
 
+// ── Deuxième conversation Inès (après partie 3) ───────────────────────────
+
+(function(){
+  var p3done = false;
+  try { p3done = !!localStorage.getItem('rc_p3_done'); } catch(e) {}
+  if (!p3done) return;
+
+  var notifBar = document.getElementById('p3-notif-bar');
+  notifBar.style.display = 'flex';
+
+  notifBar.addEventListener('click', function () {
+    notifBar.style.display = 'none';
+    openSecondConvo();
+  });
+})();
+
+function openSecondConvo(){
+  // Masque la conversation principale, affiche la seconde
+  document.querySelector('.tbar').style.display = 'none';
+  document.getElementById('ma').style.display   = 'none';
+  document.getElementById('ca').style.display   = 'none';
+  var sc = document.getElementById('second-convo');
+  sc.style.display = 'flex';
+  document.getElementById('st').textContent = 'en ligne';
+
+  var scMa = document.getElementById('sc-ma');
+  scMa.innerHTML = '';
+
+  function addSc(txt, type) {
+    var d = document.createElement('div');
+    d.className = 'bb ' + type;
+    d.textContent = txt;
+    scMa.appendChild(d);
+    scMa.scrollTop = scMa.scrollHeight;
+  }
+
+  // Amorce : le joueur envoie le premier message
+  addSc("Inès, j'ai peut-être trouvé quelque chose", 's');
+
+  var scInputRow = document.getElementById('sc-input-row');
+  var scInput    = document.getElementById('sc-input');
+  var scSend     = document.getElementById('sc-send');
+
+  setTimeout(function(){
+    // Inès répond
+    document.getElementById('st').textContent = 'écrit…';
+    var ty = document.createElement('div');
+    ty.className = 'tyi';
+    ty.innerHTML = '<span></span><span></span><span></span>';
+    scMa.appendChild(ty); scMa.scrollTop = scMa.scrollHeight;
+
+    setTimeout(function(){
+      ty.remove();
+      document.getElementById('st').textContent = 'en ligne';
+      addSc('quoi donc ?', 'r');
+      scInputRow.style.display = 'flex';
+      scInput.focus();
+    }, 1100);
+  }, 700);
+
+  function sendMsg() {
+    var val = scInput.value.trim();
+    if (!val) return;
+    scInput.value = '';
+    scInputRow.style.display = 'none';
+    addSc(val, 's');
+
+    var n = val.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+    var correct = n.includes('havre') || n.includes('secret');
+
+    document.getElementById('st').textContent = 'écrit…';
+    var ty2 = document.createElement('div');
+    ty2.className = 'tyi';
+    ty2.innerHTML = '<span></span><span></span><span></span>';
+    scMa.appendChild(ty2); scMa.scrollTop = scMa.scrollHeight;
+
+    setTimeout(function(){
+      ty2.remove();
+      document.getElementById('st').textContent = 'en ligne';
+
+      if (correct) {
+        addSc("Oui ! c'est chez sa tante, à la campagne.", 'r');
+        setTimeout(function(){
+          var ty3 = document.createElement('div');
+          ty3.className = 'tyi';
+          ty3.innerHTML = '<span></span><span></span><span></span>';
+          scMa.appendChild(ty3); scMa.scrollTop = scMa.scrollHeight;
+          setTimeout(function(){
+            ty3.remove();
+            addSc("C'est là qu'elle est, bravo ! Sa tante travaille dans un restaurant — voici le numéro :", 'r');
+            setTimeout(function(){
+              var numDiv = document.createElement('div');
+              numDiv.className = 'bb r';
+              numDiv.innerHTML = '<span style="font-size:14px;font-weight:700;letter-spacing:.08em;color:#30d158;">04 54 78 95 32</span>';
+              scMa.appendChild(numDiv); scMa.scrollTop = scMa.scrollHeight;
+              try { localStorage.setItem('rc_p3_done', '2'); } catch(e) {}
+              setTimeout(function(){
+                var endEl = document.getElementById('sc-end');
+                endEl.innerHTML = '<a href="4_Convaincre_Clara.html" class="nxbtn">→ Partie 4 : Convaincre Clara</a>';
+                endEl.style.display = 'block';
+              }, 600);
+            }, 1200);
+          }, 1100);
+        }, 800);
+      } else {
+        addSc("Je vois pas à quoi tu fais référence... c'est quoi exactement ce que t'as trouvé ?", 'r');
+        setTimeout(function(){
+          scInputRow.style.display = 'flex';
+          scInput.focus();
+        }, 400);
+      }
+    }, 1200);
+  }
+
+  scSend.addEventListener('click', sendMsg);
+  scInput.addEventListener('keydown', function(e){
+    if (e.key === 'Enter') sendMsg();
+  });
+}
+
 var intro1El = document.getElementById('intro1');
 if(intro1El){
   function dismissIntro(){

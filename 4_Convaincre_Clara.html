@@ -92,9 +92,9 @@ body::after{
 .fb.ok{color:var(--yellow);background:rgba(212,180,100,.07);border:1px solid rgba(212,180,100,.15);}
 .fb.bad{color:var(--red);background:rgba(192,104,96,.07);border:1px solid rgba(192,104,96,.15);}
 
-.btn-continue{background:none;border:1px solid var(--border);color:var(--dim);font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;padding:12px 28px;cursor:pointer;transition:all .25s;display:none;}
+.btn-continue{background:rgba(196,134,90,.08);border:1px solid rgba(196,134,90,.4);color:var(--accent);font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;padding:12px 28px;cursor:pointer;transition:all .25s;display:none;}
 .btn-continue.show{display:inline-flex;align-items:center;gap:8px;}
-.btn-continue:hover{color:var(--text);border-color:rgba(255,255,255,.2);}
+.btn-continue:hover{background:rgba(196,134,90,.16);border-color:rgba(196,134,90,.7);}
 
 /* ─── GAMEOVER ─── */
 #screen-gameover{flex-direction:column;gap:22px;text-align:center;padding:40px 28px;}
@@ -147,9 +147,38 @@ body::after{
 .i1-btn{font-family:-apple-system,sans-serif;font-size:.72rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.65);padding:10px 26px;border-radius:24px;cursor:pointer;opacity:0;animation:i1fade .8s ease forwards;transition:color .2s,border-color .2s;}
 .i1-btn:hover{color:#fff;border-color:rgba(255,255,255,.5);}
 .i1-skip{display:block;margin-top:.9rem;font-family:-apple-system,sans-serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#2a2a2a;opacity:0;animation:i1fade .8s ease forwards;}
+
+/* ─── PHONE GATE ─── */
+#phone-gate{position:fixed;inset:0;background:#000;z-index:10000;display:flex;align-items:center;justify-content:center;padding:2rem;}
+.pg-box{max-width:360px;width:100%;text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px;}
+.pg-icon{font-size:36px;animation:ring 2.4s ease-in-out infinite;}
+.pg-title{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);}
+.pg-hint{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:clamp(.9rem,2.4vw,1.1rem);color:#c8c0b2;line-height:1.75;max-width:300px;}
+.pg-sep{display:block;width:32px;height:1px;background:rgba(196,134,90,.4);margin:0 auto;}
+.pg-input{background:none;border:1px solid rgba(255,255,255,.15);border-radius:2px;color:var(--text);font-family:'Jost',sans-serif;font-size:16px;letter-spacing:.2em;padding:11px 18px;width:220px;text-align:center;outline:none;transition:border-color .2s;}
+.pg-input:focus{border-color:rgba(196,134,90,.5);}
+.pg-error{font-family:'Jost',sans-serif;font-size:10px;color:var(--red);min-height:14px;letter-spacing:.06em;}
+.pg-btn-call{background:none;border:1px solid rgba(196,134,90,.4);color:var(--accent);font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.22em;text-transform:uppercase;padding:13px 36px;cursor:pointer;transition:all .3s;border-radius:2px;}
+.pg-btn-call:hover{background:rgba(196,134,90,.07);border-color:rgba(196,134,90,.6);transform:translateY(-2px);}
+.pg-btn-skip{background:none;border:none;color:rgba(255,255,255,.15);font-family:'Jost',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:color .2s;padding:4px 8px;margin-top:-6px;}
+.pg-btn-skip:hover{color:rgba(255,255,255,.3);}
 </style>
 </head>
 <body>
+
+<!-- PHONE GATE -->
+<div id="phone-gate">
+  <div class="pg-box">
+    <div class="pg-icon">📞</div>
+    <div class="pg-title">Passer l'appel</div>
+    <div class="pg-hint">Tu as obtenu le numéro de la tante de Clara. Entre-le pour passer l'appel.</div>
+    <span class="pg-sep"></span>
+    <input type="tel" id="pg-input" class="pg-input" placeholder="ex : 04 54 78 95 32" autocomplete="off" spellcheck="false">
+    <div class="pg-error" id="pg-error"></div>
+    <button id="pg-call" class="pg-btn-call">Appeler →</button>
+    <button id="pg-skip" class="pg-btn-skip">ne pas entrer le numéro</button>
+  </div>
+</div>
 
 <div id="intro4">
   <div class="i1-inner">
@@ -236,7 +265,7 @@ body::after{
   </div>
 </div>
 
-<a href="index.html" class="menu-btn">← Menu</a>
+<a href="index.html?skip" class="menu-btn">← Menu</a>
 <script>
 (function(){
   var ov=document.getElementById('intro4');
@@ -250,6 +279,47 @@ body::after{
   document.getElementById('intro4-btn').addEventListener('click',function(e){e.stopPropagation();dismiss();});
   ov.addEventListener('click',dismiss);
 })();
+
+(function(){
+  var gate=document.getElementById('phone-gate');
+  var input=document.getElementById('pg-input');
+  var errEl=document.getElementById('pg-error');
+  var CORRECT='0454789532';
+
+  function normalise(s){ return s.replace(/[\s.\-()+]/g,''); }
+
+  function dismissGate(){
+    gate.style.transition='opacity .8s ease';
+    gate.style.opacity='0';
+    gate.style.pointerEvents='none';
+    setTimeout(function(){ gate.style.display='none'; },800);
+  }
+
+  document.getElementById('pg-call').addEventListener('click',function(){
+    var val=normalise(input.value);
+    if(val===CORRECT){
+      errEl.textContent='';
+      dismissGate();
+    } else {
+      errEl.textContent='Numéro incorrect — vérifie le numéro obtenu.';
+      input.style.borderColor='rgba(192,104,96,.6)';
+    }
+  });
+
+  input.addEventListener('input',function(){
+    input.style.borderColor='';
+    errEl.textContent='';
+  });
+
+  input.addEventListener('keydown',function(e){
+    if(e.key==='Enter') document.getElementById('pg-call').click();
+  });
+
+  document.getElementById('pg-skip').addEventListener('click',dismissGate);
+})();
 </script>
+<style>#fs-btn{position:fixed;top:1rem;right:1rem;z-index:9000;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:rgba(255,255,255,.45);cursor:pointer;padding:7px;line-height:0;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:color .2s,border-color .2s;}#fs-btn:hover{color:#fff;border-color:rgba(255,255,255,.3);}</style>
+<button id="fs-btn" title="Plein écran" aria-label="Plein écran"><svg id="fse" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg><svg id="fss" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="10" y1="14" x2="3" y2="21"/><line x1="21" y1="3" x2="14" y2="10"/></svg></button>
+<script>(function(){var b=document.getElementById('fs-btn'),e=document.getElementById('fse'),s=document.getElementById('fss');function u(){var f=!!(document.fullscreenElement||document.webkitFullscreenElement);e.style.display=f?'none':'';s.style.display=f?'':'none';}b.addEventListener('click',function(){if(!document.fullscreenElement&&!document.webkitFullscreenElement)(document.documentElement.requestFullscreen||document.documentElement.webkitRequestFullscreen).call(document.documentElement);else(document.exitFullscreen||document.webkitExitFullscreen).call(document);});document.addEventListener('fullscreenchange',u);document.addEventListener('webkitfullscreenchange',u);})();</script>
 </body>
 </html>

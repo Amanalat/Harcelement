@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journal des modifications — Retrouver Clara</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#fafaf8;--surface:#fff;--border:#e8e4de;
+  --text:#1a1a18;--dim:#6b6860;--accent:#b05a30;
+  --good:#2a7a50;--warn:#b07020;--info:#2a5080;
+  --tag-bg:#f4ede6;--tag-color:#8a3a18;
+  --code-bg:#f3f0ec;
+}
+body{background:var(--bg);color:var(--text);font-family:Georgia,'Times New Roman',serif;font-size:15px;line-height:1.75;padding:0;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+
+/* HEADER */
+.page-header{background:var(--text);color:#f0ebe3;padding:48px 60px 40px;}
+.page-header h1{font-size:28px;font-weight:400;font-style:italic;letter-spacing:.01em;margin-bottom:8px;}
+.page-header .subtitle{font-family:-apple-system,'Segoe UI',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#8a8070;margin-bottom:24px;}
+.page-header .meta{font-family:-apple-system,'Segoe UI',sans-serif;font-size:12px;color:#9a9080;display:flex;gap:28px;flex-wrap:wrap;}
+.page-header .meta span::before{content:'';display:inline-block;width:5px;height:5px;border-radius:50%;background:#b05a30;margin-right:8px;vertical-align:middle;}
+
+/* LAYOUT */
+.page-body{max-width:880px;margin:0 auto;padding:48px 60px 80px;}
+@media(max-width:700px){.page-header{padding:32px 24px;}.page-body{padding:32px 24px;}}
+
+/* TOC */
+.toc{background:#f7f3ee;border:1px solid var(--border);border-left:4px solid var(--accent);padding:20px 24px;margin-bottom:40px;border-radius:0 6px 6px 0;}
+.toc h3{font-family:-apple-system,'Segoe UI',sans-serif;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:12px;}
+.toc ol{padding-left:18px;}
+.toc li{font-family:-apple-system,'Segoe UI',sans-serif;font-size:12.5px;line-height:1.9;color:var(--dim);}
+.toc a{color:var(--accent);}
+
+/* SECTIONS */
+h2{font-size:20px;font-weight:400;font-style:italic;color:var(--text);margin:48px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+h3{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:28px 0 10px;}
+h4{font-family:-apple-system,'Segoe UI',sans-serif;font-size:12px;font-weight:700;color:var(--dim);letter-spacing:.05em;text-transform:uppercase;margin:18px 0 6px;}
+p{margin-bottom:12px;}
+ul,ol{padding-left:22px;margin-bottom:12px;}
+li{margin-bottom:4px;}
+
+/* BADGES */
+.badge{display:inline-block;font-family:-apple-system,'Segoe UI',sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:3px;vertical-align:middle;margin-left:6px;}
+.badge-new{background:#e8f4ee;color:var(--good);}
+.badge-changed{background:#fef3e2;color:var(--warn);}
+.badge-fixed{background:#e8eef8;color:var(--info);}
+.badge-removed{background:#fdeae8;color:#a03020;}
+.badge-pending{background:#f4ede6;color:var(--tag-color);}
+
+/* BLOCKS */
+.mod-block{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:20px 22px;margin:14px 0;position:relative;}
+.mod-block.good{border-left:3px solid #4a9a70;}
+.mod-block.warn{border-left:3px solid #c08030;}
+.mod-block.info{border-left:3px solid #4a70a0;}
+.mod-block.removed{border-left:3px solid #c04030;}
+.mod-block h4{margin:0 0 8px;}
+.mod-block p:last-child{margin-bottom:0;}
+
+/* FILES */
+.file-ref{font-family:'Courier New',monospace;font-size:12px;background:var(--code-bg);border:1px solid var(--border);padding:2px 6px;border-radius:3px;color:var(--info);}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;margin:14px 0;}
+thead tr{background:#f0ece6;}
+th{font-family:-apple-system,'Segoe UI',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);padding:9px 14px;text-align:left;border-bottom:1px solid var(--border);}
+td{font-family:-apple-system,'Segoe UI',sans-serif;font-size:12.5px;padding:9px 14px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+
+/* FLOW */
+.flow{display:flex;gap:0;margin:14px 0;flex-wrap:wrap;}
+.flow-step{background:var(--surface);border:1px solid var(--border);padding:10px 16px;font-family:-apple-system,'Segoe UI',sans-serif;font-size:12px;flex:1;min-width:140px;position:relative;}
+.flow-step+.flow-step::before{content:'→';position:absolute;left:-11px;top:50%;transform:translateY(-50%);color:var(--accent);font-size:14px;}
+.flow-step strong{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin-bottom:3px;}
+
+/* QUOTE */
+blockquote{border-left:3px solid var(--accent);padding:10px 18px;margin:14px 0;color:var(--dim);font-style:italic;font-size:14px;}
+
+/* PAGE BREAK hint */
+.section-break{margin:56px 0 0;padding-top:32px;border-top:2px solid var(--border);}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="subtitle">Document de travail — confidentiel</div>
+  <h1>Retrouver Clara — Journal des modifications</h1>
+  <div class="meta">
+    <span>Version du 7 mai 2026</span>
+    <span>Projet : Harcèlement Croatie</span>
+    <span>Destinataires : équipe partenaires</span>
+  </div>
+</div>
+
+<div class="page-body">
+
+<!-- TOC -->
+<div class="toc">
+  <h3>Sommaire</h3>
+  <ol>
+    <li><a href="#overview">Vue d'ensemble du projet</a></li>
+    <li><a href="#architecture">Architecture des fichiers</a></li>
+    <li><a href="#session-previous">Modifications antérieures (session précédente)</a></li>
+    <li><a href="#session-today">Modifications du 7 mai 2026</a></li>
+    <li><a href="#partie1">— Partie 1 : Téléphone d'Inès</a></li>
+    <li><a href="#partie2">— Partie 2 : Instagram de Clara</a></li>
+    <li><a href="#partie3">— Partie 3 : Groupe WhatsApp</a></li>
+    <li><a href="#partie4">— Partie 4 : Convaincre Clara</a></li>
+    <li><a href="#flux-narratif">Flux narratif complet</a></li>
+    <li><a href="#pending">Points en attente / Notes techniques</a></li>
+  </ol>
+</div>
+
+
+<!-- ═══ 1. OVERVIEW ═══ -->
+<h2 id="overview">1. Vue d'ensemble du projet</h2>
+
+<p><strong>Retrouver Clara</strong> est un jeu pédagogique sur le cyberharcèlement destiné aux collégiens. Le joueur incarne un ami de Clara, une élève de 14 ans qui a quitté le collège sans explication après avoir subi plusieurs mois de harcèlement en ligne. L'objectif est de comprendre ce qu'elle a vécu et de la retrouver.</p>
+
+<p>Le jeu est hébergé sur un site WordPress et intégré via une balise <code>&lt;iframe&gt;</code>. Il se compose de quatre scènes jouables indépendantes mais liées par une narration commune.</p>
+
+<table>
+  <thead><tr><th>Partie</th><th>Mécanique principale</th><th>Durée estimée</th><th>Statut</th></tr></thead>
+  <tbody>
+    <tr><td><strong>1 — Téléphone d'Inès</strong></td><td>Dialogue à choix multiples, jauge de confiance</td><td>5–8 min</td><td>✅ Fonctionnel</td></tr>
+    <tr><td><strong>2 — Instagram de Clara</strong></td><td>Exploration d'un profil fictif, identification de types de harcèlement</td><td>10–15 min</td><td>✅ Refonte complète</td></tr>
+    <tr><td><strong>3 — Groupe WhatsApp</strong></td><td>Lecture d'un chat de groupe, quiz d'analyse</td><td>6–10 min</td><td>✅ Enrichi</td></tr>
+    <tr><td><strong>4 — Convaincre Clara</strong></td><td>Conversation téléphonique, jeu d'empathie</td><td>6–10 min</td><td>✅ Ajustements</td></tr>
+  </tbody>
+</table>
+
+
+<!-- ═══ 2. ARCHITECTURE ═══ -->
+<h2 id="architecture">2. Architecture des fichiers</h2>
+
+<table>
+  <thead><tr><th>Fichier</th><th>Rôle</th></tr></thead>
+  <tbody>
+    <tr><td><span class="file-ref">index.html</span> / <span class="file-ref">index.js</span></td><td>Menu principal — présentation des 4 parties</td></tr>
+    <tr><td><span class="file-ref">1_Telephone_Ines.html</span></td><td>Interface téléphone iOS simulé (Partie 1)</td></tr>
+    <tr><td><span class="file-ref">1_Telephone_Ines_textes.js</span></td><td>Tous les textes et données de dialogue (Partie 1) — modifiable sans toucher la logique</td></tr>
+    <tr><td><span class="file-ref">1_Telephone_Ines_Structure.js</span></td><td>Moteur de jeu : jauge de confiance, branches, fins (Partie 1)</td></tr>
+    <tr><td><span class="file-ref">2_Insta_de_Clara.html</span></td><td>Interface Instagram fictive — profil, DMs, lightbox photos (Partie 2)</td></tr>
+    <tr><td><span class="file-ref">2_Insta_de_Clara_Structure.js</span></td><td>Moteur de jeu complet Partie 2 — données + logique</td></tr>
+    <tr><td><span class="file-ref">3_WhatsApp_Groupe.html</span></td><td>Interface WhatsApp groupe fictif (Partie 3)</td></tr>
+    <tr><td><span class="file-ref">3_WhatsApp_Groupe_textes.js</span></td><td>Messages, quiz et textes (Partie 3)</td></tr>
+    <tr><td><span class="file-ref">3_WhatsApp_Groupe_Structure.js</span></td><td>Moteur de lecture et quiz (Partie 3)</td></tr>
+    <tr><td><span class="file-ref">4_Convaincre_Clara.html</span></td><td>Interface appel téléphonique fictif (Partie 4)</td></tr>
+    <tr><td><span class="file-ref">4_Convaincre_Clara_textes.js</span></td><td>Dialogues et scènes (Partie 4)</td></tr>
+    <tr><td><span class="file-ref">4_Convaincre_Clara_Structure.js</span></td><td>Moteur de jeu Partie 4</td></tr>
+    <tr><td><span class="file-ref">edit_textes.py</span></td><td>Outil interne (Python/tkinter) pour modifier les textes de la Partie 1 sans éditeur de code</td></tr>
+    <tr><td><span class="file-ref">images_clara/</span></td><td>Photos du profil Instagram de Clara (plage, concert, chat…)</td></tr>
+  </tbody>
+</table>
+
+<p>Les fichiers <span class="file-ref">*_textes.js</span> sont intentionnellement séparés de la logique pour permettre des modifications éditoriales (textes, dialogues) sans risque de casser le moteur.</p>
+
+
+<!-- ═══ 3. SESSION PRÉCÉDENTE ═══ -->
+<h2 id="session-previous">3. Modifications antérieures (session précédente)</h2>
+
+<h3>Intégration WordPress</h3>
+
+<div class="mod-block fixed">
+  <h4>Format paysage dans l'iframe <span class="badge badge-fixed">corrigé</span></h4>
+  <p>L'iframe était contraint par une largeur maximale mobile. La contrainte a été supprimée pour permettre un affichage paysage sur ordinateur et tablette.</p>
+</div>
+
+<div class="mod-block fixed">
+  <h4>Bouton plein écran simulé <span class="badge badge-fixed">corrigé</span></h4>
+  <p>L'API <code>requestFullscreen()</code> native est bloquée sur les iframes cross-origin. Remplacement par un mécanisme CSS : <code>position:fixed; inset:0; z-index:99999</code> qui simule le plein écran sans droits navigateur.</p>
+</div>
+
+<h3>Responsive (toutes scènes)</h3>
+
+<div class="mod-block good">
+  <h4>Adaptation ordinateur / tablette / smartphone <span class="badge badge-new">ajouté</span></h4>
+  <ul>
+    <li>Ajout de <code>&lt;meta name="viewport"&gt;</code> manquant sur la Partie 1 (cause principale du bug mobile)</li>
+    <li>Largeur du téléphone simulé : <code>min(296px, calc(100vw - 2rem))</code> — s'adapte aux petits écrans</li>
+    <li>Breakpoints ajustés : passage en grille 2 colonnes à partir de 380 px</li>
+    <li>Suppression de <code>maximum-scale=1.0</code> sur les Parties 2 et 3 (bloquait le zoom utilisateur)</li>
+  </ul>
+</div>
+
+<h3>Navigation — Retour au menu</h3>
+
+<div class="mod-block good">
+  <h4>Suppression de l'intro sur retour au menu <span class="badge badge-new">ajouté</span></h4>
+  <p>Chaque bouton "← Menu" pointe désormais vers <code>index.html?skip</code>. Le paramètre <code>?skip</code> court-circuite l'animation d'introduction de 9 secondes.</p>
+</div>
+
+<h3>Outil d'édition des textes</h3>
+
+<div class="mod-block good">
+  <h4>Script Python / tkinter <span class="badge badge-new">créé</span> — <span class="file-ref">edit_textes.py</span></h4>
+  <p>L'outil HTML d'édition ne fonctionnait pas sur Edge (restrictions de sécurité). Remplacement par une application de bureau Python avec thème sombre, navigation par sections et sauvegarde directe dans le fichier JS. Nécessite Python 3.x installé ; les dépendances sont auto-installées au premier lancement.</p>
+</div>
+
+<h3>Partie 2 — Ajouts de contenu</h3>
+
+<div class="mod-block good">
+  <h4>3 nouvelles conversations DM <span class="badge badge-new">ajouté</span></h4>
+  <ul>
+    <li><strong>Sextorsion</strong> (id 27) — compte <em>anon_blackmail_x</em> : menace de diffuser des photos de soirée</li>
+    <li><strong>Harcèlement sexiste</strong> (id 28) — compte <em>vrai_garcon_2024</em> : attaques fondées sur le genre</li>
+    <li><strong>Harcèlement scolaire prolongé</strong> (id 29) — compte <em>colleg_info_2024</em> : moqueries liées à la vie scolaire</li>
+  </ul>
+</div>
+
+<h3>Partie 3 — Accès provisoire</h3>
+
+<div class="mod-block warn">
+  <h4>Mot de passe désactivé temporairement <span class="badge badge-changed">modifié</span></h4>
+  <p>Pour faciliter les tests, le code d'accès à la Partie 3 (4827) est contourné automatiquement. À rétablir avant la mise en production.</p>
+</div>
+
+
+<!-- ═══ 4. SESSION DU JOUR ═══ -->
+<div class="section-break"></div>
+<h2 id="session-today">4. Modifications du 7 mai 2026</h2>
+
+
+<!-- PARTIE 1 -->
+<h2 id="partie1" style="margin-top:32px;">Partie 1 — Téléphone d'Inès</h2>
+
+<div class="mod-block good">
+  <h4>Deuxième conversation (après Partie 3) <span class="badge badge-new">ajouté</span></h4>
+  <p>Une fois la Partie 3 terminée, une <strong>pastille verte pulsante</strong> discrète apparaît dans l'en-tête du téléphone d'Inès, indiquant un nouveau message. Elle n'est visible que si le joueur a terminé la Partie 3 — aucun indice explicite n'est donné ; c'est au joueur de penser à revenir consulter Inès.</p>
+  <p>La conversation se déroule ainsi :</p>
+  <ul>
+    <li>Léo : <em>"Inès, j'ai peut-être trouvé quelque chose"</em></li>
+    <li>Inès : <em>"quoi donc ?"</em></li>
+    <li>Le joueur doit taper <strong>"havre secret"</strong> (ou toute formulation contenant "havre")</li>
+    <li>Inès : <em>"Oui ! c'est chez sa tante, à la campagne. c'est là qu'elle est, bravo ! Sa tante travaille dans un restaurant, voici le numéro : <strong>04 54 78 95 32</strong>"</em></li>
+    <li>Bouton "→ Partie 4 : Convaincre Clara" apparaît</li>
+  </ul>
+  <p><strong>Logique de persistance :</strong> le flag <code>rc_p3_done</code> est stocké en <code>localStorage</code> à la fin de la Partie 3 et lu au chargement de la Partie 1.</p>
+</div>
+
+<h4>Fichiers modifiés</h4>
+<ul>
+  <li><span class="file-ref">1_Telephone_Ines.html</span> — notification badge HTML + CSS</li>
+  <li><span class="file-ref">1_Telephone_Ines_Structure.js</span> — logique de la deuxième conversation</li>
+</ul>
+
+
+<!-- PARTIE 2 -->
+<h2 id="partie2" style="margin-top:32px;">Partie 2 — Instagram de Clara</h2>
+
+<div class="mod-block good">
+  <h4>Refonte du système d'identification des types de harcèlement <span class="badge badge-new">nouveau</span></h4>
+  <p>L'ancien système déclenchait des quiz automatiquement à l'ouverture de certains DMs, ce qui orientait trop explicitement le joueur. Le nouveau système laisse l'initiative au joueur.</p>
+
+  <p><strong>Nouveau fonctionnement :</strong></p>
+  <div class="flow">
+    <div class="flow-step"><strong>1. Mission active</strong>Bouton flottant rouge "🔍 Identifier un harcèlement" apparaît après la question initiale</div>
+    <div class="flow-step"><strong>2. Mode sélection</strong>Le joueur clique le bouton → les messages et commentaires « taggués » s'illuminent (contour rouge pointillé)</div>
+    <div class="flow-step"><strong>3. Sélection</strong>Le joueur clique un message suspect → overlay QCM</div>
+    <div class="flow-step"><strong>4. QCM</strong>9 catégories proposées. Bonne réponse → compteur +1</div>
+    <div class="flow-step"><strong>5. Débloquage</strong>4 types identifiés → journal de Clara révélé + synthèse accessible</div>
+  </div>
+</div>
+
+<div class="mod-block info">
+  <h4>9 catégories de harcèlement <span class="badge badge-new">définies</span></h4>
+  <table>
+    <thead><tr><th>Clé</th><th>Label affiché</th><th>Icône</th></tr></thead>
+    <tbody>
+      <tr><td>body_shaming</td><td>Body shaming</td><td>🪞</td></tr>
+      <tr><td>menaces</td><td>Menaces et intimidation</td><td>⚠️</td></tr>
+      <tr><td>rumeurs</td><td>Rumeurs et diffamation</td><td>🗣️</td></tr>
+      <tr><td>exclusion</td><td>Exclusion et isolement forcé</td><td>🚪</td></tr>
+      <tr><td>diffusion_images</td><td>Diffusion d'images sans consentement</td><td>📸</td></tr>
+      <tr><td>manipulation</td><td>Manipulation psychologique</td><td>🕸️</td></tr>
+      <tr><td>sextorsion</td><td>Chantage / Sextorsion</td><td>🔐</td></tr>
+      <tr><td>sexiste</td><td>Harcèlement sexiste</td><td>😤</td></tr>
+      <tr><td>scolaire</td><td>Harcèlement scolaire prolongé</td><td>🏫</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="mod-block removed">
+  <h4>Suppression des quiz automatiques <span class="badge badge-removed">supprimé</span></h4>
+  <p>Les quiz qui se déclenchaient automatiquement à l'ouverture de certains DMs (QUIZZES) et au clic sur le bouton "Identifier" dans la lightbox (PHOTO_QUIZZES) ont été retirés. Les données sont conservées dans le code mais inactives. Le nouveau système les remplace intégralement.</p>
+</div>
+
+<div class="mod-block changed">
+  <h4>Textes modifiés <span class="badge badge-changed">modifié</span></h4>
+  <ul>
+    <li>Overlay warning : supprimé visuellement (display:none) ; la question initiale s'affiche automatiquement après 40 secondes de lecture</li>
+    <li>Objectif mission : <em>"Identifie au moins 4 types différents pour t'aider à comprendre ce qu'a vécu Clara et pouvoir la conseiller quand tu la retrouveras."</em></li>
+    <li>QCM photo glace : question reformulée pour demander le type de commentaire plutôt qu'une analyse générale</li>
+  </ul>
+</div>
+
+<h4>Fichiers modifiés</h4>
+<ul>
+  <li><span class="file-ref">2_Insta_de_Clara.html</span> — CSS mode sélection, bouton flottant, overlay identification</li>
+  <li><span class="file-ref">2_Insta_de_Clara_Structure.js</span> — HARCEL_TYPES, HARCEL_MAP, getHarcelType(), toggleSelectMode(), showIdentifyQCM(), answerIdentify(), closeIdentify() + refonte showLb() + modification openThread()</li>
+</ul>
+
+
+<!-- PARTIE 3 -->
+<h2 id="partie3" style="margin-top:32px;">Partie 3 — Groupe WhatsApp</h2>
+
+<div class="mod-block good">
+  <h4>Phase 6 : la disparition de Clara <span class="badge badge-new">ajouté</span></h4>
+  <p>19 nouveaux messages ajoutés en fin de conversation (lendemain, 09h14), après les quiz existants. Ils montrent la réaction du groupe face à la disparition de Clara.</p>
+  <ul>
+    <li><strong>Lucas, Jade, Théo, Marine</strong> : se réjouissent, se moquent du "havre secret" sans savoir ce que c'est</li>
+    <li><strong>Kevin</strong> : exprime deux fois son inquiétude (<em>"on est peut-être allés trop loin"</em>) avant d'être réduit au silence par le groupe</li>
+    <li>Référence explicite au "havre secret" — terme moqué mais non élucidé — ce qui incite le joueur à aller chercher l'information ailleurs (→ Inès)</li>
+  </ul>
+</div>
+
+<div class="mod-block good">
+  <h4>État final enrichi <span class="badge badge-changed">modifié</span></h4>
+  <p>Le message de clôture de la Partie 3 inclut désormais : <em>"s'est enfuie vers son « havre secret »... mais où est-il ?"</em> et une note qui invite implicitement le joueur à chercher.</p>
+</div>
+
+<div class="mod-block info">
+  <h4>Flag de progression <span class="badge badge-new">ajouté</span></h4>
+  <p>À l'affichage de l'état final, <code>localStorage.setItem('rc_p3_done', '1')</code> est enregistré. Ce flag est lu par la Partie 1 pour activer la notification de deuxième conversation avec Inès.</p>
+</div>
+
+<h4>Fichiers modifiés</h4>
+<ul>
+  <li><span class="file-ref">3_WhatsApp_Groupe_textes.js</span> — Phase 6 (messages 40–58), endMessage enrichi</li>
+  <li><span class="file-ref">3_WhatsApp_Groupe_Structure.js</span> — setItem localStorage dans showEndState()</li>
+</ul>
+
+
+<!-- PARTIE 4 -->
+<h2 id="partie4" style="margin-top:32px;">Partie 4 — Convaincre Clara</h2>
+
+<div class="mod-block changed">
+  <h4>Texte d'introduction <span class="badge badge-changed">modifié</span></h4>
+  <p>L'écran titre explique désormais clairement l'enjeu : Clara est réfugiée chez sa tante, et le joueur doit <strong>d'abord convaincre la tante</strong> qu'il est digne de confiance avant de pouvoir lui parler.</p>
+  <blockquote>« Clara a quitté le collège depuis trois semaines et s'est réfugiée chez sa tante. Tu es Léo, son ami. Pour parler à Clara, tu dois d'abord convaincre sa tante que tu es digne de confiance — et que tu es vraiment là pour l'aider. »</blockquote>
+</div>
+
+<div class="mod-block removed">
+  <h4>Suppressions des messages explicatifs <span class="badge badge-removed">supprimé</span></h4>
+  <p>Les toasts de feedback qui commentaient les choix du joueur en temps réel (<em>"Tu défends Clara directement. La tante le ressent."</em>) ont été supprimés. Ils brisaient l'immersion en explicitant ce que le joueur devait ressentir, au lieu de le laisser interpréter lui-même la réaction de la tante.</p>
+  <p>La réaction de la tante est désormais transmise uniquement par ses répliques dans le dialogue.</p>
+</div>
+
+<div class="mod-block fixed">
+  <h4>Bouton "Continuer →" <span class="badge badge-fixed">corrigé</span></h4>
+  <p>Le bouton était quasi invisible (couleur <code>#575060</code> sur fond très sombre). Remplacé par la couleur accent du jeu (orange/brun) avec fond légèrement teinté, cohérent avec la charte graphique de la scène.</p>
+</div>
+
+<h4>Fichiers modifiés</h4>
+<ul>
+  <li><span class="file-ref">4_Convaincre_Clara_textes.js</span> — texte d'introduction (champ <code>titre.sub</code>)</li>
+  <li><span class="file-ref">4_Convaincre_Clara_Structure.js</span> — suppression des toasts fb dans <code>onMainChoice()</code></li>
+  <li><span class="file-ref">4_Convaincre_Clara.html</span> — CSS du bouton <code>.btn-continue</code></li>
+</ul>
+
+
+<!-- ═══ 5. FLUX NARRATIF ═══ -->
+<div class="section-break"></div>
+<h2 id="flux-narratif">5. Flux narratif complet</h2>
+
+<div class="flow" style="flex-wrap:wrap;gap:4px;">
+  <div class="flow-step"><strong>Menu</strong>index.html — présentation des 4 parties</div>
+  <div class="flow-step"><strong>Partie 1</strong>Appel à Inès → obtenir codes Instagram + révélations sur le harcèlement</div>
+  <div class="flow-step"><strong>Partie 2</strong>Explorer l'Instagram de Clara → identifier 4 types de harcèlement → débloquer le journal de Clara → code WhatsApp 4827</div>
+  <div class="flow-step"><strong>Partie 3</strong>Lire le groupe WhatsApp → comprendre l'organisation → voir Clara disparaître</div>
+  <div class="flow-step"><strong>Retour Inès</strong>(discret) Saisir "havre secret" → obtenir n° de restaurant : 04 54 78 95 32</div>
+  <div class="flow-step"><strong>Partie 4</strong>Appeler le restaurant → convaincre la tante → parler à Clara</div>
+</div>
+
+<p style="margin-top:14px;font-size:13px;color:var(--dim);">Note : le retour vers Inès entre la Partie 3 et la Partie 4 est volontairement non guidé — le joueur doit faire le lien par lui-même entre la mention du "havre secret" dans le groupe WhatsApp et l'idée de rappeler Inès.</p>
+
+
+<!-- ═══ 6. PENDING ═══ -->
+<div class="section-break"></div>
+<h2 id="pending">6. Points en attente / Notes techniques</h2>
+
+<div class="mod-block warn">
+  <h4>Accès Partie 3 — mot de passe à rétablir <span class="badge badge-pending">en attente</span></h4>
+  <p>Le code d'accès <strong>4827</strong> est actuellement contourné pour faciliter les tests (<span class="file-ref">3_WhatsApp_Groupe_Structure.js</span>, fonction <code>checkCode()</code>). À restaurer avant mise en production.</p>
+</div>
+
+<div class="mod-block warn">
+  <h4>Partie 4 — code gate numéro de téléphone <span class="badge badge-pending">en attente</span></h4>
+  <p>Il a été prévu d'ajouter une porte d'accès à la Partie 4 demandant le numéro <strong>04 54 78 95 32</strong> obtenu via Inès. Cette fonctionnalité n'a pas encore été implémentée. Actuellement la Partie 4 est accessible directement.</p>
+</div>
+
+<div class="mod-block warn">
+  <h4>Partie 2 — compatibilité mode sélection en lightbox <span class="badge badge-pending">à tester</span></h4>
+  <p>Le mode sélection fonctionne dans les DMs et dans les commentaires de la lightbox. À tester sur smartphone (touch events) pour vérifier que la zone cliquable des commentaires est suffisamment grande.</p>
+</div>
+
+<div class="mod-block info">
+  <h4>Persistance inter-parties</h4>
+  <p>Les flags de progression utilisent <code>localStorage</code> (persistant entre sessions) et <code>sessionStorage</code> (limité à l'onglet courant) selon le contexte :</p>
+  <ul>
+    <li><code>rc_p1_visited</code> — localStorage — Partie 1 visitée (bouton "Reprendre" sur index)</li>
+    <li><code>rc_p3_done</code> — localStorage — Partie 3 terminée (active la 2e conversation Inès)</li>
+    <li><code>harcelement_wa_state</code> — sessionStorage — position dans la Partie 3 (retour depuis Instagram)</li>
+    <li><code>harcelement_wa_from</code> — sessionStorage — provenance (bouton "Retour au groupe" en Partie 2)</li>
+  </ul>
+</div>
+
+<div class="mod-block info">
+  <h4>Données entièrement fictives</h4>
+  <p>Tous les personnages, comptes, messages, numéros de téléphone et images sont fictifs et créés à des fins exclusivement pédagogiques. Un bandeau "Simulation pédagogique" est présent sur chaque scène.</p>
+</div>
+
+</div><!-- /page-body -->
+
+<div style="background:var(--text);color:#5a5040;font-family:-apple-system,'Segoe UI',sans-serif;font-size:11px;text-align:center;padding:18px;letter-spacing:.06em;">
+  Retrouver Clara — Document interne — 7 mai 2026
+</div>
+
+</body>
+</html>

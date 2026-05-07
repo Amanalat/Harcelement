@@ -307,6 +307,39 @@ const CONVOS = [
     ]
   },
   {
+    id:27, avatar:"🔐", name:"anon_blackmail_x", sub:"Compte inconnu",
+    unread:false, time:"il y a 2 mois", section:null,
+    preview:"j'ai des photos de toi que tu voudrais pas que tout le monde voie",
+    messages:[
+      { from:"them", text:"j'ai des photos de toi que tu voudrais pas que tout le monde voie", time:"23:12" },
+      { from:"them", text:"des photos de la soiree chez Lena le mois dernier", time:"23:13" },
+      { from:"them", text:"si tu parles a quelqu'un de ce qui se passe au college je les envoie a toute ta liste de contacts", time:"23:13" },
+      { from:"them", text:"t'as compris le message ?", time:"23:14" },
+    ]
+  },
+  {
+    id:28, avatar:"😤", name:"vrai_garcon_2024", sub:"Compte inconnu",
+    unread:false, time:"il y a 3 semaines", section:null,
+    preview:"les filles comme toi ca sait pas se tenir",
+    messages:[
+      { from:"them", text:"les filles comme toi ca sait pas se tenir", time:"19:44" },
+      { from:"them", text:"t'as pas ta place a t'exprimer comme ca devant tout le monde", time:"19:45" },
+      { from:"them", text:"t'es une fille reste a ta place", time:"19:46" },
+      { from:"them", text:"t'es trop dans ta tete pour une fille", time:"19:47" },
+    ]
+  },
+  {
+    id:29, avatar:"🏫", name:"colleg_info_2024", sub:"Compte inconnu",
+    unread:false, time:"il y a 3 semaines", section:null,
+    preview:"tout le monde riait dans ton dos a la cantine",
+    messages:[
+      { from:"them", text:"t'as vu la tete que t'avais a la cantine aujourd'hui", time:"17:21" },
+      { from:"them", text:"tout le monde riait dans ton dos a la cantine", time:"17:22" },
+      { from:"them", text:"le prof de maths t'a encore mise en difficulte devant tout le monde non", time:"17:23" },
+      { from:"them", text:"meme les profs peuvent pas te supporter c'etait dingue", time:"17:24" },
+    ]
+  },
+  {
     id:99, avatar:"📔", name:"Moi — Journal", sub:"Note personnelle",
     unread:true, time:"il y a 5 jours", section:null,
     secret:true,
@@ -328,6 +361,8 @@ let gamePhase = 0; // 0=waiting, 1=mission active, 2=types found
 let typesFound = new Set();
 const REQUIRED_TYPES = 4;
 let quizAnswered = {};
+let selectMode = false;
+let currentIdentifyData = null;
 
 // ─── UTILITAIRES ─────────────────────────────────────────────────────────────
 
@@ -361,7 +396,7 @@ const PHOTO_QUIZZES = {
   3: {
     icon:'⚖️',
     type:'Body shaming (harcèlement sur l\'apparence physique)',
-    question:'Des inconnus commentent le corps et les habitudes alimentaires de Clara — "mange encore", "problème de poids". Comment appelle-t-on ce type de harcèlement ?',
+    question:'À ton avis, comment appelle-t-on le genre de commentaire que tu viens de lire sous la photo ?',
     options:[
       'Des conseils diététiques maladroits',
       'Du body shaming — harcèlement ciblant l\'apparence physique',
@@ -469,6 +504,65 @@ const QUIZZES = {
   }
 };
 
+// ─── TYPES DE HARCÈLEMENT ────────────────────────────────────────────────────
+
+const HARCEL_TYPES = {
+  body_shaming:     { label:'Body shaming',                          desc:'Moqueries ciblant le corps, le poids ou l\'apparence.',               color:'#e07040', icon:'🪞' },
+  menaces:          { label:'Menaces et intimidation',                desc:'Messages menaçants pour faire peur ou réduire la victime au silence.', color:'#cc3333', icon:'⚠️' },
+  rumeurs:          { label:'Rumeurs et diffamation',                 desc:'Propagation de fausses informations pour nuire à la réputation.',      color:'#cc6600', icon:'🗣️' },
+  exclusion:        { label:'Exclusion et isolement forcé',           desc:'Pousser la victime à se sentir exclue de tout espace social.',         color:'#8844cc', icon:'🚪' },
+  diffusion_images: { label:'Diffusion d\'images sans consentement',  desc:'Partager ou menacer de partager des images sans accord.',             color:'#0088cc', icon:'📸' },
+  manipulation:     { label:'Manipulation psychologique',             desc:'Insinuations et jeux mentaux pour créer angoisse et confusion.',       color:'#669900', icon:'🕸️' },
+  sextorsion:       { label:'Chantage / Sextorsion',                  desc:'Utiliser des images ou secrets intimes pour faire pression.',          color:'#aa0044', icon:'🔐' },
+  sexiste:          { label:'Harcèlement sexiste',                    desc:'Attaques fondées sur le genre pour humilier et diminuer.',             color:'#cc44aa', icon:'😤' },
+  scolaire:         { label:'Harcèlement scolaire prolongé',          desc:'Extension du harcèlement scolaire vers les réseaux sociaux.',          color:'#447799', icon:'🏫' },
+};
+
+const HARCEL_MAP = [
+  { frag:'probleme de poids',                               type:'body_shaming' },
+  { frag:'mange encore',                                    type:'body_shaming' },
+  { frag:'vrai probleme avec ton poids',                    type:'body_shaming' },
+  { frag:'tu te demandes pourquoi',                         type:'body_shaming' },
+  { frag:'on est plusieurs a tavoir a loeil',               type:'menaces' },
+  { frag:'tu vas le regretter',                             type:'menaces' },
+  { frag:'ca va rester sans consequence',                   type:'menaces' },
+  { frag:'tout le monde sait ce que tas fait avec nathan',  type:'rumeurs' },
+  { frag:'ca tourne dans toute la classe',                  type:'rumeurs' },
+  { frag:'on a fait un sondage sur toi',                    type:'rumeurs' },
+  { frag:'surnommee',                                       type:'rumeurs' },
+  { frag:'supprimer ton compte personne le remarquerait',   type:'exclusion' },
+  { frag:'pas a ta place ici',                              type:'exclusion' },
+  { frag:'dans ce college dans cette classe',               type:'exclusion' },
+  { frag:'personne netait la pour ton anniversaire',        type:'exclusion' },
+  { frag:'tu las mange toute seule',                        type:'exclusion' },
+  { frag:'ca fait un moment quon voulait te dire',          type:'exclusion' },
+  { frag:'screenshotte ta story',                           type:'diffusion_images' },
+  { frag:'ta photo a ete partagee dans plusieurs groupes',  type:'diffusion_images' },
+  { frag:'on ta filmee',                                    type:'diffusion_images' },
+  { frag:'stories que les 3emes ont postees',               type:'diffusion_images' },
+  { frag:'je te dirai pas ce que cest',                     type:'manipulation' },
+  { frag:'ou peut-etre que tu merites de savoir',           type:'manipulation' },
+  { frag:'tes amis te parlent encore par pitie',            type:'manipulation' },
+  { frag:'personne ne ta defendue',                         type:'manipulation' },
+  { frag:'des photos de toi que tu voudrais pas',           type:'sextorsion' },
+  { frag:'si tu parles a quelquun de ce qui se passe au college', type:'sextorsion' },
+  { frag:'les filles comme toi',                            type:'sexiste' },
+  { frag:'reste a ta place',                                type:'sexiste' },
+  { frag:'trop dans ta tete pour une fille',                type:'sexiste' },
+  { frag:'tas pas ta place a texprimer',                    type:'sexiste' },
+  { frag:'tout le monde riait dans ton dos a la cantine',   type:'scolaire' },
+  { frag:'meme les profs peuvent pas te supporter',         type:'scolaire' },
+  { frag:'le prof de maths ta encore mise en difficulte',   type:'scolaire' },
+];
+
+function getHarcelType(text) {
+  const n = normaliseStr(text);
+  for (const e of HARCEL_MAP) {
+    if (n.includes(normaliseStr(e.frag))) return e.type;
+  }
+  return null;
+}
+
 // ─── NAVIGATION ──────────────────────────────────────────────────────────────
 
 function goTo(screenId) {
@@ -535,6 +629,11 @@ function openThread(id) {
     div.className = `msg-bubble ${m.from==='them'?'incoming':'outgoing'}`;
     div.style.animationDelay = (i * 0.06) + 's';
     div.textContent = m.text;
+    const ht = getHarcelType(m.text);
+    if (ht) {
+      div.dataset.harcelType = ht;
+      if (selectMode) div.classList.add('selectable');
+    }
     thread.appendChild(div);
     if (i < convo.messages.length - 1) {
       const ts = document.createElement('div');
@@ -553,8 +652,6 @@ function openThread(id) {
       setTimeout(() => {
         document.getElementById('code-overlay').style.display = 'flex';
       }, 2200);
-    } else if (QUIZZES[id] && !quizAnswered[id] && gamePhase >= 1) {
-      setTimeout(() => showQuiz(id), 700);
     }
   }, 100);
 }
@@ -651,18 +748,76 @@ function closeQuiz() {
   document.getElementById('quiz-overlay').style.display = 'none';
 }
 
+// ─── IDENTIFICATION FLOTTANTE ─────────────────────────────────────────────────
+
+function toggleSelectMode() {
+  selectMode = !selectMode;
+  const btn = document.getElementById('identify-btn');
+  if (selectMode) {
+    btn.textContent = '✕ Annuler la sélection';
+    btn.style.background = '#555';
+    document.querySelectorAll('[data-harcel-type]').forEach(el => el.classList.add('selectable'));
+  } else {
+    btn.textContent = '🔍 Identifier un harcèlement';
+    btn.style.background = '#e94560';
+    document.querySelectorAll('[data-harcel-type]').forEach(el => el.classList.remove('selectable'));
+  }
+}
+
+function showIdentifyQCM(correctType, msgText) {
+  currentIdentifyData = { correctType, msgText };
+  document.getElementById('id-msg').textContent = '« ' + msgText + ' »';
+  document.getElementById('id-feedback').style.display = 'none';
+  document.getElementById('id-feedback').className = 'quiz-fb';
+  document.getElementById('id-continue').style.display = 'none';
+  const optionsEl = document.getElementById('id-options');
+  optionsEl.innerHTML = '';
+  Object.entries(HARCEL_TYPES).forEach(([key, t]) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.dataset.typeKey = key;
+    btn.textContent = t.icon + ' ' + t.label;
+    btn.onclick = () => answerIdentify(key);
+    optionsEl.appendChild(btn);
+  });
+  document.getElementById('identify-overlay').style.display = 'flex';
+}
+
+function answerIdentify(chosen) {
+  if (!currentIdentifyData) return;
+  const { correctType } = currentIdentifyData;
+  const correct = chosen === correctType;
+  document.querySelectorAll('#id-options .quiz-opt').forEach(b => {
+    b.disabled = true;
+    if (b.dataset.typeKey === correctType) b.classList.add('correct');
+    else if (b.dataset.typeKey === chosen && !correct) b.classList.add('wrong');
+  });
+  const fb = document.getElementById('id-feedback');
+  fb.style.display = 'block';
+  const t = HARCEL_TYPES[correctType];
+  fb.className = 'quiz-fb ' + (correct ? 'good' : 'bad');
+  fb.innerHTML = (correct ? '<strong>✓ Bonne réponse !</strong><br>' : '<strong>✗ Pas tout à fait.</strong><br>')
+    + '<strong>' + t.icon + ' ' + t.label + '</strong><br>' + t.desc;
+  document.getElementById('id-continue').style.display = 'block';
+  if (correct) recordTypeFound(correctType);
+}
+
+function closeIdentify() {
+  document.getElementById('identify-overlay').style.display = 'none';
+  if (selectMode) toggleSelectMode();
+  currentIdentifyData = null;
+}
+
 // ─── FLOW DU JEU ─────────────────────────────────────────────────────────────
 
 function dismissWarning() {
-  document.getElementById('warning-overlay').style.display = 'none';
-  setTimeout(() => {
-    if (gamePhase === 0) {
-      const el = document.getElementById('initial-q-overlay');
-      el.style.display = 'flex';
-      document.getElementById('iq-input').focus();
-    }
-  }, 5000);
+  if (gamePhase === 0) {
+    const el = document.getElementById('initial-q-overlay');
+    el.style.display = 'flex';
+    document.getElementById('iq-input').focus();
+  }
 }
+setTimeout(dismissWarning, 40000);
 
 function checkInitialAnswer() {
   const input = document.getElementById('iq-input').value.trim();
@@ -691,6 +846,7 @@ function startMission() {
   const tracker = document.getElementById('types-tracker');
   if (tracker) tracker.style.display = 'flex';
   updateTypesTracker();
+  document.getElementById('identify-btn').style.display = 'block';
 }
 
 function recordTypeFound(type) {
@@ -700,6 +856,10 @@ function recordTypeFound(type) {
   if (typesFound.size >= REQUIRED_TYPES && gamePhase < 2) {
     gamePhase = 2;
     setTimeout(revealSecretMessage, 1200);
+    setTimeout(() => {
+      const btn = document.getElementById('synthesis-btn');
+      if (btn) btn.style.display = 'flex';
+    }, 800);
   }
 }
 
@@ -733,10 +893,12 @@ function goToSecretMessage() {
 function showSynthesis() {
   const content = document.getElementById('synthesis-content');
   content.innerHTML = '';
-  Object.values(QUIZZES).forEach(q => {
+  typesFound.forEach(typeKey => {
+    const t = HARCEL_TYPES[typeKey];
+    if (!t) return;
     const div = document.createElement('div');
     div.className = 'synth-item';
-    div.innerHTML = `<div class="synth-item-head"><span class="synth-icon">${q.icon}</span><span class="synth-type">${q.type}</span></div><div class="synth-exp">${q.explanation}</div>`;
+    div.innerHTML = `<div class="synth-item-head"><span class="synth-icon">${t.icon}</span><span class="synth-type">${t.label}</span></div><div class="synth-exp">${t.desc}</div>`;
     content.appendChild(div);
   });
   const note = document.createElement('div');
@@ -847,24 +1009,20 @@ function showLb() {
   document.getElementById('lb-likes').textContent = likeTxt;
   document.getElementById('lb-caption').textContent = data.caption;
   var commDiv = document.getElementById('lb-comments');
-  commDiv.innerHTML = data.comments.map(function(c){
-    return '<div style="font-size:.8rem;color:#f5f5f5;line-height:1.4;"><span style="font-weight:700;color:#f5f5f5;">'+c.user+'</span> <span style="color:#d0d0d0;">'+c.text+'</span></div>';
-  }).join('');
+  commDiv.innerHTML = '';
+  data.comments.forEach(function(c) {
+    var el = document.createElement('div');
+    el.className = 'ig-comment';
+    el.style.cssText = 'font-size:.8rem;color:#f5f5f5;line-height:1.4;';
+    var ht = getHarcelType(c.text);
+    if (ht) {
+      el.dataset.harcelType = ht;
+      if (selectMode) el.classList.add('selectable');
+    }
+    el.innerHTML = '<span style="font-weight:700;color:#f5f5f5;">' + c.user + '</span> <span class="c-text" style="color:#d0d0d0;">' + c.text + '</span>';
+    commDiv.appendChild(el);
+  });
   commDiv.scrollTop = 0;
-
-  // Quiz button for photos with a PHOTO_QUIZ, only during mission
-  var existingBtn = document.getElementById('lb-quiz-btn');
-  if (existingBtn) existingBtn.remove();
-  var idx = lbIndex;
-  if (PHOTO_QUIZZES[idx] && gamePhase >= 1) {
-    var alreadyDone = quizAnswered['photo_' + idx];
-    var btn = document.createElement('button');
-    btn.id = 'lb-quiz-btn';
-    btn.style.cssText = 'display:block;width:calc(100% - 0px);margin:10px 0 0;padding:10px 14px;background:'+(alreadyDone?'#0f2a1a':'#0f1a2e')+';border:1px solid '+(alreadyDone?'#2dcc6f':'#3a6fff')+';border-radius:0;color:'+(alreadyDone?'#2dcc6f':'#3a9fff')+';font-size:.82rem;font-weight:600;cursor:'+(alreadyDone?'default':'pointer')+';text-align:center;';
-    btn.textContent = alreadyDone ? '✓ Type identifié' : '🔍 Identifier le type de harcèlement';
-    if (!alreadyDone) btn.onclick = function(e){ e.stopPropagation(); showPhotoQuiz(idx); };
-    commDiv.parentElement.appendChild(btn);
-  }
 }
 
 // ─── RETOUR WHATSAPP ─────────────────────────────────────────────────────────
@@ -910,7 +1068,7 @@ document.querySelector('.posts-grid').addEventListener('click', e => {
 });
 
 // Warning overlay button
-document.querySelector('#warning-overlay button').addEventListener('click', dismissWarning);
+// warning overlay supprimé
 
 // Initial question — bouton valider
 document.querySelector('.iq-btn').addEventListener('click', checkInitialAnswer);
@@ -968,6 +1126,30 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeLightbox();
   if (e.key === 'ArrowLeft') lbNav(-1);
   if (e.key === 'ArrowRight') lbNav(1);
+});
+
+// Bouton identifier flottant
+document.getElementById('identify-btn').addEventListener('click', toggleSelectMode);
+
+// Identify overlay — annuler et continuer
+document.getElementById('id-cancel').addEventListener('click', closeIdentify);
+document.getElementById('id-continue').addEventListener('click', closeIdentify);
+
+// Event delegation — messages DM en mode sélection
+document.getElementById('msgThread').addEventListener('click', e => {
+  if (!selectMode) return;
+  const bubble = e.target.closest('[data-harcel-type]');
+  if (bubble) showIdentifyQCM(bubble.dataset.harcelType, bubble.textContent);
+});
+
+// Event delegation — commentaires lightbox en mode sélection
+document.getElementById('lb-comments').addEventListener('click', e => {
+  if (!selectMode) return;
+  const comment = e.target.closest('[data-harcel-type]');
+  if (comment) {
+    const textEl = comment.querySelector('.c-text');
+    showIdentifyQCM(comment.dataset.harcelType, textEl ? textEl.textContent : comment.textContent);
+  }
 });
 
 // ─── INIT ────────────────────────────────────────────────────────────────────

@@ -119,7 +119,30 @@ const WA_DATA = {
     { id: 39, sender: "Jade",   text: "et on flood ses DMs depuis les comptes anon, surtout des trucs sur son physique",   time: "18:01", delay: 1000 },
 
     { type: "quiz", quizId: "anonymat", delay: 400 },
-    { type: "end",                       delay: 300 }
+
+    // — Phase 6 : Clara disparaît (~J+1) —
+    { type: "time-sep", text: "Lendemain — 09h14" },
+    { id: 40, sender: "Jade",   text: "vous avez vu ? Clara a plus posté depuis hier soir",                                   time: "09:14", delay: 1200 },
+    { id: 41, sender: "Lucas",  text: "hahaha on l'a bien cassée 💀",                                                        time: "09:15", delay:  700 },
+    { id: 42, sender: "Théo",   text: "même plus vue en ligne depuis ce matin",                                               time: "09:15", delay:  800 },
+    { id: 43, sender: "Marine", text: "et elle était pas en cours aujourd'hui non plus 😂",                                   time: "09:16", delay:  900 },
+    { id: 44, sender: "Kevin",  text: "sérieusement... c'est peut-être grave là",                                             time: "09:17", delay: 1200 },
+    { id: 45, sender: "Lucas",  text: "relax elle a juste besoin d'une pause, elle l'a bien cherché 😂",                     time: "09:17", delay:  700 },
+    { id: 46, sender: "Kevin",  text: "ça fait 2 jours qu'on la voit plus nulle part. c'est pas normal",                     time: "09:18", delay: 1000 },
+    { id: 47, sender: "Jade",   text: "kevin arrête de dramatiser c'est bon",                                                 time: "09:18", delay:  600 },
+    { id: 48, sender: "Marine", text: "j'ai entendu dire qu'elle est partie dans son « havre secret » lmao",                 time: "09:20", delay: 1500 },
+    { id: 49, sender: "Lucas",  text: "son QUOI 💀💀💀",                                                                   time: "09:20", delay:  500 },
+    { id: 50, sender: "Jade",   text: "elle est vraiment trop bizarre cette fille avec ses mots de 40 ans",                  time: "09:21", delay:  800 },
+    { id: 51, sender: "Théo",   text: "c'est quoi ce « havre secret » omg elle se prend pour qui",                          time: "09:21", delay:  700 },
+    { id: 52, sender: "Marine", text: "chez sa tante je crois, quelque part, personne sait vraiment",                        time: "09:22", delay: 1000 },
+    { id: 53, sender: "Lucas",  text: "lmao elle s'est enfuie dans son château secret 🏰 trop pathétique",                  time: "09:22", delay:  800 },
+    { id: 54, sender: "Kevin",  text: "les gars franchement... on est peut-être allés trop loin",                            time: "09:24", delay: 1500 },
+    { id: 55, sender: "Théo",   text: "non, elle l'a bien cherché. elle avait juste à pas réagir comme ça",                  time: "09:24", delay:  700 },
+    { id: 56, sender: "Jade",   text: "exactement, c'est sa faute si elle peut pas encaisser",                               time: "09:25", delay:  600 },
+    { id: 57, sender: "Lucas",  text: "bon elle revient quand elle veut de son « havre » 😂 on sera là",                    time: "09:25", delay:  900 },
+    { id: 58, sender: "Kevin",  text: "...",                                                                                  time: "09:26", delay:  400 },
+
+    { type: "end",                        delay: 300 }
 
   ],
 
@@ -193,9 +216,10 @@ const WA_DATA = {
       "recevait des messages anonymes la nuit — ils sont dans ce groupe.",
       "voyait ses commentaires envahis — ils les ont organisés ici.",
       "pensait que « tout le monde » la détestait — ils l'ont fabriqué ensemble.",
-      "n'osait plus poster — c'était leur objectif."
+      "n'osait plus poster — c'était leur objectif.",
+      "s'est enfuie vers son « havre secret »... mais où est-il ?"
     ],
-    note: "Le harcèlement de groupe transforme chaque espace en danger. Même chez elle, même seule, Clara n'était plus en sécurité."
+    note: "Le harcèlement de groupe transforme chaque espace en danger. Clara est partie se réfugier quelque part. Quelqu’un doit savoir où."
   },
 
   // ─── Navigation ──────────────────────────────────────────────────────────────

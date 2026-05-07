@@ -68,9 +68,17 @@
 .cpbtn.ok{background:#0d2a0d;color:#30d158;}
 .nxbtn{background:#0a1e35;border:0.5px solid #0b4880;color:#0b84ff;padding:8px;border-radius:20px;font-size:11.5px;cursor:pointer;margin-top:8px;width:100%;display:block;text-align:center;text-decoration:none;box-sizing:border-box;}
 .nxbtn:hover{background:#0d2645}
+#p3-notif-bar{display:none;background:#0a1f0a;border-bottom:0.5px solid #1a4a1a;padding:5px 13px;cursor:pointer;align-items:center;gap:7px;}
+#p3-notif-bar:hover{background:#0d2a0d;}
+@keyframes p3pulse{0%,100%{opacity:1;}50%{opacity:.45;}}
+.p3-dot{width:7px;height:7px;border-radius:50%;background:#30d158;flex-shrink:0;animation:p3pulse 1.8s ease-in-out infinite;display:inline-block;}
+#second-convo{display:none;flex-direction:column;}
+#sc-input{flex:1;background:#222;border:0.5px solid #2e2e2e;color:#e5e5ea;padding:7px 10px;border-radius:11px;font-size:11.5px;outline:none;font-family:-apple-system,sans-serif;}
+#sc-send{background:#0b84ff;border:none;color:#fff;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+#sc-send:hover{background:#0070e0;}
 </style>
 
-<a href="index.html" class="menu-btn">← Menu</a>
+<a href="index.html?skip" class="menu-btn">← Menu</a>
 
 <div id="intro1">
   <div class="i1-inner">
@@ -101,6 +109,13 @@
     </div>
   </div>
 
+  <!-- Notification discrète — nouveau message d'Inès (visible après partie 3) -->
+  <div id="p3-notif-bar">
+    <span class="p3-dot"></span>
+    <span style="color:#4dcc70;font-size:10px;font-weight:600;flex:1;">nouveau message</span>
+    <span style="color:#4dcc70;font-size:9px;opacity:.6;">maintenant</span>
+  </div>
+
   <div class="tbar">
     <span id="tlb" style="color:#ff9f0a;font-size:9px;min-width:108px;transition:color .4s;white-space:nowrap;"></span>
     <div class="tbarr"><div class="tmark"></div><div class="tbarf" id="tf" style="width:50%;background:#ff9f0a;"></div></div>
@@ -109,7 +124,22 @@
 
   <div class="ma" id="ma"></div>
   <div class="ca" id="ca"><div class="chint">…</div></div>
+
+  <!-- Deuxième conversation avec Inès (après partie 3) -->
+  <div id="second-convo">
+    <div class="ma" id="sc-ma"></div>
+    <div id="sc-ca" style="background:#111;padding:7px;min-height:44px;border-top:0.5px solid #1e1e1e;">
+      <div id="sc-input-row" style="display:none;display:flex;gap:6px;align-items:center;">
+        <input id="sc-input" placeholder="Écrire un message…" autocomplete="off">
+        <button id="sc-send">↑</button>
+      </div>
+      <div id="sc-end" style="display:none;"></div>
+    </div>
+  </div>
 </div></div>
 
 <script src="1_Telephone_Ines_textes.js"></script>
 <script src="1_Telephone_Ines_Structure.js"></script>
+<style>#fs-btn{position:fixed;top:1rem;right:1rem;z-index:9000;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:rgba(255,255,255,.45);cursor:pointer;padding:7px;line-height:0;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:color .2s,border-color .2s;}#fs-btn:hover{color:#fff;border-color:rgba(255,255,255,.3);}</style>
+<button id="fs-btn" title="Plein écran" aria-label="Plein écran"><svg id="fse" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg><svg id="fss" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="10" y1="14" x2="3" y2="21"/><line x1="21" y1="3" x2="14" y2="10"/></svg></button>
+<script>(function(){var b=document.getElementById('fs-btn'),e=document.getElementById('fse'),s=document.getElementById('fss');function u(){var f=!!(document.fullscreenElement||document.webkitFullscreenElement);e.style.display=f?'none':'';s.style.display=f?'':'none';}b.addEventListener('click',function(){if(!document.fullscreenElement&&!document.webkitFullscreenElement)(document.documentElement.requestFullscreen||document.documentElement.webkitRequestFullscreen).call(document.documentElement);else(document.exitFullscreen||document.webkitExitFullscreen).call(document);});document.addEventListener('fullscreenchange',u);document.addEventListener('webkitfullscreenchange',u);})();</script>

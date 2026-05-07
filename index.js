@@ -2,13 +2,17 @@
   // Intro overlay
   var ov = document.getElementById('intro-overlay');
   if(ov){
-    var t = setTimeout(dismiss, 9200);
-    ov.addEventListener('click', function(){ clearTimeout(t); dismiss(); });
-    function dismiss(){
-      ov.style.transition = 'opacity 1.1s ease';
-      ov.style.opacity = '0';
-      ov.style.pointerEvents = 'none';
-      setTimeout(function(){ ov.style.display = 'none'; }, 1100);
+    if(location.search.indexOf('skip') !== -1){
+      ov.style.display = 'none';
+    } else {
+      var t = setTimeout(dismiss, 9200);
+      ov.addEventListener('click', function(){ clearTimeout(t); dismiss(); });
+      function dismiss(){
+        ov.style.transition = 'opacity 1.1s ease';
+        ov.style.opacity = '0';
+        ov.style.pointerEvents = 'none';
+        setTimeout(function(){ ov.style.display = 'none'; }, 1100);
+      }
     }
   }
 

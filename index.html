@@ -304,6 +304,22 @@ body::before{
   z-index:1;
 }
 
+#fs-btn{
+  position:fixed;top:1rem;right:1rem;
+  z-index:2000;
+  background:rgba(13,17,25,.75);
+  border:1px solid var(--border);
+  border-radius:8px;
+  color:var(--dim);
+  cursor:pointer;
+  padding:7px;
+  line-height:0;
+  transition:color .2s,border-color .2s,background .2s;
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+}
+#fs-btn:hover{color:var(--text);border-color:rgba(255,255,255,.2);background:rgba(13,17,25,.95);}
+
 /* ── INTRO ── */
 #intro-overlay{
   position:fixed;inset:0;background:var(--bg);
@@ -435,6 +451,38 @@ body::before{
 
 <footer class="footer">© Retrouver Clara — Exercice de sensibilisation au harcèlement</footer>
 
+<button id="fs-btn" title="Plein écran" aria-label="Activer le plein écran">
+  <svg id="fs-icon-expand" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/>
+    <line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>
+  </svg>
+  <svg id="fs-icon-shrink" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+    <polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/>
+    <line x1="10" y1="14" x2="3" y2="21"/><line x1="21" y1="3" x2="14" y2="10"/>
+  </svg>
+</button>
+
+<script>
+(function(){
+  var btn=document.getElementById('fs-btn');
+  var expand=document.getElementById('fs-icon-expand');
+  var shrink=document.getElementById('fs-icon-shrink');
+  function update(){
+    var fs=!!(document.fullscreenElement||document.webkitFullscreenElement);
+    expand.style.display=fs?'none':'';
+    shrink.style.display=fs?'':'none';
+  }
+  btn.addEventListener('click',function(){
+    if(!document.fullscreenElement&&!document.webkitFullscreenElement){
+      (document.documentElement.requestFullscreen||document.documentElement.webkitRequestFullscreen).call(document.documentElement);
+    } else {
+      (document.exitFullscreen||document.webkitExitFullscreen).call(document);
+    }
+  });
+  document.addEventListener('fullscreenchange',update);
+  document.addEventListener('webkitfullscreenchange',update);
+})();
+</script>
 
 </body>
 </html>

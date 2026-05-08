@@ -38,7 +38,7 @@ function resumeFromCode(){
   const raw   = document.getElementById('code-input').value;
   const errEl = document.getElementById('code-error');
   const state = decodeState(raw);
-  if(!state){ errEl.textContent='Code invalide — vérifie les 4 caractères.'; return; }
+  if(!state){ errEl.textContent=UI.invalidCode; return; }
   errEl.textContent='';
   clearTimers();
   empathy=state.empathy; sceneIndex=state.sceneIndex;

@@ -310,3 +310,18 @@ var TEXTES = {
     }
   }
 };
+
+const UI = {
+  nextPartUrl: "2_Insta_de_Clara.html",
+  secondConvo: {
+    statusOnline: "en ligne",
+    statusTyping: "écrit…",
+    playerMsg: "Inès, j'ai peut-être trouvé quelque chose",
+    q: "quoi donc ?",
+    correctYes: "Oui ! c'est chez sa tante, à la campagne.",
+    correctCont: "C'est là qu'elle est, bravo ! Sa tante travaille dans un restaurant — voici le numéro :",
+    wrongAnswer: "Je vois pas à quoi tu fais référence... c'est quoi exactement ce que t'as trouvé ?",
+    nextUrl: "4_Convaincre_Clara.html",
+    nextBtn: "→ Partie 4 : Convaincre Clara"
+  }
+};

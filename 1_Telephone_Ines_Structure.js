@@ -239,7 +239,7 @@ async function finalSuccessPhase(isSuccess){
   var html='<div style="color:'+titleColor+';font-size:10.5px;font-weight:600;margin-bottom:6px;">'+fin.titre+'</div>';
   html+=buildIgCard(fin.ig);
   html+='<div style="margin-top:8px;">'+buildRevCards()+'</div>';
-  html+='<a href="2_Insta_de_Clara.html" class="nxbtn">'+fin.nextPartBtn+'</a>';
+  html+='<a href="'+UI.nextPartUrl+'" class="nxbtn">'+fin.nextPartBtn+'</a>';
   html+='<button class="rb js-restart" style="margin-top:6px;">'+TEXTES.restartBtn+'</button>';
   ca.innerHTML='<div class="ea">'+html+'</div>';
 }
@@ -315,7 +315,7 @@ function openSecondConvo(){
   }
 
   // Amorce : le joueur envoie le premier message
-  addSc("Inès, j'ai peut-être trouvé quelque chose", 's');
+  addSc(UI.secondConvo.playerMsg, 's');
 
   var scInputRow = document.getElementById('sc-input-row');
   var scInput    = document.getElementById('sc-input');
@@ -323,7 +323,7 @@ function openSecondConvo(){
 
   setTimeout(function(){
     // Inès répond
-    document.getElementById('st').textContent = 'écrit…';
+    document.getElementById('st').textContent = UI.secondConvo.statusTyping;
     var ty = document.createElement('div');
     ty.className = 'tyi';
     ty.innerHTML = '<span></span><span></span><span></span>';
@@ -331,8 +331,8 @@ function openSecondConvo(){
 
     setTimeout(function(){
       ty.remove();
-      document.getElementById('st').textContent = 'en ligne';
-      addSc('quoi donc ?', 'r');
+      document.getElementById('st').textContent = UI.secondConvo.statusOnline;
+      addSc(UI.secondConvo.q, 'r');
       scInputRow.style.display = 'flex';
       scInput.focus();
     }, 1100);
@@ -348,7 +348,7 @@ function openSecondConvo(){
     var n = val.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
     var correct = n.includes('havre') || n.includes('secret');
 
-    document.getElementById('st').textContent = 'écrit…';
+    document.getElementById('st').textContent = UI.secondConvo.statusTyping;
     var ty2 = document.createElement('div');
     ty2.className = 'tyi';
     ty2.innerHTML = '<span></span><span></span><span></span>';
@@ -356,10 +356,10 @@ function openSecondConvo(){
 
     setTimeout(function(){
       ty2.remove();
-      document.getElementById('st').textContent = 'en ligne';
+      document.getElementById('st').textContent = UI.secondConvo.statusOnline;
 
       if (correct) {
-        addSc("Oui ! c'est chez sa tante, à la campagne.", 'r');
+        addSc(UI.secondConvo.correctYes, 'r');
         setTimeout(function(){
           var ty3 = document.createElement('div');
           ty3.className = 'tyi';
@@ -367,7 +367,7 @@ function openSecondConvo(){
           scMa.appendChild(ty3); scMa.scrollTop = scMa.scrollHeight;
           setTimeout(function(){
             ty3.remove();
-            addSc("C'est là qu'elle est, bravo ! Sa tante travaille dans un restaurant — voici le numéro :", 'r');
+            addSc(UI.secondConvo.correctCont, 'r');
             setTimeout(function(){
               var numDiv = document.createElement('div');
               numDiv.className = 'bb r';
@@ -376,14 +376,14 @@ function openSecondConvo(){
               try { localStorage.setItem('rc_p3_done', '2'); } catch(e) {}
               setTimeout(function(){
                 var endEl = document.getElementById('sc-end');
-                endEl.innerHTML = '<a href="4_Convaincre_Clara.html" class="nxbtn">→ Partie 4 : Convaincre Clara</a>';
+                endEl.innerHTML = '<a href="'+UI.secondConvo.nextUrl+'" class="nxbtn">'+UI.secondConvo.nextBtn+'</a>';
                 endEl.style.display = 'block';
               }, 600);
             }, 1200);
           }, 1100);
         }, 800);
       } else {
-        addSc("Je vois pas à quoi tu fais référence... c'est quoi exactement ce que t'as trouvé ?", 'r');
+        addSc(UI.secondConvo.wrongAnswer, 'r');
         setTimeout(function(){
           scInputRow.style.display = 'flex';
           scInput.focus();

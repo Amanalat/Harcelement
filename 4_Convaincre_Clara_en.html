@@ -1,11 +1,11 @@
-﻿<!DOCTYPE html>
-<html lang="fr">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Convaincre Clara</title>
+<title>Convincing Clara</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="4_Convaincre_Clara_textes.js"></script>
+<script src="4_Convaincre_Clara_textes_en.js"></script>
 <script src="4_Convaincre_Clara_Structure.js" defer></script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -170,22 +170,22 @@ body::after{
 <div id="phone-gate">
   <div class="pg-box">
     <div class="pg-icon">📞</div>
-    <div class="pg-title">Passer l'appel</div>
-    <div class="pg-hint">Tu as obtenu le numéro de la tante de Clara. Entre-le pour passer l'appel.</div>
+    <div class="pg-title">Make the call</div>
+    <div class="pg-hint">You have obtained Clara's aunt's phone number. Enter it to make the call.</div>
     <span class="pg-sep"></span>
-    <input type="tel" id="pg-input" class="pg-input" placeholder="ex : 04 54 78 95 32" autocomplete="off" spellcheck="false">
+    <input type="tel" id="pg-input" class="pg-input" placeholder="e.g.: 04 54 78 95 32" autocomplete="off" spellcheck="false">
     <div class="pg-error" id="pg-error"></div>
-    <button id="pg-call" class="pg-btn-call">Appeler →</button>
-    <button id="pg-skip" class="pg-btn-skip">Accéder directement →</button>
+    <button id="pg-call" class="pg-btn-call">Call →</button>
+    <button id="pg-skip" class="pg-btn-skip">Access directly →</button>
   </div>
 </div>
 
 <div id="intro4">
   <div class="i1-inner">
-    <p class="i1-line" style="animation-delay:.7s">Je dois contacter Clara pour lui apporter mon soutien et l'aider à aller mieux.</p>
+    <p class="i1-line" style="animation-delay:.7s">I need to contact Clara to support her and help her feel better.</p>
     <span class="i1-sep"></span>
-    <button id="intro4-btn" class="i1-btn" style="animation-delay:2.5s">Contacter Clara →</button>
-    <span class="i1-skip" style="animation-delay:3s">appuyer pour continuer</span>
+    <button id="intro4-btn" class="i1-btn" style="animation-delay:2.5s">Contact Clara →</button>
+    <span class="i1-skip" style="animation-delay:3s">tap to continue</span>
   </div>
 </div>
 
@@ -202,10 +202,10 @@ body::after{
   </div>
   <button class="btn-start"></button>
   <div class="save-area">
-    <div class="save-sep">ou reprendre une partie</div>
+    <div class="save-sep">or resume a game</div>
     <div class="save-row">
-      <input type="text" id="code-input" class="code-input" maxlength="4" placeholder="ex : 2XSF" autocomplete="off" spellcheck="false">
-      <button class="btn-resume">Reprendre</button>
+      <input type="text" id="code-input" class="code-input" maxlength="4" placeholder="e.g.: 2XSF" autocomplete="off" spellcheck="false">
+      <button class="btn-resume">Resume</button>
     </div>
     <div class="code-error" id="code-error"></div>
   </div>
@@ -216,9 +216,9 @@ body::after{
   <div class="game-wrap">
     <div class="ghdr">
       <div class="ghdr-left" id="phase-label"></div>
-      <button class="btn-save">Sauvegarder</button>
+      <button class="btn-save">Save</button>
       <div class="emp-area">
-        <div class="emp-lbl">Empathie</div>
+        <div class="emp-lbl">Empathy</div>
         <div class="hearts" id="hearts"></div>
       </div>
     </div>
@@ -231,7 +231,7 @@ body::after{
       <div class="fb" id="fb-toast"></div>
       <div class="q-prompt" id="q-prompt"></div>
       <div class="choices" id="choices"></div>
-      <button class="btn-continue" id="btn-continue">Continuer →</button>
+      <button class="btn-continue" id="btn-continue">Continue →</button>
     </div>
   </div>
 </div>
@@ -258,14 +258,14 @@ body::after{
 <!-- SAVE MODAL -->
 <div id="modal-save" class="modal-save">
   <div class="modal-save-box">
-    <div class="modal-save-lbl">Ton code de sauvegarde</div>
+    <div class="modal-save-lbl">Your save code</div>
     <div class="modal-save-code" id="save-code">—</div>
-    <div class="modal-save-hint">Note ces 4 caractères. Sur l'écran d'accueil, saisis-les pour reprendre ta partie.</div>
-    <button class="btn-close-modal">Fermer</button>
+    <div class="modal-save-hint">Write down these 4 characters. On the home screen, enter them to resume your game.</div>
+    <button class="btn-close-modal">Close</button>
   </div>
 </div>
 
-<a href="index.html?skip" class="menu-btn">← Menu</a>
+<a href="index_en.html?skip" class="menu-btn">← Menu</a>
 <script>
 (function(){
   var ov=document.getElementById('intro4');
@@ -301,7 +301,7 @@ body::after{
       errEl.textContent='';
       dismissGate();
     } else {
-      errEl.textContent='Numéro incorrect — vérifie le numéro obtenu.';
+      errEl.textContent='Incorrect number — check the number you obtained.';
       input.style.borderColor='rgba(192,104,96,.6)';
     }
   });
@@ -319,7 +319,7 @@ body::after{
 })();
 </script>
 <style>#fs-btn{position:fixed;top:1rem;right:1rem;z-index:9000;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:rgba(255,255,255,.45);cursor:pointer;padding:7px;line-height:0;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:color .2s,border-color .2s;}#fs-btn:hover{color:#fff;border-color:rgba(255,255,255,.3);}</style>
-<button id="fs-btn" title="Plein écran" aria-label="Plein écran"><svg id="fse" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg><svg id="fss" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="10" y1="14" x2="3" y2="21"/><line x1="21" y1="3" x2="14" y2="10"/></svg></button>
+<button id="fs-btn" title="Fullscreen" aria-label="Fullscreen"><svg id="fse" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg><svg id="fss" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="10" y1="14" x2="3" y2="21"/><line x1="21" y1="3" x2="14" y2="10"/></svg></button>
 <script>(function(){var b=document.getElementById('fs-btn'),e=document.getElementById('fse'),s=document.getElementById('fss'),f=false;function u(){f=!!(document.fullscreenElement||document.webkitFullscreenElement);e.style.display=f?'none':'';s.style.display=f?'':'none';}b.addEventListener('click',function(){if(!f)(document.documentElement.requestFullscreen||document.documentElement.webkitRequestFullscreen).call(document.documentElement);else(document.exitFullscreen||document.webkitExitFullscreen).call(document);});document.addEventListener('fullscreenchange',u);document.addEventListener('webkitfullscreenchange',u);})();</script>
 </body>
 </html>

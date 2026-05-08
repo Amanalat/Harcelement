@@ -21,8 +21,9 @@
     if(localStorage.getItem('rc_p1_visited')){
       var label = document.querySelector('.cta-label');
       var badge = document.querySelector('.cta-btn');
-      if(label){ label.textContent = 'Reprendre l\'enquête'; }
-      if(badge){ badge.textContent = '↩ Continuer'; badge.style.background = '#2c4a6e'; }
+      var isEN = location.pathname.indexOf('_en') !== -1;
+      if(label){ label.textContent = isEN ? 'Resume the investigation' : 'Reprendre l\'enquête'; }
+      if(badge){ badge.textContent = isEN ? '↩ Continue' : '↩ Continuer'; badge.style.background = '#2c4a6e'; }
     }
   } catch(e) {}
 })();

@@ -1,7 +1,17 @@
 // ── Code Gate ──────────────────────────────────────────────────────────────
 
 function checkCode() {
-  // Accès libre temporairement — mot de passe désactivé
+  var val = document.getElementById('gate-input').value.trim();
+  if (val === '4827') {
+    document.getElementById('gate-error').style.display = 'none';
+    document.getElementById('code-gate').style.display = 'none';
+    document.getElementById('warning-overlay').style.display = 'flex';
+  } else {
+    document.getElementById('gate-error').style.display = 'block';
+  }
+}
+
+function bypassGate() {
   document.getElementById('code-gate').style.display = 'none';
   document.getElementById('warning-overlay').style.display = 'flex';
 }
@@ -53,7 +63,7 @@ function init() {
   // Modal Instagram
   document.getElementById('ig-modal-photo').src = WA_DATA.instagramCard.photo;
   document.getElementById('ig-modal-cap-text').textContent = ' ' + WA_DATA.instagramCard.caption;
-  document.getElementById('ig-modal-likes').textContent    = '3 J\'aime';
+  document.getElementById('ig-modal-likes').textContent    = UI.likes;
 
   // Retour depuis Instagram ? → sauter les overlays, reprendre où on en était
   var saved = sessionStorage.getItem('harcelement_wa_state');
@@ -73,7 +83,7 @@ function fastForwardTo(targetIndex) {
 
   var sep = document.createElement('div');
   sep.className = 'date-sep';
-  sep.textContent = 'Aujourd\'hui';
+  sep.textContent = UI.today;
   container.appendChild(sep);
 
   for (var i = 0; i < targetIndex && i < WA_DATA.messages.length; i++) {
@@ -106,7 +116,7 @@ function startPlay() {
   document.getElementById('start-screen').style.display = 'none';
   var sep = document.createElement('div');
   sep.className = 'date-sep';
-  sep.textContent = 'Aujourd\'hui';
+  sep.textContent = UI.today;
   document.getElementById('messages-container').appendChild(sep);
   processNext();
 }
@@ -252,7 +262,7 @@ function appendInstagramCard(sender, instant) {
 function formatText(str) {
   return esc(str).replace(/@([\w]+)/g, function (match, username) {
     return '<span class="mention" style="cursor:pointer;text-decoration:underline dotted" ' +
-           'title="Voir ses messages sur l\'Instagram de Clara" ' +
+           'title="' + UI.mentionTooltip + '" ' +
            'data-goto-instagram="1">@' + username + '</span>';
   });
 }
@@ -340,7 +350,7 @@ function answerQuiz(q, chosen) {
   var fb = document.getElementById('quiz-feedback');
   fb.style.display = 'block';
   fb.className = 'quiz-fb ' + (correct ? 'good' : 'bad');
-  fb.innerHTML = (correct ? '<strong>✓ Bonne réponse !</strong><br>' : '<strong>✗ Pas tout à fait.</strong><br>') + esc(q.explanation);
+  fb.innerHTML = (correct ? '<strong>'+UI.correct+'</strong><br>' : '<strong>'+UI.wrong+'</strong><br>') + esc(q.explanation);
   document.getElementById('quiz-continue').style.display = 'inline-block';
 }
 

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Retrouver Clara</title>
+<title>Finding Clara</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="index.js" defer></script>
 <style>
@@ -235,7 +235,7 @@ body::before{
   flex-shrink:0;background:#0a0c14;overflow:hidden;
 }
 
-/* SMS bubbles (carte 1) */
+/* SMS bubbles, card 1 */
 .prev-sms{
   position:absolute;inset:0;background:#0a0a0a;
   display:flex;flex-direction:column;justify-content:flex-end;
@@ -246,7 +246,7 @@ body::before{
 .prev-b.s{background:#0b84ff;color:#fff;align-self:flex-end;border-bottom-right-radius:3px;}
 .prev-b.sy{font-size:8px;color:#444;align-self:center;background:transparent;font-style:italic;}
 
-/* CTA overlay (carte 1 uniquement) */
+/* CTA overlay, card 1 only */
 .card-cta{
   position:absolute;inset:0;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;
@@ -268,7 +268,7 @@ body::before{
 }
 .card:hover .cta-btn{transform:scale(1.06);box-shadow:0 4px 18px rgba(74,144,217,.5);}
 
-/* Instagram preview (carte 2) */
+/* Instagram preview, card 2 */
 .prev-insta{position:absolute;inset:0;background:#000;overflow:hidden;}
 .prev-ig-hdr{height:38px;background:#121212;border-bottom:0.5px solid #222;display:flex;align-items:center;padding:0 10px;gap:7px;}
 .prev-ig-av{width:22px;height:22px;border-radius:50%;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);flex-shrink:0;}
@@ -277,7 +277,7 @@ body::before{
 .prev-ig-cell{aspect-ratio:1;overflow:hidden;}
 .prev-ig-cell img{width:100%;height:100%;object-fit:cover;filter:brightness(.75) saturate(.9);}
 
-/* WhatsApp preview (carte 3) */
+/* WhatsApp preview, card 3 */
 .prev-wa{
   position:absolute;inset:0;background:#0b141a;
   display:flex;flex-direction:column;gap:5px;
@@ -286,7 +286,7 @@ body::before{
 .prev-wa-b{font-size:9px;padding:5px 9px;border-radius:10px;max-width:80%;line-height:1.4;font-family:system-ui;color:#e9edef;background:#202c33;align-self:flex-start;border-top-left-radius:3px;}
 .prev-wa-b .nm{font-size:8px;color:#00a884;display:block;margin-bottom:2px;font-weight:600;}
 
-/* Dialogue preview (carte 4) */
+/* Dialogue preview, card 4 */
 .prev-dial{
   position:absolute;inset:0;background:#07090f;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:16px;
@@ -354,43 +354,43 @@ body::before{
 
 <!-- Intro -->
 <div id="intro-overlay">
-  <p class="intro-line">Clara a disparu...</p>
-  <p class="intro-line">Je suis inquiet.</p>
-  <p class="intro-line">Je veux comprendre ce qui lui est arrivé.</p>
-  <span class="intro-skip">Appuyer pour continuer</span>
+  <p class="intro-line">Clara has disappeared...</p>
+  <p class="intro-line">I am worried.</p>
+  <p class="intro-line">I want to understand what happened to her.</p>
+  <span class="intro-skip">Tap to continue</span>
 </div>
 
 <header class="hero">
-  <p class="hero-label">Exercice de sensibilisation</p>
-  <h1 class="hero-title">Retrouver <em>Clara</em></h1>
-  <p class="hero-sub">Quatre étapes pour comprendre ce qui est arrivé à Clara et comment l'aider.</p>
+  <p class="hero-label">Awareness exercise</p>
+  <h1 class="hero-title">Finding <em>Clara</em></h1>
+  <p class="hero-sub">Four steps to understand what happened to Clara and how to help her.</p>
   <div class="divider"></div>
 </header>
 
 <main class="grid">
 
-  <a class="card card-1" href="1_Telephone_Ines.html">
+  <a class="card card-1" href="1_Telephone_Ines_en.html">
     <div class="card-preview">
       <div class="prev-sms">
-        <div class="prev-b r">Elle répond plus à moi non plus.</div>
-        <div class="prev-b s">T'as une idée de ce qui s'est passé&nbsp;?</div>
-        <div class="prev-b sy">Inès écrit…</div>
+        <div class="prev-b r">She is not replying to me either.</div>
+        <div class="prev-b s">Do you have any idea what happened?</div>
+        <div class="prev-b sy">Inès is typing…</div>
       </div>
       <div class="card-cta">
-        <span class="cta-label">Commencer l'enquête</span>
-        <span class="cta-btn">Partie 1 →</span>
+        <span class="cta-label">Start the investigation</span>
+        <span class="cta-btn">Part 1 →</span>
       </div>
     </div>
-    <span class="card-num">Partie 1</span>
-    <h2 class="card-title">Le téléphone d'Inès</h2>
-    <p class="card-desc">Inès est la meilleure amie de Clara. Parle-lui pour comprendre ce qu'elle sait sur la situation.</p>
+    <span class="card-num">Part 1</span>
+    <h2 class="card-title">Inès's phone</h2>
+    <p class="card-desc">Inès is Clara's best friend. Talk to her to understand what she knows about the situation.</p>
     <div class="card-arrow">
-      Commencer
+      Start
       <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </div>
   </a>
 
-  <a class="card card-2" href="2_Insta_de_Clara.html">
+  <a class="card card-2" href="2_Insta_de_Clara_en.html">
     <div class="card-preview">
       <div class="prev-insta">
         <div class="prev-ig-hdr">
@@ -404,54 +404,54 @@ body::before{
         </div>
       </div>
     </div>
-    <span class="card-num">Partie 2</span>
-    <h2 class="card-title">L'Instagram de Clara</h2>
-    <p class="card-desc">Observe le compte Instagram de Clara et découvre les traces du harcèlement qu'elle subit en ligne.</p>
+    <span class="card-num">Part 2</span>
+    <h2 class="card-title">Clara's Instagram</h2>
+    <p class="card-desc">Observe Clara's Instagram account and discover the traces of the harassment she is experiencing online.</p>
     <div class="card-arrow">
-      Commencer
+      Start
       <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </div>
   </a>
 
-  <a class="card card-3" href="3_WhatsApp_Groupe.html">
+  <a class="card card-3" href="3_WhatsApp_Groupe_en.html">
     <div class="card-preview">
       <div class="prev-wa">
-        <div class="prev-wa-b r"><span class="nm">Mathis</span>t'as vu le post de ce matin 💀</div>
-        <div class="prev-wa-b r"><span class="nm">Léa</span>loool elle est grave</div>
-        <div class="prev-wa-b r"><span class="nm">Mathis</span>quelqu'un lui a répondu&nbsp;???</div>
+        <div class="prev-wa-b r"><span class="nm">Mathis</span>did you see this morning's post 💀</div>
+        <div class="prev-wa-b r"><span class="nm">Léa</span>loool she's too much</div>
+        <div class="prev-wa-b r"><span class="nm">Mathis</span>did anyone reply to her???</div>
       </div>
     </div>
-    <span class="card-num">Partie 3</span>
-    <h2 class="card-title">Le groupe WhatsApp secret</h2>
-    <p class="card-desc">Observe le groupe WhatsApp secret où le harcèlement contre Clara a été organisé.</p>
+    <span class="card-num">Part 3</span>
+    <h2 class="card-title">The secret WhatsApp group</h2>
+    <p class="card-desc">Observe the secret WhatsApp group where the harassment against Clara was organized.</p>
     <div class="card-arrow">
-      Commencer
+      Start
       <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </div>
   </a>
 
-  <a class="card card-4" href="4_Convaincre_Clara.html">
+  <a class="card card-4" href="4_Convaincre_Clara_en.html">
     <div class="card-preview">
       <div class="prev-dial">
-        <div class="prev-dl">Clara fixe ses mains sans répondre.</div>
-        <div class="prev-dl hi">« Je savais plus à qui faire confiance. »</div>
-        <div class="prev-dl">Il faut trouver les mots justes.</div>
+        <div class="prev-dl">Clara stares at her hands without answering.</div>
+        <div class="prev-dl hi">"I didn't know who I could trust anymore."</div>
+        <div class="prev-dl">You have to find the right words.</div>
       </div>
     </div>
-    <span class="card-num">Partie 4</span>
-    <h2 class="card-title">Convaincre Clara</h2>
-    <p class="card-desc">Clara est sur le point de baisser les bras. Trouve les mots justes pour lui montrer qu'elle n'est pas seule.</p>
+    <span class="card-num">Part 4</span>
+    <h2 class="card-title">Convincing Clara</h2>
+    <p class="card-desc">Clara is about to give up. Find the right words to show her that she is not alone.</p>
     <div class="card-arrow">
-      Commencer
+      Start
       <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </div>
   </a>
 
 </main>
 
-<footer class="footer">© Retrouver Clara — Exercice de sensibilisation au harcèlement</footer>
+<footer class="footer">© Finding Clara — Bullying awareness exercise</footer>
 
-<button id="fs-btn" title="Plein écran" aria-label="Activer le plein écran">
+<button id="fs-btn" title="Fullscreen" aria-label="Enable fullscreen">
   <svg id="fs-icon-expand" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/>
     <line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>

@@ -265,3 +265,7 @@ var TEXTES = {
   ]
 
 };
+
+const UI = {
+  invalidCode: "Code invalide — vérifie les 4 caractères."
+};

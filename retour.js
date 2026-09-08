@@ -6,7 +6,8 @@
    choses, comme demandé :
 
    1. NOTER — le joueur écrit une remarque à n'importe quel moment. Elle est
-      rangée dans le localStorage avec l'étape où il se trouvait, et le
+      rangée dans le localStorage avec l'endroit exact où il se trouvait
+      (partie, écran, avancement, dernière réplique affichée), et elle
       survit au passage d'une partie à l'autre (les quatre parties sont des
       pages séparées : sans ce stockage, chaque remarque serait perdue au
       changement de page).
@@ -70,6 +71,7 @@
     phMsg: 'Your note…',
     ajouter: 'Add this note',
     ajoute: 'Note added.',
+    jointe: 'Where you are in the exercise is attached automatically, so I can find the spot.',
     liste: 'Your notes so far',
     vide: 'No note yet.',
     supprimer: 'Delete this note',
@@ -91,6 +93,7 @@
     phMsg: 'Votre remarque…',
     ajouter: 'Noter cette remarque',
     ajoute: 'Remarque notée.',
+    jointe: 'L’endroit où vous êtes dans l’exercice est joint automatiquement, pour que je retrouve le passage.',
     liste: 'Vos remarques notées',
     vide: 'Aucune remarque notée pour l’instant.',
     supprimer: 'Supprimer cette remarque',
@@ -123,6 +126,125 @@
   function echap(s) {
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
                     .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  /* =====================================================================
+     OÙ ÉTAIT LE JOUEUR — relevé au moment où il écrit, pas à l'envoi
+     ---------------------------------------------------------------------
+     « Je n'ai pas compris cette question » n'est réparable que si on sait
+     laquelle. Chaque partie tient déjà sa position dans des variables au
+     premier niveau de son fichier Structure : on les lit, sans rien lui
+     demander et sans jamais la modifier.
+
+     Tout est en try/catch et tout est facultatif : un jeu qui change de
+     variables ne doit pas casser le bouton, il doit juste envoyer un
+     contexte plus maigre.
+     ===================================================================== */
+
+  /* Les `var` du jeu sont des propriétés de window ; ses `let` et `const` au
+     premier niveau, non — ils vivent dans la portée lexicale globale. Un
+     corps de Function, lui, est évalué dans cette portée : il les voit. */
+  function glob(nom) {
+    try {
+      if (nom in window) return window[nom];
+      return Function('return typeof ' + nom + ' !== "undefined" ? ' + nom + ' : undefined')();
+    } catch (e) { return undefined; }
+  }
+
+  function nombre(v) {
+    return (typeof v === 'number' && isFinite(v)) ? v : null;
+  }
+
+  function extrait(el, max) {
+    if (!el) return '';
+    var t = (el.textContent || '').replace(/\s+/g, ' ').trim();
+    return t.length > max ? t.slice(0, max - 1) + '…' : t;
+  }
+
+  /* La dernière réplique affichée : le repère le plus parlant dans les deux
+     parties qui déroulent une conversation. */
+  function derniereReplique() {
+    if (partie === 1) {
+      /* .bb seulement : .tyi est l'indicateur « écrit… », il n'a pas de texte. */
+      var bb = document.querySelectorAll('#ma .bb');
+      return extrait(bb.length ? bb[bb.length - 1] : null, 90);
+    }
+    if (partie === 3) {
+      /* .msg-row seulement : .typing-row ne porte que le nom de l'auteur. */
+      var wa = document.querySelectorAll('#messages-container .msg-row');
+      var row = wa.length ? wa[wa.length - 1] : null;
+      if (!row) return '';
+      var qui = '';
+      try { qui = row.dataset.sender ? row.dataset.sender + ' : ' : ''; } catch (e) {}
+      var bulle = row.querySelector('.msg-bubble') || row;
+      /* L'heure est un <span> dans la bulle : sur une copie, on l'enlève pour
+         ne pas la coller au texte. */
+      try {
+        bulle = bulle.cloneNode(true);
+        var h = bulle.querySelector('.msg-time');
+        if (h) h.parentNode.removeChild(h);
+      } catch (e) {}
+      return qui + extrait(bulle, 90);
+    }
+    return '';
+  }
+
+  function contexte() {
+    var b = [];
+
+    var ecran = document.querySelector('.screen.active');
+    if (ecran && ecran.id) b.push((EN ? 'screen ' : 'écran ') + ecran.id);
+
+    if (partie === 1) {
+      var step = nombre(glob('step')), G = glob('G');
+      var total = (G && G.length) ? G.length : null;
+      if (step !== null) b.push((EN ? 'exchange ' : 'échange ') + (step + 1) + (total ? '/' + total : ''));
+      var trust = nombre(glob('trust'));
+      if (trust !== null) b.push((EN ? 'trust ' : 'confiance ') + trust);
+      var good = nombre(glob('good'));
+      if (good !== null) b.push(good + (EN ? ' good answers' : ' bonnes réponses'));
+      if (glob('crisisUsed') === true) b.push(EN ? 'crisis triggered' : 'crise déclenchée');
+
+    } else if (partie === 2) {
+      var gp = nombre(glob('gamePhase'));
+      if (gp !== null) b.push((EN ? 'phase ' : 'phase ') + gp);
+      var tf = glob('typesFound');
+      if (tf && typeof tf.size === 'number') {
+        var req = nombre(glob('REQUIRED_TYPES'));
+        b.push(tf.size + (req ? '/' + req : '') + (EN ? ' types found' : ' types trouvés'));
+        try {
+          var noms = [];
+          tf.forEach(function (t) { noms.push(t); });
+          if (noms.length) b.push('(' + noms.join(', ') + ')');
+        } catch (e) {}
+      }
+
+    } else if (partie === 3) {
+      var mi = nombre(glob('msgIndex'));
+      if (mi !== null) b.push((EN ? 'message ' : 'message ') + mi);
+
+    } else if (partie === 4) {
+      var si = nombre(glob('sceneIndex'));
+      var TX = glob('TEXTES');
+      var nbSc = (TX && TX.SCENES && TX.SCENES.length) ? TX.SCENES.length : null;
+      if (si !== null) b.push((EN ? 'scene ' : 'scène ') + (si + 1) + (nbSc ? '/' + nbSc : ''));
+      var emp = nombre(glob('empathy')), maxEmp = nombre(glob('MAX_EMP'));
+      if (emp !== null) b.push((EN ? 'empathy ' : 'empathie ') + emp + (maxEmp ? '/' + maxEmp : ''));
+      var sc = nombre(glob('auntScore'));
+      if (sc !== null) b.push((EN ? 'aunt ' : 'tante ') + sc);
+      var st = nombre(glob('auntStrikes'));
+      if (st) b.push(st + (EN ? ' clumsy answers' : ' maladresses'));
+    }
+
+    var rep = derniereReplique();
+    if (rep) b.push((EN ? 'last line: “' : 'dernière réplique : « ') + rep + (EN ? '”' : ' »'));
+
+    return b.join(' · ');
+  }
+
+  function horodatage(d) {
+    function d2(n) { return (n < 10 ? '0' : '') + n; }
+    return d2(d.getDate()) + '/' + d2(d.getMonth() + 1) + ' ' + d2(d.getHours()) + ':' + d2(d.getMinutes());
   }
 
   /* ---------------------------------------------------------------------
@@ -180,6 +302,7 @@
     '#rc-liste .rc-sup{background:none;border:0;color:#575060;cursor:pointer;font-size:.9rem;line-height:1;padding:2px 4px;}',
     '#rc-liste .rc-sup:hover,#rc-liste .rc-sup:focus-visible{color:#b85c5c;}',
     '.rc-vide{color:#575060;font-size:.78rem;font-style:italic;margin-bottom:.3rem;}',
+    '.rc-jointe{color:#575060;font-size:.7rem;font-weight:300;margin-top:.55rem;}',
     '.rc-info{font-size:.76rem;margin:.2rem 0 .6rem;min-height:1.1em;}',
     '.rc-info.rc-ok{color:#5a9e7a;}',
     '.rc-info.rc-ko{color:#b85c5c;}',
@@ -212,6 +335,7 @@
         '<textarea id="rc-msg" rows="3" placeholder="' + echap(T.phMsg) + '"></textarea>' +
         '<p class="rc-info" id="rc-info"></p>' +
         '<button type="button" class="rc-bt rc-sec" id="rc-add">＋ ' + echap(T.ajouter) + '</button>' +
+        '<p class="rc-jointe">' + echap(T.jointe) + '</p>' +
 
         '<div class="rc-sep">' +
           '<p class="rc-titre">' + echap(T.liste) + '</p>' +
@@ -275,7 +399,7 @@
       } else {
         var h = '';
         for (var i = 0; i < l.length; i++) {
-          h += '<li><span class="rc-txt"><span class="rc-ou">' + echap(l[i].etape || '') + '</span>' +
+          h += '<li title="' + echap(l[i].ou || '') + '"><span class="rc-txt"><span class="rc-ou">' + echap(l[i].etape || '') + '</span>' +
                echap(l[i].texte) + '</span>' +
                '<button type="button" class="rc-sup" data-i="' + i + '" aria-label="' + echap(T.supprimer) + '">✕</button></li>';
         }
@@ -301,7 +425,10 @@
       var texte = (msg.value || '').trim();
       if (!texte) { dire(T.videErreur, false); msg.focus(); return false; }
       var l = lire();
-      l.push({ etape: etape, texte: texte, date: new Date().toISOString() });
+      /* Le contexte est relevé ici, pas à l'envoi : une remarque écrite en
+         partie 1 doit garder la position de la partie 1 même si elle part
+         une heure plus tard, depuis la partie 4. */
+      l.push({ etape: etape, ou: contexte(), texte: texte, date: new Date().toISOString() });
       ecrire(l);
       msg.value = '';
       dessinerListe();
@@ -314,19 +441,29 @@
          personne ne doit perdre son texte pour avoir oublié « Noter ». */
       var enCours = (msg.value || '').trim();
       var l = lire().slice();
-      if (enCours) l.push({ etape: etape, texte: enCours });
+      if (enCours) l.push({ etape: etape, ou: contexte(), texte: enCours, date: new Date().toISOString() });
       if (!l.length) { dire(T.videErreur, false); msg.focus(); return; }
 
       var nom  = (document.getElementById('rc-nom').value || '').trim();
       var mail = (document.getElementById('rc-mail').value || '').trim();
 
+      var ua = '';
+      try { ua = (navigator.userAgent || '').slice(0, 140); } catch (e) {}
+
       var lignes = [];
-      lignes.push((EN ? 'Language: ' : 'Langue : ') + (EN ? 'EN' : 'FR') +
-                  ' | ' + (EN ? 'Page: ' : 'Page : ') + etape +
-                  ' | ' + (EN ? 'Window: ' : 'Fenêtre : ') + window.innerWidth + 'px');
-      lignes.push('');
+      lignes.push(l.length + (EN ? ' note(s)' : ' remarque(s)') + ' — ' + (EN ? 'EN' : 'FR') +
+                  ' · ' + horodatage(new Date()) +
+                  ' · ' + (EN ? 'window ' : 'fenêtre ') + window.innerWidth + '×' + window.innerHeight);
+      if (ua) lignes.push(ua);
+
       for (var i = 0; i < l.length; i++) {
-        lignes.push((i + 1) + '. [' + (l[i].etape || '?') + '] ' + l[i].texte);
+        var r = l[i];
+        var quand = '';
+        try { if (r.date) quand = ' — ' + horodatage(new Date(r.date)); } catch (e) {}
+        lignes.push('');
+        lignes.push((i + 1) + '. ' + (r.etape || '?') + quand);
+        if (r.ou) lignes.push('   ' + (EN ? 'where: ' : 'où : ') + r.ou);
+        lignes.push('   ' + r.texte.replace(/\n/g, '\n   '));
       }
 
       send.disabled = true;

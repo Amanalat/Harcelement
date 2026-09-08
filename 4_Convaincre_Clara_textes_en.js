@@ -93,7 +93,7 @@ var TEXTES = {
       ],
       prompt:'How do you answer?',
       choices:[
-        { emp:2, txt:"“I completely understand. I don't want to pressure her. But I miss her, and I'm worried about her.”",
+        { emp:2, txt:"“I get it. I don't want to push her… but I miss her, and I'm scared for her.”",
           fb:{type:'good', msg:'You show that protecting her comes before your own need.'},
           reply:{spk:'aunt', txt:"(a silence) That's kind of you to say it like that."}},
         { emp:1, txt:"“I understand. But it's important — it won't take long.”",
@@ -121,7 +121,7 @@ var TEXTES = {
       ],
       prompt:'What do you answer?',
       choices:[
-        { emp:2, txt:"“That she feels guilty… that's what hurts me the most. She did absolutely nothing wrong.”",
+        { emp:2, txt:"“She blames herself? But she didn't do anything… That's what hurts the most.”",
           fb:{type:'good', msg:'You defend Clara directly. The aunt feels it.'},
           reply:{spk:'aunt', txt:"(breathes out) That's exactly what she needs to hear."}},
         { emp:1, txt:"“I didn't know it was that bad… it's really serious.”",
@@ -149,7 +149,7 @@ var TEXTES = {
       ],
       prompt:"Before she goes to ask Clara…",
       choices:[
-        { emp:2, txt:"“I will be. Just tell her I'm here, with no pressure. She has nothing to prove.”",
+        { emp:2, txt:"“I'll be patient. Just tell her I'm here. She doesn't have to talk to me.”",
           fb:{type:'good', msg:"You remove all pressure. That's exactly what was needed."},
           reply:{spk:'aunt', txt:"(softer) I'll tell her that. Wait."}},
         { emp:1, txt:"“I promise I'll be gentle. Thank you for giving me this chance.”",
@@ -198,7 +198,7 @@ var TEXTES = {
       ],
       prompt:'What do you answer her?',
       choices:[
-        { emp:2, txt:"“You don't have to find the right words with me. I would have listened to you, even without an explanation.”",
+        { emp:2, txt:"“You didn't need to find the right words. I'd have listened, even with no explanation.”",
           fb:{type:'good', msg:"You remove the pressure of finding words. She can breathe."},
           reply:{spk:'lea', txt:"(silence) …I know. I think I was ashamed."}},
         { emp:1, txt:"“I understand… it's hard to know how to say these things.”",
@@ -217,7 +217,7 @@ var TEXTES = {
       ],
       prompt:"What do you feel hearing that?",
       choices:[
-        { emp:2, txt:"“No refuge anywhere — not at school, not at home. That's total violence. I'm so sorry.”",
+        { emp:2, txt:"“Even at home you couldn't breathe… You had nowhere left to feel safe. I'm sorry.”",
           fb:{type:'good', msg:'You name her reality precisely. She feels understood.'},
           reply:{spk:'lea', txt:"(voice breaking) Yes… that's exactly it."}},
         { emp:1, txt:"“That's horrible… being bullied even at home.”",
@@ -236,7 +236,7 @@ var TEXTES = {
       ],
       prompt:'How do you answer her?',
       choices:[
-        { emp:2, txt:"“What they did to you was conditioning. They lied to you about yourself, again and again. That mirror does not show you who you are.”",
+        { emp:2, txt:"“It makes sense you ended up believing it, they told you a hundred times. But it's not true. They're the problem, not you.”",
           fb:{type:'good', msg:'You explain the mechanism. You give reality back to her.'},
           reply:{spk:'lea', txt:"(long pause) No one had ever said it like that before."}},
         { emp:1, txt:"“No. What you saw was their lies — not you.”",
@@ -257,7 +257,7 @@ var TEXTES = {
       ],
       prompt:'What do you say to her?',
       choices:[
-        { emp:2, txt:"“It is already real, Clara. And precisely because it is real, you need adults who can act — the CPE, a school counselor, your parents. Not to fix everything at once. Just so you no longer have to carry this alone.”",
+        { emp:2, txt:"“It's already real, Clara. And that's exactly why you need adults who can act: your aunt, your parents, the school counsellor. Not to fix everything at once. Just so you're not carrying it alone anymore.”",
           fb:{type:'good', msg:"You show her that seeking help from adults is an act of courage — not a weakness."},
           reply:{spk:'lea', txt:"(silence) …Maybe. My aunt offered to call the school.\nI said no. But now… maybe yes."}},
         { emp:1, txt:"“You don't have to deal with this alone. If you want, I can be there when you talk to someone — any trusted adult.”",

@@ -93,7 +93,7 @@ var TEXTES = {
       ],
       prompt:'Comment répondre ?',
       choices:[
-        { emp:2, txt:"« Je comprends tout à fait. Je ne veux pas la brusquer. Mais elle me manque, et j'ai peur pour elle. »",
+        { emp:2, txt:"« Je comprends. Je veux pas la brusquer… mais elle me manque, et j'ai peur pour elle. »",
           fb:{type:'good', msg:'Tu montres que sa protection passe avant ton besoin.'},
           reply:{spk:'aunt', txt:"(un silence) C'est gentil de le dire comme ça."}},
         { emp:1, txt:"« Je comprends. Mais c'est important — ça ne prendra pas longtemps. »",
@@ -121,7 +121,7 @@ var TEXTES = {
       ],
       prompt:'Que réponds-tu ?',
       choices:[
-        { emp:2, txt:"« Qu'elle culpabilise… c'est ce qui me fait le plus mal. Elle n'a absolument rien fait. »",
+        { emp:2, txt:"« Elle culpabilise ? Mais elle a rien fait… C'est ça qui me fait le plus mal. »",
           fb:{type:'good', msg:'Tu défends Clara directement. La tante le ressent.'},
           reply:{spk:'aunt', txt:"(souffle) C'est exactement ce qu'elle a besoin d'entendre."}},
         { emp:1, txt:"« Je savais pas que c'était à ce point… c'est vraiment grave. »",
@@ -149,7 +149,7 @@ var TEXTES = {
       ],
       prompt:"Avant qu'elle aille demander à Clara…",
       choices:[
-        { emp:2, txt:"« Je le serai. Dites-lui juste que je suis là, sans pression. Elle n'a rien à prouver. »",
+        { emp:2, txt:"« Je serai patient. Dites-lui juste que je suis là. Elle est pas obligée de me parler. »",
           fb:{type:'good', msg:"Tu enlèves toute pression. C'est exactement ce qu'il fallait."},
           reply:{spk:'aunt', txt:"(plus douce) Je vais lui dire ça. Attends."}},
         { emp:1, txt:"« Je vous promets d'être doux. Merci de me donner cette chance. »",
@@ -198,7 +198,7 @@ var TEXTES = {
       ],
       prompt:'Que lui réponds-tu ?',
       choices:[
-        { emp:2, txt:"« Tu n'as pas à trouver les bons mots avec moi. Je t'aurais écoutée, même sans explication. »",
+        { emp:2, txt:"« T'avais pas besoin de trouver les bons mots. Je t'aurais écoutée, même sans explication. »",
           fb:{type:'good', msg:"Tu lèves la pression des mots. Elle peut souffler."},
           reply:{spk:'lea', txt:"(silence) …Je sais. Je crois que j'avais honte."}},
         { emp:1, txt:"« Je comprends… c'est dur de savoir comment dire ces choses. »",
@@ -217,7 +217,7 @@ var TEXTES = {
       ],
       prompt:"Que ressens-tu à l'entendre ?",
       choices:[
-        { emp:2, txt:"« Plus de refuge nulle part — ni au collège, ni chez toi. C'est une violence totale. Je suis tellement désolé. »",
+        { emp:2, txt:"« Même chez toi t'étais pas tranquille… T'avais plus aucun endroit où souffler. Je suis désolé. »",
           fb:{type:'good', msg:'Tu nommes sa réalité avec précision. Elle se sent comprise.'},
           reply:{spk:'lea', txt:"(voix qui se brise) Oui… c'est exactement ça."}},
         { emp:1, txt:"« C'est horrible… être harcelée même à la maison. »",
@@ -236,7 +236,7 @@ var TEXTES = {
       ],
       prompt:'Comment lui répondre ?',
       choices:[
-        { emp:2, txt:"« Ce qu'ils t'ont fait, c'est du conditionnement. Ils t'ont menti sur toi-même, encore et encore. Ce miroir ne te montre pas toi. »",
+        { emp:2, txt:"« C'est normal que t'aies fini par y croire, ils te l'ont dit cent fois. Mais c'est faux. C'est eux le problème, pas toi. »",
           fb:{type:'good', msg:'Tu expliques le mécanisme. Tu lui rends la réalité.'},
           reply:{spk:'lea', txt:"(longue pause) Personne ne l'avait dit comme ça avant."}},
         { emp:1, txt:"« Non. Ce que tu voyais, c'est leurs mensonges — pas toi. »",
@@ -257,7 +257,7 @@ var TEXTES = {
       ],
       prompt:'Que lui dire ?',
       choices:[
-        { emp:2, txt:"« C'est déjà réel, Clara. Et justement parce que c'est réel, tu as besoin d'adultes qui peuvent agir — le CPE, un psy scolaire, tes parents. Pas pour tout régler d'un coup. Juste pour ne plus porter ça seule. »",
+        { emp:2, txt:"« C'est déjà réel, Clara. Et c'est pour ça qu'il faut des adultes qui peuvent agir : ta tante, tes parents, le CPE. Pas pour tout régler d'un coup. Juste pour que tu portes plus ça toute seule. »",
           fb:{type:'good', msg:"Tu lui montres que chercher de l'aide adulte, c'est un acte de courage — pas une faiblesse."},
           reply:{spk:'lea', txt:"(silence) …Peut-être. Ma tante m'a proposé d'appeler le collège.\nJ'avais dit non. Mais là… peut-être que oui."}},
         { emp:1, txt:"« Tu n'as pas à régler ça toute seule. Si tu veux, je peux être là quand tu en parles à quelqu'un — n'importe quel adulte de confiance. »",

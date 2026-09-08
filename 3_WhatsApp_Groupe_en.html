@@ -303,6 +303,12 @@ body {
   font-size: .85rem; outline: none; font-family: inherit;
 }
 .wa-icon { color: var(--wa-text2); font-size: 1.2rem; }
+/* Lecture au tap : la barre de saisie (décorative) devient l'invite */
+.wa-input-field { pointer-events: none; }
+.tap-wait { cursor: pointer; }
+#wa-input.tap-wait .wa-input-field { border: 1px solid #00a884; animation: tapPulse 1.6s ease-in-out infinite; }
+#wa-input.tap-wait .wa-input-field::placeholder { color: #e9edef; }
+@keyframes tapPulse { 0%,100% { border-color: #00a884; } 50% { border-color: rgba(0,168,132,.25); } }
 
 /* ── END STATE ── */
 #end-state {

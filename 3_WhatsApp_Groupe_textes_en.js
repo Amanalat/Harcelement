@@ -222,5 +222,7 @@ const UI = {
   likes: "3 likes",
   mentionTooltip: "See their messages on Clara's Instagram",
   correct: "✓ Correct!",
-  wrong: "✗ Not quite."
+  wrong: "✗ Not quite.",
+  tapHint: "▼ Tap to read on",
+  inputPlaceholder: "Message…"
 };

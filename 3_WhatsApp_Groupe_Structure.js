@@ -145,9 +145,12 @@ function processNext() {
     return;
   }
 
+  // Les messages n'enchaînent plus tout seuls (55 messages en 95 s, personne
+  // ne suivait) : chacun attend un appui du joueur. Le « écrit… » reste,
+  // court, pour le rythme.
   var typingMs = (msg.type === 'instagram-card')
-    ? 1000
-    : Math.min(1200, Math.max(300, (msg.text || '').length * 16));
+    ? 800
+    : Math.min(800, Math.max(250, (msg.text || '').length * 10));
 
   var typingEl = showTyping(msg.sender);
   scrollChat();
@@ -159,11 +162,38 @@ function processNext() {
       appendMessage(msg.sender, msg.text, msg.time, false);
     }
     scrollChat();
-    wait(msg.delay || 700, processNext);
+    awaitTap();
   });
 }
 
 function wait(ms, cb) { setTimeout(cb, ms); }
+
+// ── Avancer au tap ────────────────────────────────────────────────────────
+
+var waitingTap = false;
+
+function awaitTap() {
+  waitingTap = true;
+  var f = document.querySelector('.wa-input-field');
+  if (f) f.placeholder = UI.tapHint || '▼';
+  document.getElementById('wa-input').classList.add('tap-wait');
+  document.getElementById('chat-area').classList.add('tap-wait');
+}
+
+function onTap(e) {
+  if (!waitingTap) return;
+  // Les @mentions, la carte Instagram et les boutons gardent leur propre rôle.
+  if (e.target.closest('.mention, .ig-card-btn, button, a')) return;
+  waitingTap = false;
+  var f = document.querySelector('.wa-input-field');
+  if (f) f.placeholder = UI.inputPlaceholder || 'Message…';
+  document.getElementById('wa-input').classList.remove('tap-wait');
+  document.getElementById('chat-area').classList.remove('tap-wait');
+  processNext();
+}
+
+document.getElementById('chat-area').addEventListener('click', onTap);
+document.getElementById('wa-input').addEventListener('click', onTap);
 
 function scrollChat() {
   var ca = document.getElementById('chat-area');

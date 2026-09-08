@@ -236,5 +236,7 @@ const UI = {
   likes: "3 J'aime",
   mentionTooltip: "Voir ses messages sur l'Instagram de Clara",
   correct: "✓ Bonne réponse !",
-  wrong: "✗ Pas tout à fait."
+  wrong: "✗ Pas tout à fait.",
+  tapHint: "▼ Appuie pour lire la suite",
+  inputPlaceholder: "Message…"
 };

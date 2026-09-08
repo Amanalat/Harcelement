@@ -471,16 +471,24 @@
       lab.textContent = T.envoiEnCours;
       dire('');
 
+      /* Web3Forms pose « email » en Reply-To du message qu'il expédie. Y
+         mettre « non renseigné » quand le champ est vide fabrique un en-tête
+         invalide, et les filtres anti-spam — Outlook et Hotmail en tête —
+         classent volontiers un message dont le Reply-To n'est pas une
+         adresse. Le champ n'est pas obligatoire : quand il est vide ou
+         manifestement mal saisi, on ne l'envoie pas du tout. */
+      var envoi = {
+        access_key: ACCESS_KEY,
+        subject: 'Retrouver Clara — ' + (EN ? 'notes' : 'remarques') + (nom ? ' — ' + nom : ''),
+        name: nom || (EN ? 'Anonymous' : 'Anonyme'),
+        message: lignes.join('\n')
+      };
+      if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) envoi.email = mail;
+
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          access_key: ACCESS_KEY,
-          subject: 'Retrouver Clara — ' + (EN ? 'notes' : 'remarques') + (nom ? ' — ' + nom : ''),
-          name: nom || (EN ? 'Anonymous' : 'Anonyme'),
-          email: mail || 'non renseigne',
-          message: lignes.join('\n')
-        })
+        body: JSON.stringify(envoi)
       }).then(function (r) { return r.json(); }).then(function (d) {
         if (d && d.success) {
           ecrire([]);

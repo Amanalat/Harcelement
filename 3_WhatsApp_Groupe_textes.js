@@ -20,7 +20,7 @@ const WA_DATA = {
 
   banner: {
     strong: "Exercice pédagogique sur le cyberharcèlement",
-    tail:   " — Tous les personnages et messages sont fictifs. Créé à des fins éducatives."
+    tail:   ", créé à des fins éducatives — tous les personnages et messages sont fictifs."
   },
 
   warning: {

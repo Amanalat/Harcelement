@@ -7,7 +7,7 @@ var TEXTES = {
     main:    "Convaincre Clara",
     sub:     "Clara a quitté le collège depuis trois semaines et s'est réfugiée chez sa tante.\nTu es Léo, son ami. Pour parler à Clara, tu dois d'abord convaincre sa tante que tu es digne de confiance — et que tu es vraiment là pour l'aider.",
     legende: ["La tante", "Clara", "Toi — Léo"],
-    bouton:  "☎  Décrocher"
+    bouton:  "☎  Appeler"
   },
 
   // ─── Écran game over ──────────────────────────────────────────────────────

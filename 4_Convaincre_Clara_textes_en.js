@@ -7,7 +7,7 @@ var TEXTES = {
     main:    "Convincing Clara",
     sub:     "Clara left school three weeks ago and took refuge at her aunt's house.\nYou are Léo, her friend. To speak to Clara, you must first convince her aunt that you are trustworthy — and that you are truly there to help her.",
     legende: ["The aunt", "Clara", "You — Léo"],
-    bouton:  "☎  Answer"
+    bouton:  "☎  Call"
   },
 
   // ─── Game over screen ──────────────────────────────────────────────────────

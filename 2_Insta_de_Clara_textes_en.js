@@ -567,10 +567,10 @@ var photoData = [
       { user: "0000_mask_0000",   text: "the people around you in the crowd must have been thrilled lol" },
     ]
   },
-  { likes: 2,  caption: "beach vacation ☀️🏖️",
+  { likes: 2,  caption: "flowers from the market 🌸",
     comments: [
-      { user: "dark_mode_user",   text: "your photo is so ugly you could have stayed home" },
-      { user: "fantome_reseau",   text: "this beach deserves better photos" },
+      { user: "dark_mode_user",   text: "your photo is so ugly even the flowers look sad" },
+      { user: "fantome_reseau",   text: "flowers? nobody's ever gonna give you any lol" },
     ]
   },
   { likes: 4,  caption: "birthday cake 🎂",

@@ -141,23 +141,25 @@ var TEXTES = {
         {
           "l": "A",
           "t": "Ça lui arrivait déjà avant ?",
-          "e": 1
+          "e": 1,
+          "r": "Non. Jamais."
         },
         {
           "l": "B",
           "t": "Peut-être qu'elle vous a bloqués.",
-          "e": -1
+          "e": -1,
+          "r": "Elle m'aurait jamais bloquée. Pas moi."
         },
         {
           "l": "C",
           "t": "Vous vous parliez souvent ?",
-          "e": 0
+          "e": 0,
+          "r": "Tous les jours. Enfin… avant."
         }
       ]
     },
     {
       "intro": [
-        "Non. Jamais.",
         "Ça faisait un moment qu'elle était pas bien.",
         "Depuis le mois dernier au moins.",
         "Elle manquait des cours. Elle répondait plus aux messages.",
@@ -167,23 +169,25 @@ var TEXTES = {
         {
           "l": "A",
           "t": "Tu sais ce qui s'est passé ?",
-          "e": 1
+          "e": 1,
+          "r": "Pas vraiment. J'ai essayé de lui demander."
         },
         {
           "l": "B",
           "t": "Et t'as pas essayé d'en parler avec elle ?",
-          "e": -1
+          "e": -1,
+          "r": "Si. J'ai essayé."
         },
         {
           "l": "C",
           "t": "Elle avait l'air d'avoir peur de quelque chose ?",
-          "e": 0
+          "e": 0,
+          "r": "Peut-être… Je lui ai demandé, plusieurs fois."
         }
       ]
     },
     {
       "intro": [
-        "Si j'ai essayé.",
         "Elle voulait pas.",
         "Mais je voyais bien.",
         "Elle laissait son téléphone retourné sur la table. Elle regardait plus ses applis.",

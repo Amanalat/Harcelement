@@ -141,23 +141,25 @@ var TEXTES = {
         {
           "l": "A",
           "t": "Had this happened before?",
-          "e": 1
+          "e": 1,
+          "r": "No. Never."
         },
         {
           "l": "B",
           "t": "Maybe she blocked you.",
-          "e": -1
+          "e": -1,
+          "r": "She would never block me. Not me."
         },
         {
           "l": "C",
           "t": "Did you talk often?",
-          "e": 0
+          "e": 0,
+          "r": "Every day. Well… before."
         }
       ]
     },
     {
       "intro": [
-        "No. Never.",
         "She hadn't been doing well for a while.",
         "Since at least last month.",
         "She was missing classes. She wasn't replying to messages anymore.",
@@ -167,23 +169,25 @@ var TEXTES = {
         {
           "l": "A",
           "t": "Do you know what happened?",
-          "e": 1
+          "e": 1,
+          "r": "Not really. I tried asking her."
         },
         {
           "l": "B",
           "t": "And you didn't try to talk to her about it?",
-          "e": -1
+          "e": -1,
+          "r": "I did try."
         },
         {
           "l": "C",
           "t": "Did she seem afraid of something?",
-          "e": 0
+          "e": 0,
+          "r": "Maybe… I asked her, more than once."
         }
       ]
     },
     {
       "intro": [
-        "I did try.",
         "She didn't want to.",
         "But I could tell.",
         "She would leave her phone face down on the table. She wasn't looking at her apps anymore.",

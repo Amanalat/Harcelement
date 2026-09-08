@@ -12,9 +12,13 @@ let currentIdentifyData = null;
 // ─── UTILITAIRES ─────────────────────────────────────────────────────────────
 
 function normaliseStr(s) {
+  // Les fragments de HARCEL_MAP sont écrits sans apostrophe ni ligature
+  // (« tas fait », « loeil ») : on retire les deux côtés avant de comparer,
+  // sinon « t'as » ne rencontre jamais « tas ».
   return s.toLowerCase()
     .normalize('NFD').replace(/[̀-ͯ]/g,'')
-    .replace(/^(du |de la |de l'|le |la |les |un |une |des |au |c'est |c est )/gi,'')
+    .replace(/œ/g,'oe').replace(/[\u2019']/g,'')
+    .replace(/^(du |de la |de l|le |la |les |un |une |des |au |cest |c est )/gi,'')
     .trim();
 }
 function levenshtein(a,b){

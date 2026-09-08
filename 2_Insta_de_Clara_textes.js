@@ -599,5 +599,7 @@ const UI = {
   backToWA:        "← Retour au groupe",
   backToWAUrl:     "3_WhatsApp_Groupe.html",
   correct:         "Bonne réponse !",
-  wrong:           "Pas tout à fait."
+  wrong:           "Pas tout à fait.",
+  noteCode:        "🔐 J'ai noté le code",
+  codeClose:       "← Relire le journal"
 };

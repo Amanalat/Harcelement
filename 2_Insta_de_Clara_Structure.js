@@ -127,17 +127,28 @@ function openThread(id) {
     }
   });
 
+  // Le journal de Clara (fil 99) : le code n'est plus imposé en overlay
+  // deux secondes après l'ouverture — c'est le seul endroit où Clara parle
+  // à la première personne, il faut pouvoir le lire. Un bouton en bas du
+  // fil ouvre l'écran du code quand le joueur est prêt.
+  if (id === 99) {
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'text-align:center;margin:18px 0 8px;';
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = UI.noteCode || '🔐 4827';
+    btn.style.cssText = 'background:#2dcc6f;color:#000;border:none;border-radius:8px;padding:11px 18px;font-size:.85rem;font-weight:700;cursor:pointer;';
+    btn.addEventListener('click', () => {
+      document.getElementById('code-overlay').style.display = 'flex';
+    });
+    wrap.appendChild(btn);
+    thread.appendChild(wrap);
+  }
+
   // Mark as read
   convo.unread = false;
   goTo('screen-thread');
-  setTimeout(() => {
-    thread.scrollTop = thread.scrollHeight;
-    if (id === 99) {
-      setTimeout(() => {
-        document.getElementById('code-overlay').style.display = 'flex';
-      }, 2200);
-    }
-  }, 100);
+  setTimeout(() => { thread.scrollTop = thread.scrollHeight; }, 100);
 }
 
 // ─── QUIZ ────────────────────────────────────────────────────────────────────
@@ -506,6 +517,13 @@ document.getElementById('secret-notif').addEventListener('click', goToSecretMess
 
 // Quiz continue
 document.getElementById('quiz-continue').addEventListener('click', closeQuiz);
+
+// Écran du code — retour au journal
+const codeClose = document.getElementById('code-close');
+if (codeClose && UI.codeClose) codeClose.textContent = UI.codeClose;
+if (codeClose) codeClose.addEventListener('click', () => {
+  document.getElementById('code-overlay').style.display = 'none';
+});
 
 // Synthèse close
 document.getElementById('synthesis-close').addEventListener('click', () => {

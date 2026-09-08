@@ -603,5 +603,9 @@ const UI = {
   synthBtn:        "📋 View summary — What happened to Clara",
   synthNote:       "These forms of bullying are real. Each one leaves marks on the victim — even without physical contact.",
   backToWA:        "← Back to the group",
-  backToWAUrl:     "3_WhatsApp_Groupe_en.html"
+  backToWAUrl:     "3_WhatsApp_Groupe_en.html",
+  correct:         "Correct!",
+  wrong:           "Not quite.",
+  noteCode:        "🔐 I've noted the code",
+  codeClose:       "← Back to the journal"
 };

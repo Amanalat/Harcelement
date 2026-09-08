@@ -38,13 +38,13 @@ var TEXTES = {
   // ─── Fins (ordre décroissant de score) ───────────────────────────────────
 
   fins: [
-    { minScore: 13,
+    { minScore: 10,
       icon: "🌿", cls: "good",
       titre:    "Clara va demander de l'aide.",
       corps:    "Tu as su trouver les mots justes à chaque instant.\nNi trop forts, ni trop légers — juste présents.\n\nLa tante t'a fait confiance. Clara a raccroché avec une décision concrète : parler à un adulte de confiance, et ne plus porter ça seule.\n\nTon rôle n'était pas de la sauver. C'était de lui montrer que demander de l'aide, c'est possible.",
       citation: "« Je vais en parler à ma tante. Vraiment parler. »\n— Clara"
     },
-    { minScore: 7,
+    { minScore: 5,
       icon: "🕯️", cls: "ok",
       titre:    "Un premier pas.",
       corps:    "Tu as montré de la bonne volonté, même si certaines réponses manquaient de profondeur.\n\nClara hésite encore — mais elle envisage d'en parler à un adulte. Le chemin est long.\n\nTon rôle était de lui montrer que ce n'est pas à elle seule de tout porter.",

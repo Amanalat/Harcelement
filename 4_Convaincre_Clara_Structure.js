@@ -219,6 +219,14 @@ function onMainChoice(scene, choice){
 
     later(()=>{
       if(choice.reply){ appendLine(choice.reply.spk,choice.reply.txt); scrollFeed(); }
+      // Le retour pédagogique (pourquoi cette réponse est juste, moyenne ou
+      // maladroite) : sans lui, le joueur ne voit que des cœurs qui montent
+      // ou pas, et cherche « la bonne réponse » au lieu de comprendre.
+      if(choice.fb){
+        const toast=document.getElementById('fb-toast');
+        toast.textContent=choice.fb.msg;
+        toast.className='fb show '+choice.fb.type;
+      }
 
       if(choice.emp===0 && scene.phase==='1' && choice.recovery){
         later(()=>showRecovery(scene, choice.recovery), 900);
@@ -235,7 +243,7 @@ function showRecovery(scene, rec){
   scrollFeed();
 
   later(()=>{
-    document.getElementById('fb-toast').className='fb';
+    // Le retour de la réponse maladroite reste affiché pendant le rattrapage.
     const recoveryChoices=[
       { emp:'good', txt: rec.good.txt, _reply: rec.good.reply },
       { emp:'bad',  txt: rec.bad.txt,  _reply: rec.bad.reply  },

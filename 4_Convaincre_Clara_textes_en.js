@@ -38,13 +38,13 @@ var TEXTES = {
   // ─── Endings, descending score order ───────────────────────────────────
 
   fins: [
-    { minScore: 13,
+    { minScore: 10,
       icon: "🌿", cls: "good",
       titre:    "Clara is going to ask for help.",
       corps:    "You found the right words at every moment.\nNot too forceful, not too light — simply present.\n\nThe aunt trusted you. Clara hung up with a concrete decision: to talk to a trusted adult, and to stop carrying this alone.\n\nYour role was not to save her. It was to show her that asking for help is possible.",
       citation: "“I'm going to talk to my aunt. Really talk.”\n— Clara"
     },
-    { minScore: 7,
+    { minScore: 5,
       icon: "🕯️", cls: "ok",
       titre:    "A first step.",
       corps:    "You showed goodwill, even if some answers lacked depth.\n\nClara is still hesitant — but she is considering talking to an adult. The road is long.\n\nYour role was to show her that she does not have to carry everything alone.",

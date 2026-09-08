@@ -26,7 +26,7 @@ if %errorlevel% neq 0 (
 git push origin main
 if %errorlevel%==0 (
   echo.
-  echo Done. https://amanalat.github.io/Harcelement/
+  echo Done. https://antoninatger.github.io/Harcelement/
 ) else (
   echo.
   echo ERREUR lors du push.

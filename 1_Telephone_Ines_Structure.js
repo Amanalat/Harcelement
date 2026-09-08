@@ -110,6 +110,14 @@ async function pick(choice){
     endGame('block');return;
   }
 
+  // Réplique propre au choix (champ « r » de l'option), jouée avant la suite
+  // commune de l'étape : sans elle, « Si j'ai essayé » répondait aussi bien à
+  // « Tu sais ce qui s'est passé ? » qu'à « T'as pas essayé d'en parler ? ».
+  if(choice.r){
+    await sl(450);showTy();await sl(900);hideTy();
+    addBub(choice.r,'r');
+  }
+
   if(phase==='crisis'){
     phase='story';
     step++;

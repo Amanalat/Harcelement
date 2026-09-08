@@ -226,7 +226,7 @@ const WA_DATA = {
 
   navigation: {
     prev: { label: "← Instagram de Clara", url: "2_Insta_de_Clara.html" },
-    next: { label: "Continuer : Convaincre Clara →", url: "4_Convaincre_Clara.html" }
+    next: { label: "Retour à l'enquête →", url: "index.html" }
   }
 
 };

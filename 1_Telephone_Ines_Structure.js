@@ -280,9 +280,10 @@ try { localStorage.setItem('rc_p1_visited','1'); } catch(e) {}
 
 // ── Deuxième conversation Inès (après partie 3) ───────────────────────────
 
+var openSecondDirect = false;
 (function(){
-  var p3done = false;
-  try { p3done = !!localStorage.getItem('rc_p3_done'); } catch(e) {}
+  var p3done = null;
+  try { p3done = localStorage.getItem('rc_p3_done'); } catch(e) {}
   if (!p3done) return;
 
   var notifBar = document.getElementById('p3-notif-bar');
@@ -292,16 +293,24 @@ try { localStorage.setItem('rc_p1_visited','1'); } catch(e) {}
     notifBar.style.display = 'none';
     openSecondConvo();
   });
+
+  // Partie 3 finie, numéro pas encore obtenu : le joueur revient exprès
+  // pour prévenir Inès, on ouvre directement la seconde conversation.
+  // Une fois le numéro donné (rc_p3_done = 2), on retrouve la première
+  // conversation, avec le bandeau « nouveau message » pour rejouer la seconde.
+  if (p3done === '1') openSecondDirect = true;
 })();
 
 function openSecondConvo(){
   // Masque la conversation principale, affiche la seconde
+  var nb = document.getElementById('p3-notif-bar');
+  if (nb) nb.style.display = 'none';
   document.querySelector('.tbar').style.display = 'none';
   document.getElementById('ma').style.display   = 'none';
   document.getElementById('ca').style.display   = 'none';
   var sc = document.getElementById('second-convo');
   sc.style.display = 'flex';
-  document.getElementById('st').textContent = 'en ligne';
+  document.getElementById('st').textContent = UI.secondConvo.statusOnline;
 
   var scMa = document.getElementById('sc-ma');
   scMa.innerHTML = '';
@@ -346,7 +355,10 @@ function openSecondConvo(){
     addSc(val, 's');
 
     var n = val.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
-    var correct = n.includes('havre') || n.includes('secret');
+    // « chez sa tante » est la réponse naturelle : on l'accepte, avec les
+    // mots du groupe WhatsApp (« havre secret ») et leurs équivalents anglais.
+    var accepted = ['tante','campagne','havre','secret','aunt','countryside','haven','safe'];
+    var correct = accepted.some(function(w){ return n.includes(w); });
 
     document.getElementById('st').textContent = UI.secondConvo.statusTyping;
     var ty2 = document.createElement('div');
@@ -399,7 +411,10 @@ function openSecondConvo(){
 }
 
 var intro1El = document.getElementById('intro1');
-if(intro1El){
+if(openSecondDirect){
+  if(intro1El) intro1El.style.display='none';
+  openSecondConvo();
+}else if(intro1El){
   function dismissIntro(){
     intro1El.style.transition='opacity .9s ease';
     intro1El.style.opacity='0';

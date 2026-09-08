@@ -44,6 +44,7 @@ body::after{
 .btn-start{background:none;border:1px solid rgba(196,134,90,.35);color:var(--accent);font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.22em;text-transform:uppercase;padding:13px 36px;cursor:pointer;transition:all .3s;}
 .btn-start:hover{background:rgba(196,134,90,.07);border-color:rgba(196,134,90,.6);transform:translateY(-2px);}
 
+
 /* ─── GAME ─── */
 #screen-game{align-items:stretch;justify-content:stretch;flex-direction:column;}
 .game-wrap{width:100%;max-width:600px;height:100vh;margin:0 auto;display:flex;flex-direction:column;padding:0 22px;position:relative;z-index:1;}
@@ -162,6 +163,15 @@ body::after{
 .pg-btn-call:hover{background:rgba(196,134,90,.07);border-color:rgba(196,134,90,.6);transform:translateY(-2px);}
 .pg-btn-skip{background:none;border:none;color:rgba(255,255,255,.3);font-family:'Jost',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:color .2s;padding:4px 8px;margin-top:-6px;text-decoration:underline;text-underline-offset:2px;}
 .pg-btn-skip:hover{color:rgba(255,255,255,.55);}
+/* Pensées de Léo après chaque numéro faux (textes : TEXTES.titre.pensees) */
+.pg-thoughts{display:flex;flex-direction:column;gap:8px;max-width:320px;}
+.pg-thoughts:empty{display:none;}
+.pg-thought{font-family:'Jost',sans-serif;font-size:12.5px;font-style:italic;color:var(--thomas);opacity:0;line-height:1.6;animation:thoughtIn .7s ease forwards;}
+@keyframes thoughtIn{to{opacity:.9}}
+.pg-input.shake{animation:pgShake .35s ease;}
+@keyframes pgShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.pg-back{font-family:'Jost',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.3);text-decoration:none;transition:color .2s;}
+.pg-back:hover{color:rgba(255,255,255,.55);}
 </style>
 </head>
 <body>
@@ -171,12 +181,14 @@ body::after{
   <div class="pg-box">
     <div class="pg-icon">📞</div>
     <div class="pg-title">Make the call</div>
-    <div class="pg-hint">You have obtained Clara's aunt's phone number. Enter it to make the call.</div>
+    <div class="pg-hint">To talk to Clara, you need to call her aunt's house.</div>
     <span class="pg-sep"></span>
-    <input type="tel" id="pg-input" class="pg-input" placeholder="e.g.: 04 54 78 95 32" autocomplete="off" spellcheck="false">
+    <input type="tel" id="pg-input" class="pg-input" placeholder="The aunt's number" inputmode="tel" autocomplete="off" spellcheck="false">
     <div class="pg-error" id="pg-error"></div>
+    <div class="pg-thoughts" id="pg-thoughts"></div>
     <button id="pg-call" class="pg-btn-call">Call →</button>
-    <button id="pg-skip" class="pg-btn-skip">Access directly →</button>
+    <button id="pg-skip" class="pg-btn-skip" style="display:none">Access directly →</button>
+    <a class="pg-back" href="index_en.html">← Back to the investigation</a>
   </div>
 </div>
 
@@ -295,14 +307,30 @@ body::after{
     setTimeout(function(){ gate.style.display='none'; },800);
   }
 
+  // Chaque numéro faux fait apparaître une pensée de Léo (TEXTES.titre.pensees) :
+  // le joueur doit deviner qu'Inès (Partie 1) peut lui donner le numéro.
+  // « Accéder directement » n'apparaît qu'après la troisième pensée.
+  var attempts=0;
   document.getElementById('pg-call').addEventListener('click',function(){
     var val=normalise(input.value);
     if(val===CORRECT){
       errEl.textContent='';
       dismissGate();
     } else {
-      errEl.textContent='Incorrect number — check the number you obtained.';
+      attempts++;
+      errEl.textContent='That number doesn\'t answer.';
       input.style.borderColor='rgba(192,104,96,.6)';
+      input.classList.remove('shake'); void input.offsetWidth; input.classList.add('shake');
+      var th=(window.TEXTES&&TEXTES.titre&&TEXTES.titre.pensees)||[];
+      var box=document.getElementById('pg-thoughts');
+      var idx=Math.min(attempts,th.length)-1;
+      if(idx>=0&&box&&box.children.length<=idx){
+        var d=document.createElement('div');
+        d.className='pg-thought';
+        d.textContent=th[idx];
+        box.appendChild(d);
+      }
+      if(attempts>=th.length) document.getElementById('pg-skip').style.display='';
     }
   });
 

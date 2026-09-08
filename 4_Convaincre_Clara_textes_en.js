@@ -7,7 +7,14 @@ var TEXTES = {
     main:    "Convincing Clara",
     sub:     "Clara left school three weeks ago and took refuge at her aunt's house.\nYou are Léo, her friend. To speak to Clara, you must first convince her aunt that you are trustworthy — and that you are truly there to help her.",
     legende: ["The aunt", "Clara", "You — Léo"],
-    bouton:  "☎  Call"
+    bouton:  "☎  Call",
+    // Léo's thoughts after each wrong number: the player has to work out that
+    // Inès (Part 1) can give it to them.
+    pensees: [
+      "There has to be a way to get this number…",
+      "There must be someone I know who can help me.",
+      "It's someone I've already talked to who can help me…"
+    ]
   },
 
   // ─── Game over screen ──────────────────────────────────────────────────────

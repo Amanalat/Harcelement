@@ -7,7 +7,14 @@ var TEXTES = {
     main:    "Convaincre Clara",
     sub:     "Clara a quitté le collège depuis trois semaines et s'est réfugiée chez sa tante.\nTu es Léo, son ami. Pour parler à Clara, tu dois d'abord convaincre sa tante que tu es digne de confiance — et que tu es vraiment là pour l'aider.",
     legende: ["La tante", "Clara", "Toi — Léo"],
-    bouton:  "☎  Appeler"
+    bouton:  "☎  Appeler",
+    // Pensées de Léo après chaque numéro faux : le joueur doit deviner qu'Inès
+    // (Partie 1) peut lui donner le numéro.
+    pensees: [
+      "Il y a forcément un moyen d'avoir ce numéro…",
+      "Il y a certainement quelqu'un que je connais qui peut m'aider.",
+      "C'est quelqu'un avec qui j'ai déjà interagi qui peut m'aider…"
+    ]
   },
 
   // ─── Écran game over ──────────────────────────────────────────────────────

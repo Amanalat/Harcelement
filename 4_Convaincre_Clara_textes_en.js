@@ -42,19 +42,19 @@ var TEXTES = {
       icon: "🌿", cls: "good",
       titre:    "Clara is going to ask for help.",
       corps:    "You found the right words at every moment.\nNot too forceful, not too light — simply present.\n\nThe aunt trusted you. Clara hung up with a concrete decision: to talk to a trusted adult, and to stop carrying this alone.\n\nYour role was not to save her. It was to show her that asking for help is possible.",
-      citation: ""I'm going to talk to my aunt. Really talk."\n— Clara"
+      citation: "“I'm going to talk to my aunt. Really talk.”\n— Clara"
     },
     { minScore: 7,
       icon: "🕯️", cls: "ok",
       titre:    "A first step.",
       corps:    "You showed goodwill, even if some answers lacked depth.\n\nClara is still hesitant — but she is considering talking to an adult. The road is long.\n\nYour role was to show her that she does not have to carry everything alone.",
-      citation: ""Maybe I'll try…"\n— Clara"
+      citation: "“Maybe I'll try…”\n— Clara"
     },
     { minScore: 0,
       icon: "🌧️", cls: "bad",
       titre:    "The distance remains.",
       corps:    "You meant well, but your words sometimes sounded like blame or impatience.\n\nClara remains closed off. She needs time — and someone who truly listens before acting.",
-      citation: ""I just needed you to listen to me."\n— Clara"
+      citation: "“I just needed you to listen to me.”\n— Clara"
     }
   ],
 
@@ -86,21 +86,21 @@ var TEXTES = {
       ],
       prompt:'How do you answer?',
       choices:[
-        { emp:2, txt:""I completely understand. I don't want to pressure her. But I miss her, and I'm worried about her."",
+        { emp:2, txt:"“I completely understand. I don't want to pressure her. But I miss her, and I'm worried about her.”",
           fb:{type:'good', msg:'You show that protecting her comes before your own need.'},
           reply:{spk:'aunt', txt:"(a silence) That's kind of you to say it like that."}},
-        { emp:1, txt:""I understand. But it's important — it won't take long."",
+        { emp:1, txt:"“I understand. But it's important — it won't take long.”",
           fb:{type:'ok', msg:'Honest, but focused more on you than on Clara.'},
           reply:{spk:'aunt', txt:"Hmm… alright. I'm listening."}},
-        { emp:0, txt:""I need to talk to her now, it's urgent."",
+        { emp:0, txt:"“I need to talk to her now, it's urgent.”",
           fb:{type:'bad', msg:'The abrupt insistence puts the aunt on the defensive.'},
           reply:{spk:'aunt', txt:"(coldly) Urgent… for you, maybe."},
           recovery:{
             auntLine: "It is not an emergency for me, Léo. And for now, that is what matters.",
             prompt:   'The aunt waits. What do you say?',
-            good:{ txt:""You're right. I'm sorry. She is what matters, not me."",
+            good:{ txt:"“You're right. I'm sorry. She is what matters, not me.”",
                    reply:{spk:'aunt', txt:"(slightly softened) …Alright. Continue."} },
-            bad: { txt:""But you don't understand, it's really important."",
+            bad: { txt:"“But you don't understand, it's really important.”",
                    reply:{spk:'aunt', txt:"(sharply) I understand very well. And it does not reassure me."} }
           }
         },
@@ -114,21 +114,21 @@ var TEXTES = {
       ],
       prompt:'What do you answer?',
       choices:[
-        { emp:2, txt:""That she feels guilty… that's what hurts me the most. She did absolutely nothing wrong."",
+        { emp:2, txt:"“That she feels guilty… that's what hurts me the most. She did absolutely nothing wrong.”",
           fb:{type:'good', msg:'You defend Clara directly. The aunt feels it.'},
           reply:{spk:'aunt', txt:"(breathes out) That's exactly what she needs to hear."}},
-        { emp:1, txt:""I didn't know it was that bad… it's really serious."",
+        { emp:1, txt:"“I didn't know it was that bad… it's really serious.”",
           fb:{type:'ok', msg:'Sincere, but you remain on the surface.'},
           reply:{spk:'aunt', txt:"Yes. It is very serious."}},
-        { emp:0, txt:""She should have talked to me before it got to this point."",
+        { emp:0, txt:"“She should have talked to me before it got to this point.”",
           fb:{type:'bad', msg:'It sounds like blame. The aunt clearly notices it.'},
           reply:{spk:'aunt', txt:"(sharply) She didn't dare. That is precisely the problem."},
           recovery:{
             auntLine: "If you blamed her now… you would hurt her even more, Léo.",
             prompt:   'How do you react to that?',
-            good:{ txt:""You're right. That's not what I meant. She deserved none of this."",
+            good:{ txt:"“You're right. That's not what I meant. She deserved none of this.”",
                    reply:{spk:'aunt', txt:"(pause) …That's better. I hear sincerity."} },
-            bad: { txt:""I'm just pointing out that if she had talked to me, we could have avoided this."",
+            bad: { txt:"“I'm just pointing out that if she had talked to me, we could have avoided this.”",
                    reply:{spk:'aunt', txt:"(coldly) Avoided this. You really think it was that simple."} }
           }
         },
@@ -142,21 +142,21 @@ var TEXTES = {
       ],
       prompt:"Before she goes to ask Clara…",
       choices:[
-        { emp:2, txt:""I will be. Just tell her I'm here, with no pressure. She has nothing to prove."",
+        { emp:2, txt:"“I will be. Just tell her I'm here, with no pressure. She has nothing to prove.”",
           fb:{type:'good', msg:"You remove all pressure. That's exactly what was needed."},
           reply:{spk:'aunt', txt:"(softer) I'll tell her that. Wait."}},
-        { emp:1, txt:""I promise I'll be gentle. Thank you for giving me this chance."",
+        { emp:1, txt:"“I promise I'll be gentle. Thank you for giving me this chance.”",
           fb:{type:'ok', msg:"Sincere. The aunt appreciates the honesty."},
           reply:{spk:'aunt', txt:"Alright… I'll ask her."}},
-        { emp:0, txt:""I'll tell her everything will be okay, that I have a plan."",
+        { emp:0, txt:"“I'll tell her everything will be okay, that I have a plan.”",
           fb:{type:'bad', msg:"You are talking about yourself and your plan — not about her."},
           reply:{spk:'aunt', txt:"(coldly) A plan. Clara does not need a plan. She needs to be heard."},
           recovery:{
             auntLine: "Do you understand the difference, Léo?",
             prompt:   '',
-            good:{ txt:""Yes… you're right. I just wanted to help her but I went too fast."",
+            good:{ txt:"“Yes… you're right. I just wanted to help her but I went too fast.”",
                    reply:{spk:'aunt', txt:"(long pause) …I'll ask her. But don't pressure her."} },
-            bad: { txt:""I think it would do her good to have a concrete goal."",
+            bad: { txt:"“I think it would do her good to have a concrete goal.”",
                    reply:{spk:'aunt', txt:"(firmly) I don't think you're ready to talk to her tonight."} }
           }
         },
@@ -191,13 +191,13 @@ var TEXTES = {
       ],
       prompt:'What do you answer her?',
       choices:[
-        { emp:2, txt:""You don't have to find the right words with me. I would have listened to you, even without an explanation."",
+        { emp:2, txt:"“You don't have to find the right words with me. I would have listened to you, even without an explanation.”",
           fb:{type:'good', msg:"You remove the pressure of finding words. She can breathe."},
           reply:{spk:'lea', txt:"(silence) …I know. I think I was ashamed."}},
-        { emp:1, txt:""I understand… it's hard to know how to say these things."",
+        { emp:1, txt:"“I understand… it's hard to know how to say these things.”",
           fb:{type:'ok', msg:'True, but a little general.'},
           reply:{spk:'lea', txt:"Yeah… that's it."}},
-        { emp:0, txt:""Why did you delete those messages? I would have answered, you know."",
+        { emp:0, txt:"“Why did you delete those messages? I would have answered, you know.”",
           fb:{type:'bad', msg:"You focus on yourself, not on what she was going through."},
           reply:{spk:'lea', txt:"(coldly) I don't know…"}},
       ]
@@ -210,13 +210,13 @@ var TEXTES = {
       ],
       prompt:"What do you feel hearing that?",
       choices:[
-        { emp:2, txt:""No refuge anywhere — not at school, not at home. That's total violence. I'm so sorry."",
+        { emp:2, txt:"“No refuge anywhere — not at school, not at home. That's total violence. I'm so sorry.”",
           fb:{type:'good', msg:'You name her reality precisely. She feels understood.'},
           reply:{spk:'lea', txt:"(voice breaking) Yes… that's exactly it."}},
-        { emp:1, txt:""That's horrible… being bullied even at home."",
+        { emp:1, txt:"“That's horrible… being bullied even at home.”",
           fb:{type:'ok', msg:'Sincere, but you remain on the surface.'},
           reply:{spk:'lea', txt:"Yeah…"}},
-        { emp:0, txt:""You could have blocked those people, disabled your social media."",
+        { emp:0, txt:"“You could have blocked those people, disabled your social media.”",
           fb:{type:'bad', msg:'Unsolicited advice that sounds like blame.'},
           reply:{spk:'lea', txt:"(coldly) Thanks, I hadn't thought of that."}},
       ]
@@ -229,13 +229,13 @@ var TEXTES = {
       ],
       prompt:'How do you answer her?',
       choices:[
-        { emp:2, txt:""What they did to you was conditioning. They lied to you about yourself, again and again. That mirror does not show you who you are."",
+        { emp:2, txt:"“What they did to you was conditioning. They lied to you about yourself, again and again. That mirror does not show you who you are.”",
           fb:{type:'good', msg:'You explain the mechanism. You give reality back to her.'},
           reply:{spk:'lea', txt:"(long pause) No one had ever said it like that before."}},
-        { emp:1, txt:""No. What you saw was their lies — not you."",
+        { emp:1, txt:"“No. What you saw was their lies — not you.”",
           fb:{type:'ok', msg:'Clear and direct. Useful.'},
           reply:{spk:'lea', txt:"I try to tell myself that… it's hard."}},
-        { emp:0, txt:""You know very well that what they say is false."",
+        { emp:0, txt:"“You know very well that what they say is false.”",
           fb:{type:'bad', msg:'"You know very well" unintentionally minimizes her pain.'},
           reply:{spk:'lea', txt:"(silence) If I really knew that, I wouldn't have broken down."}},
       ]
@@ -250,13 +250,13 @@ var TEXTES = {
       ],
       prompt:'What do you say to her?',
       choices:[
-        { emp:2, txt:""It is already real, Clara. And precisely because it is real, you need adults who can act — the CPE, a school counselor, your parents. Not to fix everything at once. Just so you no longer have to carry this alone."",
+        { emp:2, txt:"“It is already real, Clara. And precisely because it is real, you need adults who can act — the CPE, a school counselor, your parents. Not to fix everything at once. Just so you no longer have to carry this alone.”",
           fb:{type:'good', msg:"You show her that seeking help from adults is an act of courage — not a weakness."},
           reply:{spk:'lea', txt:"(silence) …Maybe. My aunt offered to call the school.\nI said no. But now… maybe yes."}},
-        { emp:1, txt:""You don't have to deal with this alone. If you want, I can be there when you talk to someone — any trusted adult."",
+        { emp:1, txt:"“You don't have to deal with this alone. If you want, I can be there when you talk to someone — any trusted adult.”",
           fb:{type:'ok', msg:"Supportive. But she has to take the first step — and you remind her of that well."},
           reply:{spk:'lea', txt:"(hesitant) …Okay. I'll think about it."}},
-        { emp:0, txt:""Don't worry, I'll handle it myself. Those people are going to be in trouble."",
+        { emp:0, txt:"“Don't worry, I'll handle it myself. Those people are going to be in trouble.”",
           fb:{type:'bad', msg:"You take everything onto yourself. That is not your role — and she knows it may make things worse."},
           reply:{spk:'lea', txt:"(coldly) No… please, don't do anything. It will only make things worse."}},
       ]

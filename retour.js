@@ -10,7 +10,9 @@
       (partie, écran, avancement, dernière réplique affichée), et elle
       survit au passage d'une partie à l'autre (les quatre parties sont des
       pages séparées : sans ce stockage, chaque remarque serait perdue au
-      changement de page).
+      changement de page). Quand le navigateur refuse le stockage — le jeu
+      tourne en cadre tiers, voir le bloc STOCKAGE —, la fenêtre le dit au
+      lieu de perdre la remarque en silence.
 
    2. ENVOYER — à la fin de l'exercice, un seul bouton envoie l'ensemble des
       remarques accumulées dans un seul e-mail. La technique d'envoi est
@@ -72,6 +74,8 @@
     ajouter: 'Add this note',
     ajoute: 'Note added.',
     jointe: 'Where you are in the exercise is attached automatically, so I can find the spot.',
+    sansMemoire: 'This browser will not let the page remember anything between the four parts. Send this note now — it would be lost when you move on.',
+    sousSansMemoire: 'A remark, an idea, something that feels off? Write it here — I read everything.',
     liste: 'Your notes so far',
     vide: 'No note yet.',
     supprimer: 'Delete this note',
@@ -94,6 +98,8 @@
     ajouter: 'Noter cette remarque',
     ajoute: 'Remarque notée.',
     jointe: 'L’endroit où vous êtes dans l’exercice est joint automatiquement, pour que je retrouve le passage.',
+    sansMemoire: 'Ce navigateur empêche la page de retenir quoi que ce soit d’une partie à l’autre. Envoyez cette remarque maintenant : elle serait perdue en changeant de partie.',
+    sousSansMemoire: 'Une remarque, une idée, un détail qui cloche&nbsp;? Écrivez-la ici, je lis tout.',
     liste: 'Vos remarques notées',
     vide: 'Aucune remarque notée pour l’instant.',
     supprimer: 'Supprimer cette remarque',
@@ -110,17 +116,43 @@
     finCta: 'M’envoyer mes remarques'
   };
 
-  /* ---------------------------------------------------------------------
-     Stockage — commun aux quatre parties, jamais envoyé sans un clic
-     --------------------------------------------------------------------- */
+  /* =====================================================================
+     STOCKAGE — le fil entre les quatre parties, quand il existe
+     ---------------------------------------------------------------------
+     Les quatre parties sont quatre pages : sans stockage partagé, une
+     remarque notée en partie 1 disparaît en passant à la partie 2.
+
+     Or le jeu tourne en cadre (iframe) sur antoninatger.com, servi depuis
+     github.io : c'est du stockage tiers. Safari le bloque toujours, Chrome
+     dès que les cookies tiers sont refusés — et sur les postes d'un
+     établissement, c'est fréquent. localStorage lève alors une exception.
+
+     Dans ce cas on ne fait pas semblant : la mémoire tombe en RAM, ce qui
+     tient le temps d'une page, et la fenêtre le dit — « envoyez maintenant,
+     je ne pourrai pas garder cette remarque ». Perdre les remarques d'un
+     élève sans rien lui dire serait pire que de ne pas les proposer.
+     ===================================================================== */
+  var memoire = [];          // repli quand le navigateur refuse le stockage
+  var stockageOK = (function () {
+    try {
+      var t = CLE + '.test';
+      localStorage.setItem(t, '1');
+      localStorage.removeItem(t);
+      return true;
+    } catch (e) { return false; }
+  })();
+
   function lire() {
+    if (!stockageOK) return memoire;
     try {
       var l = JSON.parse(localStorage.getItem(CLE) || '[]');
       return Object.prototype.toString.call(l) === '[object Array]' ? l : [];
-    } catch (e) { return []; }
+    } catch (e) { return memoire; }
   }
   function ecrire(l) {
-    try { localStorage.setItem(CLE, JSON.stringify(l)); } catch (e) {}
+    memoire = l;
+    if (!stockageOK) return;
+    try { localStorage.setItem(CLE, JSON.stringify(l)); } catch (e) { stockageOK = false; }
   }
 
   function echap(s) {
@@ -303,6 +335,7 @@
     '#rc-liste .rc-sup:hover,#rc-liste .rc-sup:focus-visible{color:#b85c5c;}',
     '.rc-vide{color:#575060;font-size:.78rem;font-style:italic;margin-bottom:.3rem;}',
     '.rc-jointe{color:#575060;font-size:.7rem;font-weight:300;margin-top:.55rem;}',
+    '.rc-jointe.rc-alerte{color:#c4865a;}',
     '.rc-info{font-size:.76rem;margin:.2rem 0 .6rem;min-height:1.1em;}',
     '.rc-info.rc-ok{color:#5a9e7a;}',
     '.rc-info.rc-ko{color:#b85c5c;}',
@@ -330,12 +363,15 @@
       '<div id="rc-modal">' +
         '<button id="rc-x" type="button" aria-label="' + echap(T.fermer) + '">✕</button>' +
         '<h2 id="rc-h2">💬 ' + T.titre + '</h2>' +
-        '<p class="rc-sous">' + T.sous + '</p>' +
+        '<p class="rc-sous">' + (stockageOK ? T.sous : T.sousSansMemoire) + '</p>' +
 
         '<textarea id="rc-msg" rows="3" placeholder="' + echap(T.phMsg) + '"></textarea>' +
         '<p class="rc-info" id="rc-info"></p>' +
         '<button type="button" class="rc-bt rc-sec" id="rc-add">＋ ' + echap(T.ajouter) + '</button>' +
-        '<p class="rc-jointe">' + echap(T.jointe) + '</p>' +
+        /* Quand le navigateur refuse le stockage, cette ligne devient un
+           avertissement : « envoyez maintenant ». Voir le bloc STOCKAGE. */
+        '<p class="rc-jointe' + (stockageOK ? '' : ' rc-alerte') + '">' +
+          echap(stockageOK ? T.jointe : T.sansMemoire) + '</p>' +
 
         '<div class="rc-sep">' +
           '<p class="rc-titre">' + echap(T.liste) + '</p>' +

@@ -686,6 +686,8 @@ body {
 (function(){
   var USER='clara.fontaine', PASS='nuit_rouge17';
   window.igGateOpen=true; // lu par 2_Insta_de_Clara_Structure.js : rien ne se déclenche avant la connexion
+  // Retour depuis le groupe WhatsApp (clic sur une @mention) : déjà connecté.
+  try{if(sessionStorage.getItem('harcelement_wa_from')){document.getElementById('ig-gate').style.display='none';window.igGateOpen=false;}}catch(e){}
   function dismiss(){
     var g=document.getElementById('ig-gate');
     window.igGateOpen=false;
@@ -750,7 +752,7 @@ body {
     <div class="m-icon">👁</div>
     <h2>What you need to understand</h2>
     <p>To understand what Clara is going through, you need to <strong style="color:#3a9fff">identify the different types of harassment</strong> she is experiencing.</p>
-    <p style="margin-top:10px;">By reading the <strong>comments under her photos</strong> and her <strong>private messages</strong>, questions will appear — analyse what you observe.</p>
+    <p style="margin-top:10px;">Read the <strong>comments under her photos</strong> and her <strong>private messages</strong>. When a message seems revealing, tap <strong>🔍 Identify harassment</strong>, then tap that message: you will have to say which type of harassment it is.</p>
     <p style="margin-top:10px;font-size:.78rem;color:#5a7090;">Identify at least <strong style="color:#3a9fff">4 different types</strong> to help you understand what Clara went through and to advise her when you find her.</p>
     <button class="mission-btn">Start the investigation →</button>
   </div>

@@ -52,6 +52,7 @@ function getHarcelType(text) {
 function goTo(screenId) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(screenId).classList.add('active');
+  if (screenId !== 'screen-thread') maybeAskInitial();
 }
 
 // ─── LISTE DM ────────────────────────────────────────────────────────────────
@@ -102,6 +103,7 @@ function buildDMList() {
 
 function openThread(id) {
   const convo = CONVOS.find(c => c.id === id);
+  noteExplored('dms', id);
   document.getElementById('threadName').textContent = convo.name;
   document.getElementById('threadSub').textContent = convo.sub;
   document.getElementById('threadAvatar').textContent = convo.avatar;
@@ -305,14 +307,69 @@ function closeIdentify() {
 
 // ─── FLOW DU JEU ─────────────────────────────────────────────────────────────
 
-function dismissWarning() {
-  if (gamePhase === 0) {
-    const el = document.getElementById('initial-q-overlay');
-    el.style.display = 'flex';
-    document.getElementById('iq-input').focus();
-  }
+// ─── QUESTION INITIALE : déclenchée par l'exploration, pas par l'horloge ──
+// « Qu'est-ce que tu observes ? » arrivait 40 s après le chargement, quoi que
+// fasse le joueur (même en pleine lecture d'une photo, même avant d'avoir
+// passé l'écran de connexion). Elle vient maintenant quand il a réellement
+// regardé : deux photos et deux conversations, et seulement quand il revient
+// sur le profil ou la liste des messages. Un bouton permet de répondre plus
+// tôt ; un filet de 2 min après la connexion couvre celui qui ne fait rien.
+
+const explored = { photos: new Set(), dms: new Set() };
+let initialAsked = false;
+let observeBtn = null;
+const FALLBACK_S = 120;
+
+function gateOpen() { return window.igGateOpen === true; }
+function fromWhatsApp() {
+  try { return !!sessionStorage.getItem('harcelement_wa_from'); } catch (e) { return false; }
 }
-setTimeout(dismissWarning, 40000);
+function overlayOpen() {
+  return document.getElementById('lightbox').style.display === 'flex'
+      || document.getElementById('screen-thread').classList.contains('active');
+}
+function canAsk() {
+  return gamePhase === 0 && !initialAsked && !gateOpen() && !fromWhatsApp();
+}
+function askInitial() {
+  if (!canAsk()) return;
+  initialAsked = true;
+  if (observeBtn) observeBtn.style.display = 'none';
+  const el = document.getElementById('initial-q-overlay');
+  el.style.display = 'flex';
+  document.getElementById('iq-input').focus();
+}
+function maybeAskInitial() {
+  if (canAsk() && !overlayOpen() && explored.photos.size >= 2 && explored.dms.size >= 2) askInitial();
+}
+function noteExplored(kind, id) {
+  if (gamePhase !== 0) return;
+  explored[kind].add(id);
+  showObserveBtn();
+}
+function showObserveBtn() {
+  if (!canAsk()) return;
+  if (!observeBtn) {
+    observeBtn = document.createElement('button');
+    observeBtn.type = 'button';
+    observeBtn.id = 'observe-btn';
+    observeBtn.textContent = UI.observeBtn || '🗣';
+    observeBtn.style.cssText = 'position:fixed;bottom:20px;right:16px;z-index:450;background:#3a9fff;color:#fff;border:none;border-radius:24px;padding:11px 18px;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 2px 14px rgba(58,159,255,.45);white-space:nowrap;';
+    observeBtn.addEventListener('click', askInitial);
+    document.body.appendChild(observeBtn);
+  }
+  observeBtn.style.display = 'block';
+}
+// Filet : 2 min après la connexion, si rien ne s'est passé.
+(function () {
+  let sinceGate = 0;
+  const tick = setInterval(() => {
+    if (initialAsked || gamePhase !== 0) { clearInterval(tick); return; }
+    if (gateOpen()) return;
+    sinceGate++;
+    if (sinceGate >= FALLBACK_S && canAsk() && !overlayOpen()) { askInitial(); clearInterval(tick); }
+  }, 1000);
+})();
 
 function checkInitialAnswer() {
   const input = document.getElementById('iq-input').value.trim();
@@ -416,6 +473,7 @@ function openLightbox(idx) {
   collectImages();
   if (!lbImgs.length) return;
   lbIndex = idx;
+  noteExplored('photos', idx);
   showLb();
   var lb = document.getElementById('lightbox');
   lb.style.display = 'flex';
@@ -427,10 +485,12 @@ function openLightbox(idx) {
 
 function closeLightbox() {
   document.getElementById('lightbox').style.display = 'none';
+  maybeAskInitial();
 }
 
 function lbNav(dir) {
   lbIndex = (lbIndex + dir + lbImgs.length) % lbImgs.length;
+  noteExplored('photos', lbIndex);
   showLb();
 }
 
@@ -578,6 +638,7 @@ document.getElementById('msgThread').addEventListener('click', e => {
   if (!selectMode) return;
   const bubble = e.target.closest('[data-harcel-type]');
   if (bubble) showIdentifyQCM(bubble.dataset.harcelType, bubble.textContent);
+  else if (e.target.closest('.msg-bubble.incoming')) flashHint(UI.notTagged);
 });
 
 // Event delegation — commentaires lightbox en mode sélection
@@ -587,8 +648,25 @@ document.getElementById('lb-comments').addEventListener('click', e => {
   if (comment) {
     const textEl = comment.querySelector('.c-text');
     showIdentifyQCM(comment.dataset.harcelType, textEl ? textEl.textContent : comment.textContent);
-  }
+  } else if (e.target.closest('.ig-comment')) flashHint(UI.notTagged);
 });
+
+// Petit message éphémère (mode sélection : message non balisé)
+let hintTimer = null;
+function flashHint(msg) {
+  if (!msg) return;
+  let el = document.getElementById('flash-hint');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'flash-hint';
+    el.style.cssText = 'position:fixed;left:50%;bottom:76px;transform:translateX(-50%);max-width:88%;background:#1c2a44;color:#dfe8ff;border:1px solid #3a6fff;border-radius:10px;padding:10px 14px;font-size:.78rem;line-height:1.45;z-index:650;box-shadow:0 2px 14px rgba(0,0,0,.5);text-align:center;';
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  el.style.display = 'block';
+  clearTimeout(hintTimer);
+  hintTimer = setTimeout(() => { el.style.display = 'none'; }, 3200);
+}
 
 // ─── INIT ────────────────────────────────────────────────────────────────────
 

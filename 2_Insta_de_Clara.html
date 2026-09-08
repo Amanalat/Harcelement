@@ -686,6 +686,8 @@ body {
 (function(){
   var USER='clara.fontaine', PASS='nuit_rouge17';
   window.igGateOpen=true; // lu par 2_Insta_de_Clara_Structure.js : rien ne se déclenche avant la connexion
+  // Retour depuis le groupe WhatsApp (clic sur une @mention) : déjà connecté.
+  try{if(sessionStorage.getItem('harcelement_wa_from')){document.getElementById('ig-gate').style.display='none';window.igGateOpen=false;}}catch(e){}
   function dismiss(){
     var g=document.getElementById('ig-gate');
     window.igGateOpen=false;
@@ -750,7 +752,7 @@ body {
     <div class="m-icon">👁</div>
     <h2>Ce qu'il faut comprendre</h2>
     <p>Pour comprendre ce que vit Clara, il faut <strong style="color:#3a9fff">identifier les différents types de harcèlement</strong> qu'elle subit.</p>
-    <p style="margin-top:10px;">En lisant les <strong>commentaires sous ses photos</strong> et ses <strong>messages privés</strong>, des questions apparaîtront — analyse ce que tu observes.</p>
+    <p style="margin-top:10px;">Lis les <strong>commentaires sous ses photos</strong> et ses <strong>messages privés</strong>. Quand un message te paraît révélateur, appuie sur <strong>🔍 Identifier un harcèlement</strong>, puis sur ce message : tu devras dire de quel type de harcèlement il s'agit.</p>
     <p style="margin-top:10px;font-size:.78rem;color:#5a7090;">Identifie au moins <strong style="color:#3a9fff">4 types différents</strong> pour t'aider à comprendre ce qu'a vécu Clara et pouvoir la conseiller quand tu la retrouveras.</p>
     <button class="mission-btn">Commencer l'enquête →</button>
   </div>

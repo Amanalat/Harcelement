@@ -607,5 +607,7 @@ const UI = {
   correct:         "Correct!",
   wrong:           "Not quite.",
   noteCode:        "🔐 I've noted the code",
-  codeClose:       "← Back to the journal"
+  codeClose:       "← Back to the journal",
+  observeBtn:      "🗣 Say what I observe",
+  notTagged:       "That one hurts too — but it isn't enough to name a type of harassment. Look for a more revealing message."
 };

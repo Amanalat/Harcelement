@@ -601,5 +601,7 @@ const UI = {
   correct:         "Bonne réponse !",
   wrong:           "Pas tout à fait.",
   noteCode:        "🔐 J'ai noté le code",
-  codeClose:       "← Relire le journal"
+  codeClose:       "← Relire le journal",
+  observeBtn:      "🗣 Dire ce que j'observe",
+  notTagged:       "C'est violent aussi — mais ce message ne suffit pas à nommer un type de harcèlement. Cherche-en un plus révélateur."
 };

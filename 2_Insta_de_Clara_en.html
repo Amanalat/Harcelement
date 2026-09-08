@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
 <title>Simulation – Online Harassment</title>
 <script src="2_Insta_de_Clara_textes_en.js" defer></script>
 <script src="2_Insta_de_Clara_Structure.js" defer></script>
@@ -650,8 +650,14 @@ body {
 
 <!-- ── INSTAGRAM LOGIN GATE ── -->
 <style>
-#ig-gate{position:fixed;inset:0;background:#000;z-index:600;display:flex;align-items:center;justify-content:center;padding:24px;}
-.ig-gate-box{background:#121212;border:1px solid #2a2a2a;border-radius:12px;padding:36px 28px 28px;max-width:340px;width:100%;text-align:center;}
+/* Sur mobile, le clavier réduit la zone visible : la boîte est centrée par
+   margin:auto tant qu'il y a de la place, et l'overlay défile sinon. */
+#ig-gate{position:fixed;inset:0;background:#000;z-index:600;display:flex;align-items:flex-start;justify-content:center;padding:24px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.ig-gate-box{background:#121212;border:1px solid #2a2a2a;border-radius:12px;padding:36px 28px 28px;max-width:340px;width:100%;text-align:center;margin:auto;}
+.ig-gate-pw{position:relative;margin-bottom:10px;}
+.ig-gate-pw .ig-gate-input{padding-right:42px;margin-bottom:0;}
+.ig-gate-eye{position:absolute;right:6px;top:0;bottom:0;width:34px;background:none;border:none;color:#888;font-size:1rem;cursor:pointer;padding:0;}
+.ig-gate-eye:hover{color:#ddd;}
 .ig-gate-logo{font-family:Georgia,serif;font-size:1.5rem;color:#f5f5f5;margin-bottom:6px;letter-spacing:.01em;}
 .ig-gate-sub{font-size:.75rem;color:#888;margin-bottom:24px;}
 .ig-gate-input{width:100%;background:#1a1a1a;border:1px solid #2e2e2e;border-radius:6px;color:#f5f5f5;font-size:.85rem;padding:10px 14px;margin-bottom:10px;outline:none;transition:border-color .2s;}
@@ -667,7 +673,10 @@ body {
     <div class="ig-gate-logo">Instagram</div>
     <div class="ig-gate-sub">Inès has given you Clara's login details.<br>Log in to access her account.</div>
     <input id="ig-user" class="ig-gate-input" type="text" placeholder="Username" autocomplete="off" spellcheck="false">
-    <input id="ig-pass" class="ig-gate-input" type="password" placeholder="Password" autocomplete="off">
+    <div class="ig-gate-pw">
+      <input id="ig-pass" class="ig-gate-input" type="password" placeholder="Password" autocomplete="off">
+      <button type="button" id="ig-eye" class="ig-gate-eye" aria-label="Show password" title="Show password">👁</button>
+    </div>
     <button id="ig-login-btn" class="ig-gate-btn">Log in</button>
     <div class="ig-gate-error" id="ig-error"></div>
     <button id="ig-bypass" class="ig-gate-bypass">Access directly →</button>
@@ -676,11 +685,27 @@ body {
 <script>
 (function(){
   var USER='clara.fontaine', PASS='nuit_rouge17';
+  window.igGateOpen=true; // lu par 2_Insta_de_Clara_Structure.js : rien ne se déclenche avant la connexion
   function dismiss(){
     var g=document.getElementById('ig-gate');
+    window.igGateOpen=false;
     g.style.transition='opacity .5s';g.style.opacity='0';
     setTimeout(function(){g.style.display='none';},500);
   }
+  // Clavier mobile : ramener le champ actif dans la zone visible.
+  ['ig-user','ig-pass'].forEach(function(id){
+    document.getElementById(id).addEventListener('focus',function(){
+      var el=this;setTimeout(function(){try{el.scrollIntoView({block:'center',behavior:'smooth'});}catch(e){}},350);
+    });
+  });
+  // Œil : voir ce qu'on tape (c'est un jeu, pas un vrai mot de passe).
+  document.getElementById('ig-eye').addEventListener('click',function(){
+    var p=document.getElementById('ig-pass');
+    var show=p.type==='password';
+    p.type=show?'text':'password';
+    this.style.color=show?'#f5f5f5':'#888';
+    p.focus();
+  });
   document.getElementById('ig-login-btn').addEventListener('click',function(){
     var u=document.getElementById('ig-user').value.trim().replace(/^@/,'');
     var p=document.getElementById('ig-pass').value;

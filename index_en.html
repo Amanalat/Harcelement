@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Finding Clara</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="prenom.js" defer></script>
+<script src="sauvegarde.js" defer></script>
 <script src="index.js" defer></script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -15,12 +17,12 @@
   --card:#121826;
   --border:rgba(255,255,255,.07);
   --text:#d8d0c2;
-  --dim:#575060;
+  --dim:#8a8394;
   --accent:#c4865a;
   --blue:#4a90d9;
   --purple:#8b6bb1;
   --green:#5a9e7a;
-  --red:#b85c5c;
+  --red:#c76b6b;
 }
 
 html,body{
@@ -294,11 +296,68 @@ body::before{
 .prev-dl{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:10px;color:rgba(216,208,194,.42);line-height:1.6;text-align:center;}
 .prev-dl.hi{color:rgba(216,208,194,.82);font-size:10.5px;}
 
-.footer{
-  margin-top:3rem;
-  font-size:.72rem;
+#prenom-choix{
+  display:flex;gap:9px;justify-content:center;align-items:center;flex-wrap:wrap;
+  margin:1.5rem auto 0;z-index:1;position:relative;font-family:'Jost',sans-serif;
+}
+#prenom-choix .pc-lab{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);}
+#prenom-choix button{
+  background:none;border:1px solid var(--border);border-radius:999px;color:var(--dim);
+  font-family:'Jost',sans-serif;font-size:.8rem;letter-spacing:.08em;padding:7px 18px;cursor:pointer;
+  transition:color .2s,border-color .2s,background .2s;
+}
+#prenom-choix button:hover{color:var(--text);border-color:var(--accent);}
+#prenom-choix button.on{color:var(--accent);border-color:var(--accent);background:rgba(196,134,90,.08);font-weight:600;}
+#save-area{
+  display:none;flex-direction:column;align-items:center;gap:10px;
+  margin:1.6rem auto 0;max-width:420px;z-index:1;position:relative;
+}
+#save-area .sa-sep{
+  font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--dim);
+}
+#save-area .sa-code{
+  font-family:'Courier New',monospace;font-size:1.25rem;letter-spacing:.3em;
+  color:var(--accent);background:rgba(196,134,90,.07);
+  border:1px solid rgba(196,134,90,.28);border-radius:4px;padding:9px 16px;
+}
+#save-area .sa-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+#save-area input{
+  background:none;border:1px solid var(--border);border-radius:3px;color:var(--text);
+  font-family:'Courier New',monospace;font-size:.9rem;letter-spacing:.2em;
+  padding:8px 12px;width:150px;text-align:center;outline:none;text-transform:uppercase;
+}
+#save-area input:focus{border-color:var(--accent);}
+#save-area button{
+  background:none;border:1px solid var(--border);border-radius:3px;color:var(--dim);
+  font-family:'Jost',sans-serif;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
+  padding:9px 16px;cursor:pointer;transition:color .2s,border-color .2s;
+}
+#save-area button:hover{color:var(--text);border-color:var(--accent);}
+#save-area .sa-msg{font-family:'Jost',sans-serif;font-size:.72rem;color:var(--red);min-height:1em;}
+#reset-btn{
+  display:none;
+  margin:1.4rem auto 0;
+  background:none;
+  border:1px solid var(--border);
+  border-radius:999px;
   color:var(--dim);
-  opacity:.5;
+  font-family:'Jost',sans-serif;
+  font-size:.74rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  padding:9px 20px;
+  cursor:pointer;
+  transition:color .2s,border-color .2s;
+  z-index:1;
+  position:relative;
+}
+#reset-btn:hover{color:var(--text);border-color:var(--accent);}
+.footer{
+  margin-top:1.6rem;
+  font-size:.78rem;
+  color:var(--dim);
+  opacity:.85;
   letter-spacing:.06em;
   position:relative;
   z-index:1;
@@ -449,6 +508,22 @@ body::before{
 
 </main>
 
+<div id="prenom-choix">
+  <span class="pc-lab">You play</span>
+  <button type="button" data-prenom="Léo">Léo</button>
+  <button type="button" data-prenom="Léa">Léa</button>
+</div>
+<div id="save-area">
+  <span class="sa-sep">Your resume code</span>
+  <span class="sa-code" id="sa-code">0000000</span>
+  <span class="sa-sep">or resume with a code</span>
+  <div class="sa-row">
+    <input type="text" id="sa-input" maxlength="7" placeholder="7 characters" autocomplete="off" spellcheck="false" aria-label="Resume code">
+    <button type="button" id="sa-go">Resume</button>
+  </div>
+  <span class="sa-msg" id="sa-msg"></span>
+</div>
+<button type="button" id="reset-btn">↺ New investigation</button>
 <footer class="footer">© Finding Clara — Bullying awareness exercise</footer>
 
 <button id="fs-btn" title="Fullscreen" aria-label="Enable fullscreen">

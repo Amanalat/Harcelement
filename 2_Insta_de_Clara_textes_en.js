@@ -54,7 +54,6 @@ const CONVOS = [
       { from:"them", text:"it's been going around the whole class since this morning", time:"09:23" },
     ]
   },
-
   // ── YESTERDAY ──
   {
     id:6, avatar:"👤", name:"xxxxxxxxx_011", sub:"Unknown account",
@@ -98,7 +97,6 @@ const CONVOS = [
       { from:"them", text:"now you know", time:"16:45" },
     ]
   },
-
   // ── THIS WEEK ──
   {
     id:10, avatar:"🔇", name:"xx_nobody_xx", sub:"Unknown account",
@@ -142,7 +140,6 @@ const CONVOS = [
       { from:"them", text:"you don't have much of a future in this class", time:"20:19" },
     ]
   },
-
   // ── LAST MONTH ──
   {
     id:14, avatar:"👻", name:"fantome_reseau", sub:"Unknown account",
@@ -205,6 +202,28 @@ const CONVOS = [
     ]
   },
   {
+    id:28, avatar:"😤", name:"vrai_garcon_2024", sub:"Unknown account",
+    unread:false, time:"3 weeks ago", section:null,
+    preview:"girls like you don't know how to behave",
+    messages:[
+      { from:"them", text:"girls like you don't know how to behave", time:"19:44" },
+      { from:"them", text:"you don't belong expressing yourself like that in front of everyone", time:"19:45" },
+      { from:"them", text:"you're a girl stay in your place", time:"19:46" },
+      { from:"them", text:"you're too much in your head for a girl", time:"19:47" },
+    ]
+  },
+  {
+    id:29, avatar:"🏫", name:"colleg_info_2024", sub:"Unknown account",
+    unread:false, time:"3 weeks ago", section:null,
+    preview:"everyone was laughing behind your back in the cafeteria",
+    messages:[
+      { from:"them", text:"did you see the face you had in the cafeteria today", time:"17:21" },
+      { from:"them", text:"everyone was laughing behind your back in the cafeteria", time:"17:22" },
+      { from:"them", text:"the math teacher embarrassed you in front of everyone again right", time:"17:23" },
+      { from:"them", text:"even the teachers can't stand you it was crazy", time:"17:24" },
+    ]
+  },
+  {
     id:17, avatar:"🔴", name:"rouge_anonyme", sub:"Unknown account",
     unread:false, time:"4 weeks ago", section:null,
     preview:"did you see the comment E. left on your photo",
@@ -214,7 +233,6 @@ const CONVOS = [
       { from:"them", text:"that says everything", time:"20:13" },
     ]
   },
-
   // ── 2 MONTHS AGO ──
   {
     id:18, avatar:"🫥", name:"user_invisible_00", sub:"Unknown account",
@@ -247,7 +265,17 @@ const CONVOS = [
       { from:"them", text:"you'll do better next time if there is one", time:"16:19" },
     ]
   },
-
+  {
+    id:27, avatar:"🔐", name:"anon_blackmail_x", sub:"Unknown account",
+    unread:false, time:"2 months ago", section:null,
+    preview:"i have photos of you that you wouldn't want everyone to see",
+    messages:[
+      { from:"them", text:"I have photos of you that you wouldn't want everyone to see", time:"23:12" },
+      { from:"them", text:"photos from the party at Lena's last month", time:"23:13" },
+      { from:"them", text:"if you talk to anyone about what's happening at school I'll send them to your whole contact list", time:"23:13" },
+      { from:"them", text:"do you understand the message?", time:"23:14" },
+    ]
+  },
   // ── 3 MONTHS AGO ──
   {
     id:21, avatar:"⚫", name:"xX_shadow_Xx", sub:"Unknown account",
@@ -288,7 +316,6 @@ const CONVOS = [
       { from:"them", text:"congratulations", time:"20:56" },
     ]
   },
-
   // ── MORE THAN 6 MONTHS AGO ──
   {
     id:25, avatar:"🕳️", name:"void_user_xx", sub:"Unknown account",
@@ -311,39 +338,6 @@ const CONVOS = [
     ]
   },
   {
-    id:27, avatar:"🔐", name:"anon_blackmail_x", sub:"Unknown account",
-    unread:false, time:"2 months ago", section:null,
-    preview:"i have photos of you that you wouldn't want everyone to see",
-    messages:[
-      { from:"them", text:"I have photos of you that you wouldn't want everyone to see", time:"23:12" },
-      { from:"them", text:"photos from the party at Lena's last month", time:"23:13" },
-      { from:"them", text:"if you talk to anyone about what's happening at school I'll send them to your whole contact list", time:"23:13" },
-      { from:"them", text:"do you understand the message?", time:"23:14" },
-    ]
-  },
-  {
-    id:28, avatar:"😤", name:"vrai_garcon_2024", sub:"Unknown account",
-    unread:false, time:"3 weeks ago", section:null,
-    preview:"girls like you don't know how to behave",
-    messages:[
-      { from:"them", text:"girls like you don't know how to behave", time:"19:44" },
-      { from:"them", text:"you don't belong expressing yourself like that in front of everyone", time:"19:45" },
-      { from:"them", text:"you're a girl stay in your place", time:"19:46" },
-      { from:"them", text:"you're too much in your head for a girl", time:"19:47" },
-    ]
-  },
-  {
-    id:29, avatar:"🏫", name:"colleg_info_2024", sub:"Unknown account",
-    unread:false, time:"3 weeks ago", section:null,
-    preview:"everyone was laughing behind your back in the cafeteria",
-    messages:[
-      { from:"them", text:"did you see the face you had in the cafeteria today", time:"17:21" },
-      { from:"them", text:"everyone was laughing behind your back in the cafeteria", time:"17:22" },
-      { from:"them", text:"the math teacher embarrassed you in front of everyone again right", time:"17:23" },
-      { from:"them", text:"even the teachers can't stand you it was crazy", time:"17:24" },
-    ]
-  },
-  {
     id:99, avatar:"📔", name:"Me — Journal", sub:"Personal note",
     unread:true, time:"5 days ago", section:null,
     secret:true,
@@ -352,9 +346,9 @@ const CONVOS = [
       { from:"me", text:"it's horrible...", time:"21:03" },
       { from:"me", text:"I discovered they made a group about me", time:"21:03" },
       { from:"me", text:"a secret group where they coordinate everything that happens to me", time:"21:04" },
-      { from:"me", text:"I even managed to get the code...", time:"21:04" },
-      { from:"me", text:"the code is 4827", time:"21:05" },
-      { from:"me", text:"I don't know what to do with it but I'm keeping it just in case", time:"21:05" },
+      { from:"me", text:"I don't even know how I found out", time:"21:04" },
+      { from:"me", text:"and I can't get in. I can't prove anything.", time:"21:05" },
+      { from:"me", text:"I don't know what to do with this", time:"21:06" },
     ]
   },
 ];
@@ -534,11 +528,11 @@ var photoData = [
       { user: "_noreply_ghost_",  text: "your photo is seriously so ugly" },
     ]
   },
-  { likes: 5,  caption: "love playing so much 🎸🎵",
+  { likes: 34, caption: "love playing so much 🎸🎵",
     comments: [
-      { user: "vrai_info_colleg", text: "what? you like this artist? you're useless poor girl" },
-      { user: "user_fake8847",    text: "stop pretending you like music it's pathetic" },
-      { user: "xxxxxxxxx_011",    text: "you don't even have talent stop identifying with that" },
+      { user: "sarah.girard",     text: "SINCE WHEN do you play that well" },
+      { user: "ines_l",           text: "same song for 3 weeks straight lol but I love it" },
+      { user: "sarah.girard",     text: "please play at the end of year show" },
     ]
   },
   { likes: 1,  caption: "my kitten 🐱❤️",
@@ -554,10 +548,10 @@ var photoData = [
       { user: "anonymous_x0",     text: "eat more don't worry" },
     ]
   },
-  { likes: 2,  caption: "evening reading 📚",
+  { likes: 21, caption: "evening reading 📚",
     comments: [
-      { user: "utilisateur_4729", text: "you haven't even read those books stop showing off" },
-      { user: "_noreply_ghost_",  text: "your photo is so ugly you can't even see the titles lol" },
+      { user: "ines_l",           text: "which book are you on now ??" },
+      { user: "sarah.girard",     text: "lend it to me when you're done" },
     ]
   },
   { likes: 7,  caption: "concert tonight 🎤🔥",
@@ -569,7 +563,7 @@ var photoData = [
   },
   { likes: 2,  caption: "flowers from the market 🌸",
     comments: [
-      { user: "dark_mode_user",   text: "your photo is so ugly even the flowers look sad" },
+      { user: "dark_mode_user",   text: "even the flowers look like they want to leave" },
       { user: "fantome_reseau",   text: "flowers? nobody's ever gonna give you any lol" },
     ]
   },
@@ -584,7 +578,7 @@ var photoData = [
     comments: [
       { user: "truth_teller_99",  text: "0 likes in 3 hours that's a message clara" },
       { user: "utilisateur_4729", text: "even the sky doesn't want you" },
-      { user: "_noreply_ghost_",  text: "your photo is so ugly you should have gone to sleep instead" },
+      { user: "_noreply_ghost_",  text: "you should have gone to sleep instead of posting this" },
     ]
   },
 ];
@@ -606,7 +600,13 @@ const UI = {
   backToWAUrl:     "3_WhatsApp_Groupe_en.html",
   correct:         "Correct!",
   wrong:           "Not quite.",
-  noteCode:        "🔐 I've noted the code",
+  demasqueSub:     "Unmasked in the group: ",
+  reportBtn:       "⚠ Report this account",
+  reportDone:      "✓ Account reported",
+  reportAfter:     "Account reported. Clara could have done it from the very first message — nobody had told her.",
+  synthFound:      "found",
+  synthMissed:     "missed",
+  noteCode:        "🔐 The code for what comes next",
   codeClose:       "← Back to the journal",
   observeBtn:      "🗣 Say what I observe",
   notTagged:       "That one hurts too — but it isn't enough to name a type of harassment. Look for a more revealing message."

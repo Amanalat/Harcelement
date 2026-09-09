@@ -202,6 +202,28 @@ const CONVOS = [
     ]
   },
   {
+    id:28, avatar:"😤", name:"vrai_garcon_2024", sub:"Compte inconnu",
+    unread:false, time:"il y a 3 sem.", section:null,
+    preview:"les filles comme toi ca sait pas se tenir",
+    messages:[
+      { from:"them", text:"les filles comme toi ca sait pas se tenir", time:"19:44" },
+      { from:"them", text:"t'as pas ta place a t'exprimer comme ca devant tout le monde", time:"19:45" },
+      { from:"them", text:"t'es une fille reste a ta place", time:"19:46" },
+      { from:"them", text:"t'es trop dans ta tete pour une fille", time:"19:47" },
+    ]
+  },
+  {
+    id:29, avatar:"🏫", name:"colleg_info_2024", sub:"Compte inconnu",
+    unread:false, time:"il y a 3 sem.", section:null,
+    preview:"tout le monde riait dans ton dos a la cantine",
+    messages:[
+      { from:"them", text:"t'as vu la tete que t'avais a la cantine aujourd'hui", time:"17:21" },
+      { from:"them", text:"tout le monde riait dans ton dos a la cantine", time:"17:22" },
+      { from:"them", text:"le prof de maths t'a encore mise en difficulte devant tout le monde non", time:"17:23" },
+      { from:"them", text:"meme les profs peuvent pas te supporter c'etait dingue", time:"17:24" },
+    ]
+  },
+  {
     id:17, avatar:"🔴", name:"rouge_anonyme", sub:"Compte inconnu",
     unread:false, time:"il y a 4 sem.", section:null,
     preview:"t'as vu le commentaire que E. a laisse sur ta photo",
@@ -241,6 +263,17 @@ const CONVOS = [
       { from:"them", text:"ton ex a tout raconte a ses potes tu savais ?", time:"16:18" },
       { from:"them", text:"genre vraiment tout", time:"16:18" },
       { from:"them", text:"tu feras mieux la prochaine fois si y'en a une", time:"16:19" },
+    ]
+  },
+  {
+    id:27, avatar:"🔐", name:"anon_blackmail_x", sub:"Compte inconnu",
+    unread:false, time:"il y a 2 mois", section:null,
+    preview:"j'ai des photos de toi que tu voudrais pas que tout le monde voie",
+    messages:[
+      { from:"them", text:"j'ai des photos de toi que tu voudrais pas que tout le monde voie", time:"23:12" },
+      { from:"them", text:"des photos de la soiree chez Lena le mois dernier", time:"23:13" },
+      { from:"them", text:"si tu parles a quelqu'un de ce qui se passe au college je les envoie a toute ta liste de contacts", time:"23:13" },
+      { from:"them", text:"t'as compris le message ?", time:"23:14" },
     ]
   },
   // ── IL Y A 3 MOIS ──
@@ -305,39 +338,6 @@ const CONVOS = [
     ]
   },
   {
-    id:27, avatar:"🔐", name:"anon_blackmail_x", sub:"Compte inconnu",
-    unread:false, time:"il y a 2 mois", section:null,
-    preview:"j'ai des photos de toi que tu voudrais pas que tout le monde voie",
-    messages:[
-      { from:"them", text:"j'ai des photos de toi que tu voudrais pas que tout le monde voie", time:"23:12" },
-      { from:"them", text:"des photos de la soiree chez Lena le mois dernier", time:"23:13" },
-      { from:"them", text:"si tu parles a quelqu'un de ce qui se passe au college je les envoie a toute ta liste de contacts", time:"23:13" },
-      { from:"them", text:"t'as compris le message ?", time:"23:14" },
-    ]
-  },
-  {
-    id:28, avatar:"😤", name:"vrai_garcon_2024", sub:"Compte inconnu",
-    unread:false, time:"il y a 3 semaines", section:null,
-    preview:"les filles comme toi ca sait pas se tenir",
-    messages:[
-      { from:"them", text:"les filles comme toi ca sait pas se tenir", time:"19:44" },
-      { from:"them", text:"t'as pas ta place a t'exprimer comme ca devant tout le monde", time:"19:45" },
-      { from:"them", text:"t'es une fille reste a ta place", time:"19:46" },
-      { from:"them", text:"t'es trop dans ta tete pour une fille", time:"19:47" },
-    ]
-  },
-  {
-    id:29, avatar:"🏫", name:"colleg_info_2024", sub:"Compte inconnu",
-    unread:false, time:"il y a 3 semaines", section:null,
-    preview:"tout le monde riait dans ton dos a la cantine",
-    messages:[
-      { from:"them", text:"t'as vu la tete que t'avais a la cantine aujourd'hui", time:"17:21" },
-      { from:"them", text:"tout le monde riait dans ton dos a la cantine", time:"17:22" },
-      { from:"them", text:"le prof de maths t'a encore mise en difficulte devant tout le monde non", time:"17:23" },
-      { from:"them", text:"meme les profs peuvent pas te supporter c'etait dingue", time:"17:24" },
-    ]
-  },
-  {
     id:99, avatar:"📔", name:"Moi — Journal", sub:"Note personnelle",
     unread:true, time:"il y a 5 jours", section:null,
     secret:true,
@@ -346,9 +346,9 @@ const CONVOS = [
       { from:"me", text:"c'est horrible...", time:"21:03" },
       { from:"me", text:"j'ai découvert qu'ils ont fait un groupe sur moi", time:"21:03" },
       { from:"me", text:"un groupe secret où ils coordonnent tout ce qui m'arrive", time:"21:04" },
-      { from:"me", text:"j'ai même pu avoir le code...", time:"21:04" },
-      { from:"me", text:"le code c'est 4827", time:"21:05" },
-      { from:"me", text:"je sais pas quoi faire de ça mais je le garde au cas où", time:"21:05" },
+      { from:"me", text:"je sais même pas comment je l'ai appris", time:"21:04" },
+      { from:"me", text:"et je peux pas y entrer. je peux rien prouver.", time:"21:05" },
+      { from:"me", text:"je sais pas quoi faire de ça", time:"21:06" },
     ]
   },
 ];
@@ -528,11 +528,11 @@ var photoData = [
       { user: "_noreply_ghost_",  text: "elle est trop moche ta photo serieusement" },
     ]
   },
-  { likes: 5,  caption: "trop aimer jouer 🎸🎵",
+  { likes: 34, caption: "trop aimer jouer 🎸🎵",
     comments: [
-      { user: "vrai_info_colleg", text: "quoi ? tu aimes cette artiste ? t'es nulle ma pauvre fille" },
-      { user: "user_fake8847",    text: "arrete de faire semblant d'aimer la musique ca fait pitie" },
-      { user: "xxxxxxxxx_011",    text: "t'as meme pas de talent arrete de t'identifier a ca" },
+      { user: "sarah.girard",     text: "MAIS depuis quand tu joues aussi bien" },
+      { user: "ines_l",           text: "la meme chanson depuis 3 semaines mdr mais j'adore" },
+      { user: "sarah.girard",     text: "tu joues au spectacle de fin d'annee stp" },
     ]
   },
   { likes: 1,  caption: "mon chaton 🐱❤️",
@@ -548,10 +548,10 @@ var photoData = [
       { user: "anonymous_x0",     text: "mange encore t'inquiete" },
     ]
   },
-  { likes: 2,  caption: "lecture du soir 📚",
+  { likes: 21, caption: "lecture du soir 📚",
     comments: [
-      { user: "utilisateur_4729", text: "t'as meme pas lu ces livres arrete la frime" },
-      { user: "_noreply_ghost_",  text: "elle est trop moche ta photo on voit meme pas les titres lol" },
+      { user: "ines_l",           text: "t'es a quel tome la ??" },
+      { user: "sarah.girard",     text: "tu me le pretes quand t'as fini" },
     ]
   },
   { likes: 7,  caption: "concert ce soir 🎤🔥",
@@ -563,7 +563,7 @@ var photoData = [
   },
   { likes: 2,  caption: "fleurs du marche 🌸",
     comments: [
-      { user: "dark_mode_user",   text: "elle est trop moche ta photo meme les fleurs ont l'air tristes" },
+      { user: "dark_mode_user",   text: "meme les fleurs ont l'air de vouloir partir" },
       { user: "fantome_reseau",   text: "des fleurs ? personne t'en offrira jamais lol" },
     ]
   },
@@ -578,7 +578,7 @@ var photoData = [
     comments: [
       { user: "truth_teller_99",  text: "0 likes en 3 heures c'est un message clara" },
       { user: "utilisateur_4729", text: "meme le ciel il veut pas de toi" },
-      { user: "_noreply_ghost_",  text: "elle est trop moche ta photo t'aurais mieux fait de dormir" },
+      { user: "_noreply_ghost_",  text: "t'aurais mieux fait de dormir que de poster ca" },
     ]
   },
 ];
@@ -600,7 +600,13 @@ const UI = {
   backToWAUrl:     "3_WhatsApp_Groupe.html",
   correct:         "Bonne réponse !",
   wrong:           "Pas tout à fait.",
-  noteCode:        "🔐 J'ai noté le code",
+  demasqueSub:     "Démasqué dans le groupe : ",
+  reportBtn:       "⚠ Signaler ce compte",
+  reportDone:      "✓ Compte signalé",
+  reportAfter:     "Compte signalé. Clara aurait pu le faire dès le premier message — personne ne le lui avait dit.",
+  synthFound:      "trouvé",
+  synthMissed:     "pas vu",
+  noteCode:        "🔐 Le code pour la suite",
   codeClose:       "← Relire le journal",
   observeBtn:      "🗣 Dire ce que j'observe",
   notTagged:       "C'est violent aussi — mais ce message ne suffit pas à nommer un type de harcèlement. Cherche-en un plus révélateur."

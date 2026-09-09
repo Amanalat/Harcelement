@@ -4,12 +4,26 @@
 
 let gamePhase = 0; // 0=waiting, 1=mission active, 2=types found
 let typesFound = new Set();
-const REQUIRED_TYPES = 4;
+// Un joueur qui revient (ou qui a repris avec un code) garde ce qu'il a trouvé.
+try { (JSON.parse(localStorage.getItem('rc_types') || '[]') || []).forEach(t => typesFound.add(t)); } catch (e) {}
+const REQUIRED_TYPES = 6;
+
+// Les QCM ont été écrits avant le système à neuf types : leur champ « type »
+// est une phrase, pas une clé de HARCEL_TYPES. On les rattache ici. Le QCM 23
+// (« un compte créé rien que pour harceler ») n'a pas d'équivalent : ce n'est
+// pas un type de harcèlement mais une technique — il reste un point d'analyse.
+const QUIZ_TYPE = { 4:'menaces', 7:'rumeurs', 11:'manipulation', 22:'exclusion', 23:null };
+const PHOTO_QUIZ_TYPE = { 3:'body_shaming', 5:'exclusion', 7:'exclusion' };
 let quizAnswered = {};
 let selectMode = false;
 let currentIdentifyData = null;
 
 // ─── UTILITAIRES ─────────────────────────────────────────────────────────────
+
+// Comptes démasqués dans la Partie 3 : au retour sur l'Instagram, ils portent
+// le prénom de qui se cache derrière. Clara ne le saura jamais ; le joueur si.
+let COMPTES_CONNUS = {};
+try { COMPTES_CONNUS = JSON.parse(localStorage.getItem('rc_comptes') || '{}') || {}; } catch (e) {}
 
 function normaliseStr(s) {
   // Les fragments de HARCEL_MAP sont écrits sans apostrophe ni ligature
@@ -84,10 +98,10 @@ function buildDMList() {
     }
     const border = c.id===99 ? 'border-left:3px solid #2dcc6f;' : '';
     html += `
-      <div class="dm-item ${c.unread?'unread':''}" style="${border}" data-thread-id="${c.id}">
+      <div class="dm-item ${c.unread?'unread':''}${c.reported?' reported':''}" style="${border}" data-thread-id="${c.id}">
         <div class="dm-avatar anon">${c.avatar}</div>
         <div class="dm-info">
-          <div class="dm-name">${c.name}</div>
+          <div class="dm-name">${c.name}${COMPTES_CONNUS[c.name] ? `<span class="demasque">${COMPTES_CONNUS[c.name]}</span>` : ''}</div>
           <div class="dm-preview" style="color:${c.unread?'var(--text)':'var(--text2)'};">${c.preview}</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
@@ -105,7 +119,8 @@ function openThread(id) {
   const convo = CONVOS.find(c => c.id === id);
   noteExplored('dms', id);
   document.getElementById('threadName').textContent = convo.name;
-  document.getElementById('threadSub').textContent = convo.sub;
+  document.getElementById('threadSub').textContent =
+    COMPTES_CONNUS[convo.name] ? (UI.demasqueSub || '') + COMPTES_CONNUS[convo.name] : convo.sub;
   document.getElementById('threadAvatar').textContent = convo.avatar;
 
   const thread = document.getElementById('msgThread');
@@ -147,10 +162,55 @@ function openThread(id) {
     thread.appendChild(wrap);
   }
 
+  // Signalement : proposé sur les comptes qui harcèlent, pas sur l'amie ni
+  // sur le journal de Clara.
+  setupReport(convo);
+
   // Mark as read
   convo.unread = false;
   goTo('screen-thread');
-  setTimeout(() => { thread.scrollTop = thread.scrollHeight; }, 100);
+  setTimeout(() => {
+    thread.scrollTop = thread.scrollHeight;
+    // Point d'analyse écrit pour cette conversation (QUIZZES) : il ne se
+    // déclenchait nulle part jusqu'ici.
+    if (gamePhase >= 1 && QUIZZES[id] && !quizAnswered[id]) setTimeout(() => showQuiz(id), 900);
+  }, 100);
+}
+
+// ─── SIGNALEMENT ─────────────────────────────────────────────────────────────
+// Le jeu montrait le harcèlement en détail et jamais le premier geste : dans
+// les 9 500 mots, « signaler » n'apparaissait qu'une fois, dans une ressource.
+
+let reportTarget = null;
+
+function setupReport(convo) {
+  const bar = document.getElementById('report-bar');
+  const btn = document.getElementById('report-btn');
+  if (!bar || !btn) return;
+  const harceleur = convo.id !== 99 && convo.id !== 30;
+  bar.hidden = !harceleur;
+  if (!harceleur) { reportTarget = null; return; }
+  reportTarget = convo;
+  btn.disabled = !!convo.reported;
+  btn.className = convo.reported ? 'done' : '';
+  btn.textContent = convo.reported ? UI.reportDone : UI.reportBtn;
+}
+
+function openReport() {
+  if (!reportTarget || reportTarget.reported) return;
+  document.getElementById('report-overlay').style.display = 'flex';
+}
+function closeReport() {
+  document.getElementById('report-overlay').style.display = 'none';
+}
+function confirmReport() {
+  closeReport();
+  if (!reportTarget) return;
+  reportTarget.reported = true;
+  const btn = document.getElementById('report-btn');
+  btn.disabled = true; btn.className = 'done'; btn.textContent = UI.reportDone;
+  buildDMList();
+  flashHint(UI.reportAfter);
 }
 
 // ─── QUIZ ────────────────────────────────────────────────────────────────────
@@ -192,13 +252,9 @@ function answerQuiz(id, chosen) {
   fb.className = 'quiz-fb ' + (correct ? 'good' : 'bad');
   fb.innerHTML = (correct ? '<strong>✓ ' + UI.correct + '</strong><br>' : '<strong>✗ ' + UI.wrong + '</strong><br>') + q.explanation;
   document.getElementById('quiz-continue').style.display = 'inline-block';
-  if (correct) recordTypeFound(q.type);
-  if (Object.keys(quizAnswered).length >= Object.keys(QUIZZES).length) {
-    setTimeout(() => {
-      const btn = document.getElementById('synthesis-btn');
-      if (btn) btn.style.display = 'flex';
-    }, 800);
-  }
+  // Le type est acquis même sur une mauvaise réponse : l'explication vient
+  // d'être lue, et une erreur ne doit pas fermer l'accès à la suite.
+  recordTypeFound(QUIZ_TYPE[id]);
 }
 
 function answerPhotoQuiz(idx, chosen) {
@@ -217,7 +273,7 @@ function answerPhotoQuiz(idx, chosen) {
   fb.className = 'quiz-fb ' + (correct ? 'good' : 'bad');
   fb.innerHTML = (correct ? '<strong>✓ ' + UI.correct + '</strong><br>' : '<strong>✗ ' + UI.wrong + '</strong><br>') + q.explanation;
   document.getElementById('quiz-continue').style.display = 'inline-block';
-  if (correct) recordTypeFound(q.type);
+  recordTypeFound(PHOTO_QUIZ_TYPE[idx]);
 }
 
 function showPhotoQuiz(idx) {
@@ -335,6 +391,10 @@ function askInitial() {
   if (!canAsk()) return;
   initialAsked = true;
   if (observeBtn) observeBtn.style.display = 'none';
+  // Le bandeau du haut annonce « exercice sur le cyberharcèlement » : il
+  // donnerait la réponse à la question qu'on vient de poser.
+  const ban = document.getElementById('banner');
+  if (ban) ban.style.visibility = 'hidden';
   const el = document.getElementById('initial-q-overlay');
   el.style.display = 'flex';
   document.getElementById('iq-input').focus();
@@ -381,6 +441,8 @@ function checkInitialAnswer() {
     ok.style.display = 'block';
     setTimeout(() => {
       document.getElementById('initial-q-overlay').style.display = 'none';
+      const ban = document.getElementById('banner');
+      if (ban) ban.style.visibility = '';
       document.getElementById('mission-overlay').style.display = 'flex';
     }, 1400);
   } else {
@@ -399,11 +461,19 @@ function startMission() {
   if (tracker) tracker.style.display = 'flex';
   updateTypesTracker();
   document.getElementById('identify-btn').style.display = 'block';
+  // Reprise : le seuil peut déjà être atteint.
+  if (typesFound.size >= REQUIRED_TYPES && gamePhase < 2) {
+    gamePhase = 2;
+    setTimeout(revealSecretMessage, 600);
+    const btn = document.getElementById('synthesis-btn');
+    if (btn) btn.style.display = 'flex';
+  }
 }
 
 function recordTypeFound(type) {
   if (!type) return;
   typesFound.add(type);
+  try { localStorage.setItem('rc_types', JSON.stringify([...typesFound])); } catch (e) {}
   updateTypesTracker();
   if (typesFound.size >= REQUIRED_TYPES && gamePhase < 2) {
     gamePhase = 2;
@@ -445,12 +515,15 @@ function goToSecretMessage() {
 function showSynthesis() {
   const content = document.getElementById('synthesis-content');
   content.innerHTML = '';
-  typesFound.forEach(typeKey => {
-    const t = HARCEL_TYPES[typeKey];
-    if (!t) return;
+  // Les neuf types, pas seulement ceux trouvés : un joueur pouvait terminer
+  // sans jamais entendre parler de la sextorsion ni du harcèlement sexiste.
+  Object.entries(HARCEL_TYPES).forEach(([key, t]) => {
+    const found = typesFound.has(key);
     const div = document.createElement('div');
-    div.className = 'synth-item';
-    div.innerHTML = `<div class="synth-item-head"><span class="synth-icon">${t.icon}</span><span class="synth-type">${t.label}</span></div><div class="synth-exp">${t.desc}</div>`;
+    div.className = 'synth-item' + (found ? '' : ' missed');
+    div.innerHTML = `<div class="synth-item-head"><span class="synth-icon">${t.icon}</span><span class="synth-type">${t.label}</span>`
+      + `<span class="synth-flag ${found ? 'ok' : 'no'}">${found ? UI.synthFound : UI.synthMissed}</span></div>`
+      + `<div class="synth-exp">${t.desc}</div>`;
     content.appendChild(div);
   });
   const note = document.createElement('div');
@@ -475,6 +548,7 @@ function openLightbox(idx) {
   lbIndex = idx;
   noteExplored('photos', idx);
   showLb();
+  maybePhotoQuiz(idx);
   var lb = document.getElementById('lightbox');
   lb.style.display = 'flex';
   // Copy avatar
@@ -492,6 +566,16 @@ function lbNav(dir) {
   lbIndex = (lbIndex + dir + lbImgs.length) % lbImgs.length;
   noteExplored('photos', lbIndex);
   showLb();
+  maybePhotoQuiz(lbIndex);
+}
+
+// Laisse le temps de lire les commentaires avant de poser la question.
+function maybePhotoQuiz(idx) {
+  if (gamePhase < 1) return;
+  if (!PHOTO_QUIZZES[idx] || quizAnswered['photo_' + idx]) return;
+  setTimeout(() => {
+    if (document.getElementById('lightbox').style.display === 'flex') showPhotoQuiz(idx);
+  }, 1600);
 }
 
 function showLb() {
@@ -577,6 +661,26 @@ document.getElementById('secret-notif').addEventListener('click', goToSecretMess
 
 // Quiz continue
 document.getElementById('quiz-continue').addEventListener('click', closeQuiz);
+
+// Signalement
+document.getElementById('report-btn').addEventListener('click', openReport);
+document.getElementById('report-go').addEventListener('click', confirmReport);
+document.getElementById('report-cancel').addEventListener('click', closeReport);
+
+// Avant de passer à la Partie 3 : ce que le joueur vient de faire du compte
+// de Clara. Le lien de l'écran du code passe d'abord par cet écran.
+(function () {
+  const link = document.querySelector('#code-overlay a[href]');
+  const pv = document.getElementById('privacy-overlay');
+  if (!link || !pv) return;
+  link.addEventListener('click', e => {
+    if (link.dataset.seen) return;
+    e.preventDefault();
+    link.dataset.seen = '1';
+    document.getElementById('code-overlay').style.display = 'none';
+    pv.style.display = 'flex';
+  });
+})();
 
 // Écran du code — retour au journal
 const codeClose = document.getElementById('code-close');

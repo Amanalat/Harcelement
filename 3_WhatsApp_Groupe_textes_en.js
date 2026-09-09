@@ -30,6 +30,43 @@ const WA_DATA = {
     btn:   "Continue →"
   },
 
+  // ─── The anonymous accounts named inside the group ─────────────────────────
+  comptes: {
+    label:      "accounts identified",
+    cardTitle:  "Account unmasked",
+    cardIntro:  "Behind this account:",
+    cardNote:   "Clara cannot know this. You can — because you are reading a group you are not in.",
+    cardSee:    "See their messages on Clara's Instagram →",
+    cardClose:  "Close",
+    already:    "Already spotted.",
+    liste: [
+      { handle: "utilisateur_4729", qui: "Enzo" },
+      { handle: "_noreply_ghost_",  qui: "Jade" },
+      { handle: "anonymous_x0",     qui: "Enzo and Théo" },
+      { handle: "vrai_info_colleg", qui: "Jade" },
+      { handle: "jevoustrouve",     qui: "Théo" }
+    ]
+  },
+
+  kevin: {
+    icon:  "🫥",
+    title: "And Kevin?",
+    body:  "Kevin hesitated four times. \"We're going a bit far here.\" \"This might be serious.\" \"Nobody has seen her for 2 days.\" Then \"…\". Every time he was cut off, and every time he went quiet.",
+    items: [
+      "Write to Clara privately, one sentence. He didn't have to take on the group: she only needed to stop feeling alone.",
+      "Leave the group. Leaving is visible, and it takes one voice away from the crowd.",
+      "Keep a screenshot. It is the only proof this group ever existed.",
+      "Tell an adult. It is the only move that could have stopped the others."
+    ],
+    note: "In a classroom there are rarely many Claras and many Enzos. There are mostly a lot of Kevins."
+  },
+
+  mobile: {
+    icon:  "❓",
+    title: "Why Clara?",
+    body:  "Read the group again: they never say. The only justification that comes back is \"she asked for it\". There is no reason — and looking for one would already be blaming Clara.",
+  },
+
   mission: {
     icon:  "👁",
     title: "What you need to understand",
@@ -98,7 +135,7 @@ const WA_DATA = {
 
     { type: "quiz", quizId: "coordination", delay: 400 },
 
-    { id: 34, sender: "Enzo",  text: "I created @anonymous_x0 just for her btw",                                        time: "17:57", delay:  700 },
+    { id: 34, sender: "Enzo",  text: "@anonymous_x0 is mine, I made it, Théo uses it too btw",                                        time: "17:57", delay:  700 },
     { id: 35, sender: "Jade",   text: "mine is @vrai_info_colleg, created to spread rumors about her",                   time: "17:57", delay: 1000 },
     { id: 36, sender: "Théo",   text: "I have @jevoustrouve to scare her at night",                                      time: "17:58", delay:  900 },
     { id: 37, sender: "Marine", text: "for tonight we organize it like this: messages every hour after midnight",        time: "17:59", delay: 1000 },

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simulation – Groupe WhatsApp secret</title>
 <script src="3_WhatsApp_Groupe_textes.js"></script>
+<script src="prenom.js"></script>
 <script src="3_WhatsApp_Groupe_Structure.js" defer></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -310,6 +311,49 @@ body {
 #wa-input.tap-wait .wa-input-field::placeholder { color: #e9edef; }
 @keyframes tapPulse { 0%,100% { border-color: #00a884; } 50% { border-color: rgba(0,168,132,.25); } }
 
+
+/* ── COMPTES IDENTIFIÉS ── */
+#comptes-tracker {
+  display: none; align-items: center; gap: 10px;
+  background: #0a1a14; border-bottom: 1px solid #14332a;
+  padding: 7px 14px; font-size: .73rem; color: #4dcc70; flex-shrink: 0;
+}
+#comptes-tracker .c-label { font-weight: 600; white-space: nowrap; }
+#comptes-tracker .c-bar { flex: 1; height: 4px; background: #14332a; border-radius: 2px; overflow: hidden; }
+#comptes-tracker .c-fill { height: 100%; width: 0; background: #4dcc70; transition: width .35s; }
+.mention.trouve { color: #4dcc70 !important; text-decoration: none !important; font-weight: 700; }
+#compte-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.94);
+  z-index: 700; align-items: center; justify-content: center; padding: 22px;
+}
+.compte-box {
+  background: #0c1f18; border: 2px solid #2dcc6f; border-radius: 16px;
+  padding: 26px 22px; max-width: 340px; width: 100%; text-align: center;
+}
+.compte-box .cb-icon { font-size: 2rem; margin-bottom: 8px; }
+.compte-box h3 { font-size: .8rem; color: #2dcc6f; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 14px; }
+.compte-box .cb-handle { font-family: 'Courier New', monospace; font-size: .95rem; color: #8696a0; margin-bottom: 10px; }
+.compte-box .cb-intro { font-size: .76rem; color: #7a8f85; margin-bottom: 4px; }
+.compte-box .cb-qui { font-size: 1.5rem; font-weight: 800; color: #e9edef; margin-bottom: 14px; }
+.compte-box .cb-note { font-size: .78rem; color: #ccc; line-height: 1.6; margin-bottom: 16px; }
+.compte-box .cb-see, .compte-box .cb-close {
+  display: block; width: 100%; border-radius: 8px; padding: 10px;
+  font-size: .82rem; font-weight: 700; cursor: pointer; border: none; margin-top: 8px;
+}
+.compte-box .cb-see { background: #2dcc6f; color: #05130c; text-decoration: none; }
+.compte-box .cb-close { background: none; color: #7a8f85; }
+/* fin de partie */
+.end-kevin, .end-mobile {
+  background: #101d29; border: 1px solid #22384a; border-radius: 10px;
+  padding: 14px 15px; margin: 14px 16px 0;
+}
+.end-kevin h4, .end-mobile h4 { font-size: .86rem; color: #a78bfa; margin: 0 0 7px; display: flex; gap: 7px; align-items: center; }
+.end-mobile h4 { color: #f4a261; }
+.end-kevin p, .end-mobile p { font-size: .79rem; color: #b9c6cf; line-height: 1.6; margin: 0; }
+.end-kevin ul { margin: 10px 0 0; padding-left: 18px; }
+.end-kevin li { font-size: .78rem; color: #b9c6cf; line-height: 1.55; margin-bottom: 7px; }
+.end-kevin .k-note { margin-top: 10px; font-style: italic; color: #8696a0; }
+
 /* ── ÉTAT FINAL ── */
 #end-state {
   display: none; flex-direction: column;
@@ -545,6 +589,11 @@ body {
     <span class="wa-icon">⋮</span>
   </div>
 
+  <div id="comptes-tracker">
+    <span class="c-label">0/5</span>
+    <div class="c-bar"><div class="c-fill"></div></div>
+  </div>
+
   <!-- Zone chat -->
   <div id="chat-area">
     <!-- Écran de démarrage -->
@@ -581,16 +630,31 @@ body {
 
 </div><!-- /phone -->
 
+
+<!-- Compte anonyme démasqué -->
+<div id="compte-overlay">
+  <div class="compte-box">
+    <div class="cb-icon">🕵️</div>
+    <h3 id="cb-title"></h3>
+    <div class="cb-handle" id="cb-handle"></div>
+    <div class="cb-intro" id="cb-intro"></div>
+    <div class="cb-qui" id="cb-qui"></div>
+    <div class="cb-note" id="cb-note"></div>
+    <a class="cb-see" id="cb-see" href="#"></a>
+    <button type="button" class="cb-close" id="cb-close"></button>
+  </div>
+</div>
+
 <!-- ── CODE GATE ── -->
 <div id="code-gate">
   <div class="gate-box">
     <div class="g-icon">🔐</div>
-    <h2>Groupe privé — accès restreint</h2>
-    <p>Tu as trouvé l'existence de ce groupe secret.<br>Pour y accéder, entre le code que Clara a noté dans ses messages.</p>
+    <h2>Code de l'exercice</h2>
+    <p>Un vrai groupe WhatsApp n'a pas de code, et Clara n'a jamais pu entrer dans celui-ci.<br>Ce verrou est celui de l'exercice. Ce que tu liras derrière est ce que le groupe a écrit.</p>
     <input class="gate-input" id="gate-input" type="text" placeholder="_ _ _ _" maxlength="10" autocomplete="off">
     <button id="gate-btn" class="gate-btn">Entrer dans le groupe →</button>
-    <div class="gate-error" id="gate-error">Code incorrect. Retourne lire les messages de Clara.</div>
-    <div class="gate-hint">Le code se trouve dans un message privé que Clara s'est écrit à elle-même.</div>
+    <div class="gate-error" id="gate-error">Ce n'est pas le code.</div>
+    <div class="gate-hint">Il t'a été donné à la fin de la Partie 2, juste après le journal de Clara.</div>
     <button onclick="bypassGate()" style="display:block;margin-top:18px;background:none;border:none;color:#3a5040;font-size:.72rem;cursor:pointer;text-decoration:underline;text-underline-offset:2px;transition:color .2s;" onmouseover="this.style.color='#6a9a6a'" onmouseout="this.style.color='#3a5040'">Accéder directement →</button>
   </div>
 </div>

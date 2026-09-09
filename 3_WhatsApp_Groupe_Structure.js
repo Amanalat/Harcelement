@@ -55,6 +55,9 @@ function init() {
     document.getElementById('mission-overlay').style.display = 'none';
   });
 
+  // Comptes anonymes : compteur et libellés
+  initComptes();
+
   // Bouton démarrer
   var sb = document.getElementById('start-btn');
   sb.textContent = WA_DATA.startLabel;
@@ -98,6 +101,57 @@ function fastForwardTo(targetIndex) {
   msgIndex = targetIndex;
   scrollChat();
   processNext();
+}
+
+// ── COMPTES ANONYMES ─────────────────────────────────────────────────────
+// Le groupe nomme cinq comptes à voix haute. Le joueur les repère en appuyant
+// dessus ; la Partie 2 les étiquette ensuite avec le prénom du propriétaire.
+// C'est l'asymétrie que le jeu raconte : le joueur sait, Clara jamais.
+
+var COMPTES = {};
+var comptesTrouves = {};
+
+function initComptes() {
+  var C = WA_DATA.comptes;
+  if (!C) return;
+  C.liste.forEach(function (e) { COMPTES[e.handle] = e.qui; });
+  try {
+    var brut = localStorage.getItem('rc_comptes');
+    if (brut) comptesTrouves = JSON.parse(brut) || {};
+  } catch (e) {}
+  document.getElementById('cb-title').textContent = C.cardTitle;
+  document.getElementById('cb-intro').textContent = C.cardIntro;
+  document.getElementById('cb-note').textContent  = C.cardNote;
+  document.getElementById('cb-see').textContent   = C.cardSee;
+  document.getElementById('cb-close').textContent = C.cardClose;
+  majComptes();
+}
+
+function majComptes() {
+  var C = WA_DATA.comptes;
+  if (!C) return;
+  var tr = document.getElementById('comptes-tracker');
+  if (!tr) return;
+  var total = C.liste.length;
+  var n = Object.keys(comptesTrouves).length;
+  tr.style.display = 'flex';
+  tr.querySelector('.c-label').textContent = n + '/' + total + ' ' + C.label;
+  tr.querySelector('.c-fill').style.width = (n / total * 100) + '%';
+  document.querySelectorAll('.mention').forEach(function (m) {
+    var h = m.dataset.handle;
+    if (h && comptesTrouves[h]) m.classList.add('trouve');
+  });
+}
+
+function ouvrirCompte(handle) {
+  var qui = COMPTES[handle];
+  if (!qui) { goToInstagram(); return; }
+  comptesTrouves[handle] = qui;
+  try { localStorage.setItem('rc_comptes', JSON.stringify(comptesTrouves)); } catch (e) {}
+  document.getElementById('cb-handle').textContent = '@' + handle;
+  document.getElementById('cb-qui').textContent = qui;
+  document.getElementById('compte-overlay').style.display = 'flex';
+  majComptes();
 }
 
 // ── Naviguer vers Instagram (sauvegarde l'état avant de partir) ───────────
@@ -291,9 +345,11 @@ function appendInstagramCard(sender, instant) {
 // Échappe le HTML, met les @mentions en vert avec data-attr pour event delegation
 function formatText(str) {
   return esc(str).replace(/@([\w]+)/g, function (match, username) {
-    return '<span class="mention" style="cursor:pointer;text-decoration:underline dotted" ' +
-           'title="' + UI.mentionTooltip + '" ' +
-           'data-goto-instagram="1">@' + username + '</span>';
+    var connu = !!COMPTES[username];
+    return '<span class="mention' + (comptesTrouves[username] ? ' trouve' : '') + '" ' +
+           'style="cursor:pointer;text-decoration:underline dotted" ' +
+           'title="' + UI.mentionTooltip + '" data-handle="' + username + '" ' +
+           (connu ? 'data-compte="1"' : 'data-goto-instagram="1"') + '>@' + username + '</span>';
   });
 }
 
@@ -427,6 +483,28 @@ function showEndState() {
     synthEl.appendChild(div);
   });
 
+  // Ce que le témoin aurait pu faire, et pourquoi il n'y a pas de raison.
+  var extra = document.createElement('div');
+  var K = WA_DATA.kevin, M = WA_DATA.mobile, C = WA_DATA.comptes;
+  if (C) {
+    var n = Object.keys(comptesTrouves).length;
+    var lignes = C.liste.map(function (e) {
+      var vu = !!comptesTrouves[e.handle];
+      return '<li>@' + esc(e.handle) + ' — <strong>' + (vu ? esc(e.qui) : '?') + '</strong></li>';
+    }).join('');
+    extra.innerHTML += '<div class="end-kevin"><h4>🕵️ ' + n + '/' + C.liste.length + ' ' + esc(C.label)
+      + '</h4><ul>' + lignes + '</ul><p class="k-note">' + esc(C.cardNote) + '</p></div>';
+  }
+  if (K) {
+    extra.innerHTML += '<div class="end-kevin"><h4>' + K.icon + ' ' + esc(K.title) + '</h4><p>' + esc(K.body) + '</p>'
+      + '<ul>' + K.items.map(function (i) { return '<li>' + esc(i) + '</li>'; }).join('') + '</ul>'
+      + '<p class="k-note">' + esc(K.note) + '</p></div>';
+  }
+  if (M) {
+    extra.innerHTML += '<div class="end-mobile"><h4>' + M.icon + ' ' + esc(M.title) + '</h4><p>' + esc(M.body) + '</p></div>';
+  }
+  synthEl.appendChild(extra);
+
   document.getElementById('end-prev').textContent = WA_DATA.navigation.prev.label;
   document.getElementById('end-prev').href        = WA_DATA.navigation.prev.url;
   document.getElementById('end-next').textContent = WA_DATA.navigation.next.label;
@@ -444,7 +522,17 @@ document.getElementById('ig-modal-back').addEventListener('click', closeIgModal)
 
 // Event delegation pour les @mentions dynamiques
 document.getElementById('messages-container').addEventListener('click', function (e) {
+  var c = e.target.closest('[data-compte]');
+  if (c) { ouvrirCompte(c.dataset.handle); return; }
   if (e.target.closest('[data-goto-instagram]')) goToInstagram();
+});
+document.getElementById('cb-close').addEventListener('click', function () {
+  document.getElementById('compte-overlay').style.display = 'none';
+});
+document.getElementById('cb-see').addEventListener('click', function (e) {
+  e.preventDefault();
+  document.getElementById('compte-overlay').style.display = 'none';
+  goToInstagram();
 });
 
 // ── Démarrage ─────────────────────────────────────────────────────────────

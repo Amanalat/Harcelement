@@ -31,10 +31,30 @@ const WA_DATA = {
   },
 
   mission: {
-    icon:  "👁",
-    title: "Ce qu'il faut comprendre",
-    body:  "Je vais observer comment les membres de ce groupe ont organisé le harcèlement contre Clara.\n\nDes questions apparaîtront pendant la lecture pour m'aider à analyser ce qui se passe.\n\nÀ la fin, j'aurai une vue complète de ce qui s'est passé.",
+    icon:  "🕵️",
+    title: "Ce qu'il faut repérer",
+    body:  "Ils écrivent à Clara depuis des comptes anonymes — et ici, entre eux, ils disent lesquels.\n\nÀ chaque fois qu'un compte est nommé, appuie dessus : je saurai qui se cache derrière. Clara, elle, ne le saura jamais.\n\nIl y en a cinq à repérer. Des questions viendront aussi pendant la lecture.",
     btn:   "Commencer →"
+  },
+
+  // ─── Les comptes anonymes nommés dans le groupe ─────────────────────────────
+  // Ce sont les mêmes identifiants que dans la Partie 2 : une fois repérés ici,
+  // ils portent le prénom de leur propriétaire quand on retourne sur l'Instagram.
+  comptes: {
+    label:      "comptes identifiés",
+    cardTitle:  "Compte démasqué",
+    cardIntro:  "Derrière ce compte, il y a :",
+    cardNote:   "Clara ne peut pas le savoir. Toi si — parce que tu lis un groupe où tu n'es pas.",
+    cardSee:    "Voir ses messages sur l'Instagram de Clara →",
+    cardClose:  "Fermer",
+    already:    "Déjà repéré.",
+    liste: [
+      { handle: "utilisateur_4729", qui: "Enzo" },
+      { handle: "_noreply_ghost_",  qui: "Jade" },
+      { handle: "anonymous_x0",     qui: "Enzo et Théo" },
+      { handle: "vrai_info_colleg", qui: "Jade" },
+      { handle: "jevoustrouve",     qui: "Théo" }
+    ]
   },
 
   startLabel: "▶ Voir ce qui se dit dans le groupe",
@@ -111,7 +131,7 @@ const WA_DATA = {
     { type: "quiz", quizId: "coordination", delay: 400 },
 
     // — Phase 5 : création des comptes anonymes (~17h57) —
-    { id: 34, sender: "Enzo",  text: "j'ai créé @anonymous_x0 juste pour elle btw",                                        time: "17:57", delay:  700 },
+    { id: 34, sender: "Enzo",  text: "@anonymous_x0 c'est moi qui l'ai créé, Théo l'utilise aussi btw",                                        time: "17:57", delay:  700 },
     { id: 35, sender: "Jade",   text: "moi c'est @vrai_info_colleg, créé pour balancer des rumeurs sur elle",               time: "17:57", delay: 1000 },
     { id: 36, sender: "Théo",   text: "moi j'ai @jevoustrouve pour lui faire peur la nuit",                                 time: "17:58", delay:  900 },
     { id: 37, sender: "Marine", text: "pour ce soir on s'organise : messages toutes les heures après minuit",               time: "17:59", delay: 1000 },
@@ -220,6 +240,29 @@ const WA_DATA = {
       "s'est enfuie vers son « havre secret »... mais où est-il ?"
     ],
     note: "Le harcèlement de groupe transforme chaque espace en danger. Clara est partie se réfugier quelque part. Quelqu’un doit savoir où."
+  },
+
+  // ─── Ce que le témoin aurait pu faire ───────────────────────────────────────
+
+  kevin: {
+    icon:  "🫥",
+    title: "Et Kevin ?",
+    body:  "Kevin a douté quatre fois. « On va un peu trop loin là. » « C'est peut-être grave. » « Ça fait 2 jours qu'on la voit plus. » Puis « … ». À chaque fois on lui a coupé la parole, et à chaque fois il s'est tu.",
+    items: [
+      "Écrire à Clara en privé, une seule phrase. Il n'avait pas besoin d'affronter le groupe : il suffisait qu'elle ne se croie plus seule.",
+      "Quitter le groupe. Partir se voit, et ça retire une voix au nombre.",
+      "Garder une capture d'écran. C'est la seule preuve que ce groupe a existé.",
+      "En parler à un adulte. C'est le seul geste qui pouvait arrêter les autres."
+    ],
+    note: "Dans une classe, il y a rarement beaucoup de Clara et beaucoup d'Enzo. Il y a surtout beaucoup de Kevin."
+  },
+
+  // ─── Pourquoi elle ? ────────────────────────────────────────────────────────
+
+  mobile: {
+    icon:  "❓",
+    title: "Pourquoi Clara ?",
+    body:  "Relis le groupe : à aucun moment ils ne le disent. La seule justification qui revient est « elle l'a bien cherché ». Il n'y a pas de raison — et chercher laquelle serait déjà donner tort à Clara."
   },
 
   // ─── Navigation ──────────────────────────────────────────────────────────────

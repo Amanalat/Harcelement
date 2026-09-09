@@ -1,783 +1,472 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<title>Retrouver Clara — Textes des parties 1, 3 et 4</title>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retrouver Clara — textes complets</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  @page { size: A4; margin: 2.2cm 2.5cm; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: #f0ece8;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 11pt;
-    color: #1a1a1a;
-    line-height: 1.7;
-  }
-
-  /* ── Mise en page type Word ── */
-  .page {
-    background: #fff;
-    width: 21cm;
-    min-height: 29.7cm;
-    margin: 1.5cm auto;
-    padding: 2.4cm 2.8cm 2.8cm;
-    box-shadow: 0 2px 16px rgba(0,0,0,.18);
-  }
-  @media print {
-    body { background: #fff; }
-    .page { box-shadow: none; margin: 0; padding: 2.2cm 2.5cm; width: 100%; page-break-after: always; }
-    .page:last-child { page-break-after: avoid; }
-    .no-break { page-break-inside: avoid; }
-  }
-
-  /* ── Couverture ── */
-  .cover { text-align: center; padding: 2.5cm 0 2cm; border-bottom: 2px solid #1a1a1a; margin-bottom: 1.2cm; }
-  .cover-eyebrow { font-size: 8pt; letter-spacing: .3em; text-transform: uppercase; color: #888; margin-bottom: 0.8cm; }
-  .cover-title { font-size: 26pt; font-weight: 400; font-style: italic; margin-bottom: 0.3cm; }
-  .cover-sub { font-size: 10.5pt; color: #555; margin-bottom: 1.2cm; }
-  .cover-meta { font-size: 8.5pt; color: #999; letter-spacing: .08em; }
-
-  /* ── Titres ── */
-  h1 { font-size: 17pt; font-weight: 400; font-style: italic; margin: 1.2cm 0 0.3cm; border-bottom: 1.5px solid #1a1a1a; padding-bottom: 0.2cm; }
-  h2 { font-size: 12pt; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: #444; margin: 0.9cm 0 0.25cm; }
-  h3 { font-size: 10.5pt; font-weight: 700; color: #666; margin: 0.6cm 0 0.15cm; }
-  .part-intro { font-size: 9.5pt; color: #666; font-style: italic; margin-bottom: 0.5cm; border-left: 3px solid #ccc; padding-left: 0.4cm; }
-
-  /* ── Script dialogue ── */
-  .dialogue { margin: 0.3cm 0; }
-  .line { display: flex; gap: 0.35cm; margin-bottom: 0.25cm; }
-  .spk {
-    font-weight: 700; font-family: 'Arial Narrow', Arial, sans-serif;
-    font-size: 8.5pt; letter-spacing: .06em; text-transform: uppercase;
-    min-width: 3cm; flex-shrink: 0; padding-top: 1px; color: #333;
-  }
-  .spk.leo    { color: #1a3a6a; }
-  .spk.ines   { color: #4a1a6a; }
-  .spk.lucas  { color: #1a5a28; }
-  .spk.jade   { color: #7a3a00; }
-  .spk.theo   { color: #2a4a7a; }
-  .spk.marine { color: #7a1a4a; }
-  .spk.kevin  { color: #555; }
-  .spk.tante  { color: #5a3510; }
-  .spk.clara  { color: #6a1a2a; }
-  .spk.narr   { color: #aaa; font-style: italic; font-weight: 400; }
-  .txt { flex: 1; }
-  .txt em { font-style: italic; color: #555; }
-
-  /* ── Séparateur de phase ── */
-  .phase-sep {
-    margin: 0.6cm 0 0.4cm;
-    display: flex; align-items: center; gap: 0.3cm;
-    font-family: Arial, sans-serif; font-size: 8pt;
-    letter-spacing: .15em; text-transform: uppercase; color: #aaa;
-  }
-  .phase-sep::before, .phase-sep::after { content: ''; flex: 1; height: 0.5px; background: #ddd; }
-  .time-sep {
-    text-align: center; font-size: 8.5pt; color: #999; font-style: italic;
-    margin: 0.4cm 0; font-family: Arial, sans-serif;
-  }
-
-  /* ── Choix ── */
-  .choices-block { margin: 0.3cm 0 0.4cm 3.35cm; }
-  .choice-hint { font-size: 8.5pt; color: #888; font-style: italic; font-family: Arial, sans-serif; margin-bottom: 0.2cm; }
-  .choice {
-    border-left: 3px solid #ddd; padding: 0.2cm 0.35cm;
-    margin-bottom: 0.2cm; font-size: 10.5pt;
-    display: flex; gap: 0.3cm; align-items: flex-start;
-  }
-  .choice.good  { border-color: #2a7a50; background: #f4faf7; }
-  .choice.ok    { border-color: #c09030; background: #fdfaf0; }
-  .choice.bad   { border-color: #c04030; background: #fdf4f4; }
-  .choice-letter {
-    font-weight: 700; font-family: Arial, sans-serif; font-size: 8.5pt;
-    min-width: 0.5cm; padding-top: 1px;
-  }
-  .choice.good .choice-letter { color: #2a7a50; }
-  .choice.ok   .choice-letter { color: #c09030; }
-  .choice.bad  .choice-letter { color: #c04030; }
-  .choice-txt { flex: 1; }
-  .choice-reply {
-    font-size: 9.5pt; color: #666; font-style: italic;
-    margin-top: 0.1cm; font-family: Arial, sans-serif;
-  }
-  .recovery-block {
-    margin: 0.15cm 0 0 0.8cm;
-    border-left: 2px solid #e0c080; padding-left: 0.3cm;
-    background: #fffbf0;
-  }
-  .recovery-block .choice { font-size: 10pt; }
-
-  /* ── Quiz ── */
-  .quiz-block {
-    background: #f5f7fa; border: 1px solid #d0d8e8; border-radius: 4px;
-    padding: 0.4cm 0.5cm; margin: 0.5cm 0;
-  }
-  .quiz-block h3 { margin-top: 0; color: #2a4a7a; font-size: 10pt; text-transform: none; }
-  .quiz-q { font-size: 10.5pt; margin: 0.15cm 0 0.25cm; }
-  .quiz-opt { font-size: 10pt; margin: 0.1cm 0 0.1cm 0.5cm; }
-  .quiz-opt.correct { color: #2a7a50; font-weight: 700; }
-  .quiz-expl { font-size: 9.5pt; color: #555; font-style: italic; margin-top: 0.2cm; border-top: 0.5px solid #d0d8e8; padding-top: 0.15cm; }
-
-  /* ── Fin / Épilogue ── */
-  .ending-block {
-    border-left: 3px solid #ccc; padding: 0.3cm 0.5cm;
-    margin: 0.3cm 0; background: #fafafa;
-  }
-  .ending-block.good { border-color: #2a7a50; }
-  .ending-block.ok   { border-color: #c09030; }
-  .ending-block.bad  { border-color: #c04030; }
-  .ending-title { font-weight: 700; font-size: 10.5pt; margin-bottom: 0.15cm; }
-  .ending-block.good .ending-title { color: #2a7a50; }
-  .ending-block.ok   .ending-title { color: #c09030; }
-  .ending-block.bad  .ending-title { color: #c04030; }
-  .citation { font-style: italic; font-size: 10pt; color: #666; margin-top: 0.2cm; }
-
-  /* ── Note de bas ── */
-  .footnote { font-size: 8.5pt; color: #bbb; text-align: center; margin-top: 1cm; padding-top: 0.4cm; border-top: 0.5px solid #eee; font-family: Arial, sans-serif; }
-
-  /* Réponse inline après un choix */
-  .inline-reply { font-style: italic; color: #555; font-size: 10pt; }
-
-  p { margin-bottom: 0.2cm; }
-
-  /* ── Page de séparation ── */
-  .part-header {
-    background: #1a1a1a; color: #f0ece4;
-    margin: 0 -2.8cm; padding: 0.6cm 2.8cm 0.5cm;
-    margin-bottom: 0.5cm;
-  }
-  .part-header .part-num { font-family: Arial, sans-serif; font-size: 8pt; letter-spacing: .3em; text-transform: uppercase; color: #888; margin-bottom: 0.1cm; }
-  .part-header h1 { border: none; color: #f0ece4; margin: 0; padding: 0; font-size: 16pt; }
-</style>
-</head>
-<body>
-
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<!-- COUVERTURE                                                             -->
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<div class="page">
-  <div class="cover">
-    <div class="cover-eyebrow">Jeu pédagogique sur le cyberharcèlement</div>
-    <div class="cover-title">Retrouver Clara</div>
-    <div class="cover-sub">Textes complets — Parties 1, 3 et 4<br>Document à destination des partenaires</div>
-    <div class="cover-meta">Version mai 2026 &nbsp;·&nbsp; Usage interne</div>
-  </div>
-
-  <h2 style="border-bottom:1px solid #eee;padding-bottom:.2cm;margin-bottom:.3cm;">Présentation générale</h2>
-  <p><em>Retrouver Clara</em> est un jeu pédagogique destiné aux collégiens sur le thème du cyberharcèlement. Le joueur incarne Léo, un ami de Clara (14 ans), qui a disparu du collège. En traversant quatre scènes interactives, le joueur reconstitue ce que Clara a vécu et tente de l'aider.</p>
-  <p>Ce document présente l'intégralité des textes jouables des Parties 1, 3 et 4. Les dialogues sont retranscrits tels qu'ils apparaissent à l'écran.</p>
-
-  <h2 style="margin-top:.6cm;border-bottom:1px solid #eee;padding-bottom:.2cm;margin-bottom:.3cm;">Structure du jeu</h2>
-  <table style="width:100%;border-collapse:collapse;font-size:10pt;">
-    <thead><tr style="background:#f5f5f5;">
-      <th style="padding:.2cm .3cm;text-align:left;border:1px solid #ddd;font-family:Arial,sans-serif;font-size:8pt;text-transform:uppercase;letter-spacing:.05em;">Partie</th>
-      <th style="padding:.2cm .3cm;text-align:left;border:1px solid #ddd;font-family:Arial,sans-serif;font-size:8pt;text-transform:uppercase;letter-spacing:.05em;">Titre</th>
-      <th style="padding:.2cm .3cm;text-align:left;border:1px solid #ddd;font-family:Arial,sans-serif;font-size:8pt;text-transform:uppercase;letter-spacing:.05em;">Mécanique</th>
-    </tr></thead>
-    <tbody>
-      <tr><td style="padding:.18cm .3cm;border:1px solid #ddd;">1</td><td style="padding:.18cm .3cm;border:1px solid #ddd;">Téléphone d'Inès</td><td style="padding:.18cm .3cm;border:1px solid #ddd;color:#555;font-style:italic;">Dialogue à choix multiples, jauge de confiance</td></tr>
-      <tr style="background:#fafafa;"><td style="padding:.18cm .3cm;border:1px solid #ddd;">2</td><td style="padding:.18cm .3cm;border:1px solid #ddd;">Instagram de Clara</td><td style="padding:.18cm .3cm;border:1px solid #ddd;color:#555;font-style:italic;">Exploration du profil, identification de types de harcèlement</td></tr>
-      <tr><td style="padding:.18cm .3cm;border:1px solid #ddd;">3</td><td style="padding:.18cm .3cm;border:1px solid #ddd;">Groupe WhatsApp secret</td><td style="padding:.18cm .3cm;border:1px solid #ddd;color:#555;font-style:italic;">Lecture d'un chat de groupe, quiz d'analyse</td></tr>
-      <tr style="background:#fafafa;"><td style="padding:.18cm .3cm;border:1px solid #ddd;">4</td><td style="padding:.18cm .3cm;border:1px solid #ddd;">Convaincre Clara</td><td style="padding:.18cm .3cm;border:1px solid #ddd;color:#555;font-style:italic;">Appel téléphonique, jeu d'empathie</td></tr>
-    </tbody>
-  </table>
-
-  <p style="margin-top:.5cm;font-size:9.5pt;color:#666;font-style:italic;">Note de lecture : les options marquées en vert sont favorables (empathiques), en orange neutres ou hésitantes, en rouge défavorables. Les réponses indiquées après chaque option correspondent à la réplique déclenchée dans le jeu.</p>
-
-  <div class="footnote">Retrouver Clara — Textes partenaires — Mai 2026</div>
-</div>
-
-
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<!-- PARTIE 1                                                               -->
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<div class="page">
-  <div class="part-header">
-    <div class="part-num">Partie 1</div>
-    <h1>Téléphone d'Inès</h1>
-  </div>
-
-  <p class="part-intro">Léo appelle Inès, la meilleure amie de Clara, pour tenter d'en savoir plus sur ce qui lui est arrivé. Le joueur doit faire preuve de sensibilité pour gagner sa confiance. Une jauge visible mesure la relation en temps réel. Trois issues sont possibles selon le score final : confiance totale, confiance fragile, ou échec.</p>
-
-  <h2>Ouverture</h2>
-  <div class="dialogue no-break">
-    <div class="line"><span class="spk leo">Léo</span><span class="txt">Inès ?</span></div>
-    <div class="line"><span class="spk ines">Inès</span><span class="txt">Oui c'est qui</span></div>
-    <div class="line"><span class="spk leo">Léo</span><span class="txt">C'est Léo. On est dans la même école que Clara.</span></div>
-    <div class="line"><span class="spk ines">Inès</span><span class="txt">Je te connais pas.</span></div>
-    <div class="line"><span class="spk leo">Léo</span><span class="txt">Je sais. J'arrive plus à la joindre depuis plusieurs jours. Je ne la vois plus dans la cour. T'as eu de ses nouvelles ?</span></div>
-    <div class="line"><span class="spk ines">Inès</span><span class="txt">Pourquoi tu me demandes ça à moi</span></div>
-  </div>
-
-  <!-- Étape 1 -->
-  <h2>Étape 1</h2>
-  <p style="font-size:9pt;color:#888;font-style:italic;font-family:Arial,sans-serif;margin-bottom:.15cm;">Note de mise en scène : « Je dois être le plus honnête possible, et le plus sincère — c'est ma seule chance qu'elle m'aide. »</p>
-  <div class="choices-block">
-    <div class="choice-hint">Que répond Léo ?</div>
-    <div class="choice good"><span class="choice-letter">C</span><span class="choice-txt">« Je suis inquiet. J'arrive plus à dormir depuis hier soir. »<div class="choice-reply">→ <em>(pas de réplique fixe, la conversation se poursuit)</em></div></span></div>
-    <div class="choice ok"><span class="choice-letter">B</span><span class="choice-txt">« Je savais pas à qui d'autre m'adresser. »</span></div>
-    <div class="choice bad"><span class="choice-letter">A</span><span class="choice-txt">« Parce que t'es son amie. Si quelqu'un sait quelque chose, c'est toi. »</span></div>
-  </div>
-
-  <!-- Étape 2 -->
-  <h2>Étape 2</h2>
-  <div class="dialogue no-break">
-    <div class="line"><span class="spk ines">Inès</span><span class="txt">Tu la connais comment toi, Clara ?</span></div>
-  </div>
-  <p style="font-size:9pt;color:#888;font-style:italic;font-family:Arial,sans-serif;margin-bottom:.15cm;">Note : « Je la connais depuis quelques années. On se croisait souvent à l'école. Il faut que je le lui montre. »</p>
-  <div class="choices-block">
-    <div class="choice-hint">Que répond Léo ?</div>
-    <div class="choice good"><span class="choice-letter">A</span><span class="choice-txt">« On se croise souvent. Je l'aimais bien. »</span></div>
-    <div class="choice ok"><span class="choice-letter">C</span><span class="choice-txt">« On est dans des classes différentes mais on se parle des fois. »</span></div>
-    <div class="choice bad"><span class="choice-letter">B</span><span class="choice-txt">« Pas super bien. Mais j'ai entendu parler d'elle ces derniers temps. »</span></div>
-  </div>
-
-  <!-- Étape 3 -->
-  <h2>Étape 3</h2>
-  <div class="dialogue no-break">
-    <div class="line"><span class="spk ines">Inès</span><span class="txt">Elle répond plus à moi non plus.<br>Depuis quelques jours.</span></div>
-  </div>
-  <div class="choices-block">
-    <div class="choice-hint">Que répond Léo ?</div>
-    <div class="choice good"><span class="choice-letter">A</span><span class="choice-txt">« Ça lui arrivait déjà avant ? »</span></div>
-    <div class="choice ok"><span class="choice-letter">C</span><span class="choice-txt">« Vous vous parliez souvent ? »</span></div>
-    <div class="choice bad"><span class="choice-letter">B</span><span class="choice-txt">« Peut-être qu'elle vous a bloqués. »</span></div>
-  </div>
-
-  <!-- Étape 4 -->
-  <h2>Étape 4</h2>
-  <div class="dialogue no-break">
-    <div class="line"><span class="spk ines">Inès</span><span class="txt">Non. Jamais.<br>Ça faisait un moment qu'elle était pas bien.<br>Depuis le mois dernier au moins.<br>Elle manquait des cours. Elle répondait plus aux messages.<br>Elle disait que c'était rien.</span></div>
-  </div>
-  <div class="choices-block">
-    <div class="choice-hint">Que répond Léo ?</div>
-    <div class="choice good"><span class="choice-letter">A</span><span class="choice-txt">« Tu sais ce qui s'est passé ? »</span></div>
-    <div class="choice ok"><span class="choice-letter">C</span><span class="choice-txt">« Elle avait l'air d'avoir peur de quelque chose ? »</span></div>
-    <div class="choice bad"><span class="choice-letter">B</span><span class="choice-txt">« Et t'as pas essayé d'en parler avec elle ? »</span></div>
-  </div>
-
-  <!-- Étape 5 -->
-  <h2>Étape 5</h2>
-  <div class="dialogue no-break">
-    <div class="line"><span class="spk ines">Inès</span><span class="txt">Si j'ai essayé.<br>Elle voulait pas.<br>Mais je voyais bien.<br>Elle laissait son téléphone retourné sur la table. Elle regardait plus ses applis.<br>Des fois je lui envoyais un message, je voyais qu'elle l'avait lu… et elle répondait pas pendant des heures.</span></div>
-  </div>
-  <div class="choices-block">
-    <div class="choice-hint">Que répond Léo ?</div>
-    <div class="choice good"><span class="choice-letter">A</span><span class="choice-txt">« On dirait qu'elle voulait s'éloigner de son téléphone. »</span></div>
-    <div class="choice ok"><span class="choice-letter">B</span><span class="choice-txt">« C'est bizarre comme comportement. »</span></div>
-    <div class="choice bad"><span class="choice-letter">C</span><span class="choice-txt">« C'est peut-être juste une mauvaise période. »</span></div>
-  </div>
-
-  <!-- Étape 6 -->
-  <h2>Étape 6</h2>
-  <div class="dialogue no-break">
-    <div class="line"><span class="spk ines">Inès</span><span class="txt">Je sais pas si je devrais te raconter tout ça.<br>Je te connais même pas.</span></div>
-  </div>
-  <p style="font-size:9pt;color:#888;font-style:italic;font-family:Arial,sans-serif;margin-bottom:.15cm;">Note : « Elle a raison de se méfier. Je dois la rassurer sans la brusquer. »</p>
-  <div class="choices-block">
-    <div class="choice-hint">Que répond Léo ?</div>
-    <div class="choice good"><span class="choice-letter">A</span><span class="choice-txt">« T'es obligée à rien. C'est toi qui décides. »</span></div>
-    <div class="choice ok"><span class="choice-letter">C</span><span class="choice-txt">« Je veux juste savoir si elle va bien. Rien d'autre. »</span></div>
-    <div class="choice bad"><span class="choice-letter">B</span><span class="choice-txt">« Dis-moi juste ce que tu sais. »</span></div>
-  </div>
-
-  <div class="footnote">Retrouver Clara — Partie 1 : Téléphone d'Inès — Textes partenaires</div>
-</div>
-
-
-<div class="page">
-  <div class="part-header" style="margin-bottom:.4cm;">
-    <div class="part-num">Partie 1 — suite</div>
-    <h1>Crise de confiance &amp; Fins</h1>
-  </div>
-
-  <h2>Scène de crise <span style="font-weight:400;font-size:10pt;color:#aaa;font-style:italic;">(déclenchée si la confiance chute trop bas)</span></h2>
-  <div class="dialogue no-break">
-    <div class="line"><span class="spk ines">Inès</span><span class="txt">Attends.<br>T'es dans quelle classe ?<br>Tu connais qui dans la sienne ?</span></div>
-  </div>
-  <div class="choices-block">
-    <div class="choice-hint">Comment réagit Léo ?</div>
-    <div class="choice good"><span class="choice-letter">A</span><span class="choice-txt">« T'as raison d'être méfiante. Tu me connais pas. » <em>(+2)</em></span></div>
-    <div class="choice ok"><span class="choice-letter">B</span><span class="choice-txt">« Je fais pas partie des gens qui lui ont fait du mal. » <em>(+1)</em></span></div>
-    <div class="choice bad"><span class="choice-letter">C</span><span class="choice-txt">« Fais-moi confiance, j'essaie juste d'aider. » <em>(−1)</em></span></div>
-  </div>
-
-  <h2>Fin — Confiance perdue</h2>
-  <div class="dialogue no-break">
-    <div class="line"><span class="spk ines">Inès</span><span class="txt">Arrête de me parler.<br>Je te répondrai plus.</span></div>
-    <div class="line"><span class="spk narr">Système</span><span class="txt"><em>(elle ne répond plus)</em></span></div>
-  </div>
-  <div class="ending-block bad no-break">
-    <div class="ending-title">🔴 Échec</div>
-    <p>Inès : « Non. Arrête de fouiller. C'est pas tes affaires. »</p>
-    <p><em>(elle ne répond plus)</em></p>
-  </div>
-
-  <h2>Fin — Succès fragile</h2>
-  <div class="dialogue no-break">
-    <div class="line"><span class="spk ines">Inès</span><span class="txt">Je sais vraiment pas si je fais bien.<br>Tu me promets de faire attention ?</span></div>
-    <div class="line"><span class="spk leo">Léo</span><span class="txt">Oui.</span></div>
-    <div class="line"><span class="spk ines">Inès</span><span class="txt">Tu promets de respecter la vie privée de Clara ?</span></div>
-    <div class="line"><span class="spk leo">Léo</span><span class="txt">Oui.</span></div>
-    <div class="line"><span class="spk ines">Inès</span><span class="txt">Elle me l'avait donné au cas où. Tu l'utilises, t'en parles à personne.</span></div>
-  </div>
-  <div class="ending-block ok no-break">
-    <div class="ending-title">🟡 Succès fragile</div>
-    <p>Inès transmet les identifiants Instagram de Clara.</p>
-    <p>Compte : <strong>@clara.fontaine</strong> — Mot de passe : <strong>nuit_rouge17</strong></p>
-    <p><em>« Sois prudent. »</em></p>
-  </div>
-
-  <h2>Fin — Confiance totale</h2>
-  <div class="dialogue no-break">
-    <div class="line"><span class="spk ines">Inès</span><span class="txt">Tu promets de faire attention à ce que tu lis ?</span></div>
-    <div class="line"><span class="spk leo">Léo</span><span class="txt">Je promets.</span></div>
-    <div class="line"><span class="spk ines">Inès</span><span class="txt">Et tu me dis si tu trouves quelque chose.</span></div>
-    <div class="line"><span class="spk ines">Inès</span><span class="txt">Tu promets de respecter la vie privée de Clara ?</span></div>
-    <div class="line"><span class="spk leo">Léo</span><span class="txt">Je le promets.</span></div>
-    <div class="line"><span class="spk ines">Inès</span><span class="txt">Elle me l'avait donné au cas où. Tu l'utilises, t'en parles à personne.</span></div>
-  </div>
-  <div class="ending-block good no-break">
-    <div class="ending-title">🟢 Inès te fait confiance</div>
-    <p>Inès transmet les identifiants Instagram de Clara.</p>
-    <p>Compte : <strong>@clara.fontaine</strong> — Mot de passe : <strong>nuit_rouge17</strong></p>
-    <p><em>« ⚠ C'est sa vie privée. Respecte-la. »</em></p>
-  </div>
-
-  <h2>Deuxième conversation <span style="font-weight:400;font-size:10pt;color:#aaa;font-style:italic;">(après la Partie 3)</span></h2>
-  <p style="font-size:9.5pt;color:#666;font-style:italic;margin-bottom:.2cm;">Visible uniquement si le joueur revient consulter Inès après avoir terminé la Partie 3. La conversation se déroule dans le même téléphone, via une notification discrète.</p>
-  <div class="dialogue no-break">
-    <div class="line"><span class="spk leo">Léo</span><span class="txt">Inès, j'ai peut-être trouvé quelque chose.</span></div>
-    <div class="line"><span class="spk ines">Inès</span><span class="txt">quoi donc ?</span></div>
-    <div class="line"><span class="spk leo">Léo</span><span class="txt"><em>[Le joueur doit taper : « havre secret »]</em></span></div>
-    <div class="line"><span class="spk ines">Inès</span><span class="txt">Oui ! c'est chez sa tante, à la campagne. c'est là qu'elle est, bravo !</span></div>
-    <div class="line"><span class="spk ines">Inès</span><span class="txt">Sa tante travaille dans un restaurant, voici le numéro : <strong>04 54 78 95 32</strong></span></div>
-  </div>
-
-  <h2 style="margin-top:.6cm;">Ce que le joueur apprend sur Clara</h2>
-  <ul style="font-size:10.5pt;margin-left:.5cm;">
-    <li>Depuis plusieurs semaines, Clara laissait son téléphone retourné, ignorait ses notifications — même celles d'Inès.</li>
-    <li>Clara avait arrêté de poster, d'ouvrir ses applis. Quelque chose en ligne la faisait fuir. Inès ne sait pas exactement quoi.</li>
-    <li>Même sa meilleure amie n'a pas eu les détails. Clara voulait protéger Inès — ou avait trop honte pour en parler.</li>
-  </ul>
-
-  <div class="footnote">Retrouver Clara — Partie 1 — Textes partenaires</div>
-</div>
-
-
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<!-- PARTIE 3                                                               -->
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<div class="page">
-  <div class="part-header">
-    <div class="part-num">Partie 3</div>
-    <h1>Groupe WhatsApp secret — « les vrais 4B 🔥 »</h1>
-  </div>
-
-  <p class="part-intro">Le joueur accède au groupe WhatsApp dans lequel le harcèlement de Clara est organisé. Il observe la conversation sans pouvoir intervenir. Deux quiz d'analyse sont intégrés. Les messages s'affichent avec une temporisation pour simuler une vraie conversation en direct.</p>
-
-  <div style="margin-bottom:.35cm;font-size:9.5pt;font-family:Arial,sans-serif;color:#555;">
-    <strong>Membres du groupe :</strong>
-    <span style="color:#1a5a28">Lucas</span>,
-    <span style="color:#7a3a00">Jade</span>,
-    <span style="color:#2a4a7a">Théo</span>,
-    <span style="color:#7a1a4a">Marine</span>,
-    <span style="color:#555">Kevin</span>
-  </div>
-
-  <div class="phase-sep">Phase 1 — Après les cours, 17h14</div>
-  <div class="dialogue">
-    <div class="line"><span class="spk lucas">Lucas</span><span class="txt">les gars c trop drôle, clara a encore essayé de nous parler à la récré 💀</span></div>
-    <div class="line"><span class="spk jade">Jade</span><span class="txt">sérieusement elle comprend pas qu'elle est plus dans le groupe ou quoi</span></div>
-    <div class="line"><span class="spk theo">Théo</span><span class="txt">je l'ai carrément ignorée devant tout le monde, elle avait l'air d'une clown</span></div>
-    <div class="line"><span class="spk kevin">Kevin</span><span class="txt">mdrrr 💀</span></div>
-    <div class="line"><span class="spk marine">Marine</span><span class="txt">ça fait combien de temps qu'on lui parle plus au fait ?</span></div>
-    <div class="line"><span class="spk lucas">Lucas</span><span class="txt">genre 3 semaines et elle comprend toujours pas lol</span></div>
-    <div class="line"><span class="spk jade">Jade</span><span class="txt">j'en ai marre de la voir poster des trucs sur insta comme si de rien n'était</span></div>
-    <div class="line"><span class="spk lucas">Lucas</span><span class="txt">ouais elle fait genre tout va bien alors que personne lui parle au collège</span></div>
-    <div class="line"><span class="spk jade">Jade</span><span class="txt">on devrait aller lui flood ses commentaires</span></div>
-    <div class="line"><span class="spk kevin">Kevin</span><span class="txt">bonne idée, attendez qu'elle poste quelque chose 👀</span></div>
-  </div>
-
-  <div class="phase-sep">Phase 2 — Clara poste, 17h21</div>
-  <div class="dialogue">
-    <div class="line"><span class="spk narr">Système</span><span class="txt"><em>Lucas a partagé une publication Instagram</em></span></div>
-    <div class="line"><span class="spk lucas">Lucas</span><span class="txt">ALLEZ Y TOUS c'est le moment 🔥🔥</span></div>
-    <div class="line"><span class="spk theo">Théo</span><span class="txt">j'y vais maintenant</span></div>
-    <div class="line"><span class="spk jade">Jade</span><span class="txt">moi aussi, attendez je cherche mon compte anon</span></div>
-    <div class="line"><span class="spk marine">Marine</span><span class="txt">utilisez vos faux comptes surtout, comme ça elle sait pas que c'est nous</span></div>
-    <div class="line"><span class="spk kevin">Kevin</span><span class="txt">ouais genre même si elle screenshotte on peut toujours nier</span></div>
-  </div>
-
-  <div class="phase-sep">Phase 3 — Coordination des commentaires, 17h23</div>
-  <div class="dialogue">
-    <div class="line"><span class="spk lucas">Lucas</span><span class="txt">moi j'utilise @utilisateur_4729, ça fait un moment</span></div>
-    <div class="line"><span class="spk jade">Jade</span><span class="txt">moi c'est @_noreply_ghost_ lol j'ai mis "elle est trop moche ta photo"</span></div>
-    <div class="line"><span class="spk theo">Théo</span><span class="txt">j'ai mis "ta photo elle est floue t'as même pas de talent" depuis @anonymous_x0 💀</span></div>
-    <div class="line"><span class="spk marine">Marine</span><span class="txt">hahaha moi j'attends un peu pour pas que ça arrive tout en même temps</span></div>
-    <div class="line"><span class="spk kevin">Kevin</span><span class="txt">stratégie 🧠</span></div>
-    <div class="line"><span class="spk lucas">Lucas</span><span class="txt">ouais faites des pauses entre chaque pour que ça ait l'air naturel</span></div>
-  </div>
-
-  <div class="time-sep">— 25 minutes plus tard —</div>
-
-  <div class="phase-sep">Phase 4 — Résultats et premier doute de Kevin, 17h51</div>
-  <div class="dialogue">
-    <div class="line"><span class="spk jade">Jade</span><span class="txt">regardez son nombre de likes 💀 3 likes en 2h avec 600 abonnés c'est mort</span></div>
-    <div class="line"><span class="spk theo">Théo</span><span class="txt">même ses vrais abonnés l'ignorent maintenant hahaha</span></div>
-    <div class="line"><span class="spk lucas">Lucas</span><span class="txt">on a réussi à contaminer son image 😈</span></div>
-    <div class="line"><span class="spk kevin">Kevin</span><span class="txt">sérieusement vous trouvez pas qu'on va un peu trop loin là...</span></div>
-    <div class="line"><span class="spk lucas">Lucas</span><span class="txt">t'inquiète c'est juste pour rire, elle le prend trop au sérieux de toute façon</span></div>
-    <div class="line"><span class="spk kevin">Kevin</span><span class="txt">ouais ok...</span></div>
-    <div class="line"><span class="spk marine">Marine</span><span class="txt">et aussi ses DMs ? on pourrait lui envoyer des trucs la nuit</span></div>
-    <div class="line"><span class="spk lucas">Lucas</span><span class="txt">oui avec des comptes anon encore, comme ça elle dort pas tranquille</span></div>
-    <div class="line"><span class="spk jade">Jade</span><span class="txt">genre la harceler pour qu'elle finisse par partir d'insta</span></div>
-  </div>
-
-  <div class="footnote">Retrouver Clara — Partie 3 : Groupe WhatsApp — Textes partenaires</div>
-</div>
-
-
-<div class="page">
-  <div class="part-header" style="margin-bottom:.4cm;">
-    <div class="part-num">Partie 3 — suite</div>
-    <h1>Quiz &amp; suite de la conversation</h1>
-  </div>
-
-  <!-- Quiz 1 -->
-  <div class="quiz-block no-break">
-    <h3>📊 Quiz 1 — Point d'analyse</h3>
-    <p class="quiz-q">Kevin hésite mais se tait et accepte. Que révèle cette scène ?</p>
-    <p class="quiz-opt">A. Kevin est trop lâche pour s'opposer</p>
-    <p class="quiz-opt correct">B. ✓ La pression du groupe peut réduire au silence même celui qui doute — c'est un mécanisme clé du harcèlement collectif</p>
-    <p class="quiz-opt">C. Kevin n'est pas vraiment impliqué dans le harcèlement</p>
-    <p class="quiz-opt">D. C'est une décision individuelle et libre de chacun</p>
-    <p class="quiz-expl">Le harcèlement de groupe fonctionne parce que la pression sociale étouffe les voix discordantes. Kevin doute, mais il se conforme pour ne pas être exclu à son tour. Pendant ce temps, Clara fait face à une masse entière — ce qui rend son isolement total et son sentiment d'injustice encore plus fort.</p>
-  </div>
-
-  <div class="phase-sep">Phase 5 — Création des comptes anonymes, 17h57</div>
-  <div class="dialogue">
-    <div class="line"><span class="spk lucas">Lucas</span><span class="txt">j'ai créé @anonymous_x0 juste pour elle btw</span></div>
-    <div class="line"><span class="spk jade">Jade</span><span class="txt">moi c'est @vrai_info_colleg, créé pour balancer des rumeurs sur elle</span></div>
-    <div class="line"><span class="spk theo">Théo</span><span class="txt">moi j'ai @jevoustrouve pour lui faire peur la nuit</span></div>
-    <div class="line"><span class="spk marine">Marine</span><span class="txt">pour ce soir on s'organise : messages toutes les heures après minuit</span></div>
-    <div class="line"><span class="spk lucas">Lucas</span><span class="txt">pour qu'elle pense à nous même chez elle, même quand elle essaie de dormir 💀</span></div>
-    <div class="line"><span class="spk jade">Jade</span><span class="txt">et on flood ses DMs depuis les comptes anon, surtout des trucs sur son physique</span></div>
-  </div>
-
-  <!-- Quiz 2 -->
-  <div class="quiz-block no-break">
-    <h3>👤 Quiz 2 — Point d'analyse</h3>
-    <p class="quiz-q">Pourquoi créent-ils des comptes anonymes spécifiquement pour harceler Clara ?</p>
-    <p class="quiz-opt">A. Pour tester les paramètres de confidentialité d'Instagram</p>
-    <p class="quiz-opt correct">B. ✓ Pour éviter d'être identifiés, multiplier les agresseurs apparents et rendre le blocage impossible</p>
-    <p class="quiz-opt">C. Parce que leurs vrais comptes ont déjà été bloqués par Clara</p>
-    <p class="quiz-opt">D. Pour jouer un rôle fictif sans conséquences réelles</p>
-    <p class="quiz-expl">Les comptes anonymes servent à masquer l'identité des harceleurs tout en donnant l'impression que les attaques viennent de partout. Clara ne peut pas identifier ses agresseurs, les bloquer efficacement, ni prouver qui fait quoi. L'angoisse devient permanente car la menace semble surgir de nulle part — même chez elle, même la nuit.</p>
-  </div>
-
-  <div class="time-sep">— Lendemain — 09h14 —</div>
-
-  <div class="phase-sep">Phase 6 — La disparition de Clara</div>
-  <div class="dialogue">
-    <div class="line"><span class="spk jade">Jade</span><span class="txt">vous avez vu ? Clara a plus posté depuis hier soir</span></div>
-    <div class="line"><span class="spk lucas">Lucas</span><span class="txt">hahaha on l'a bien cassée 💀</span></div>
-    <div class="line"><span class="spk theo">Théo</span><span class="txt">même plus vue en ligne depuis ce matin</span></div>
-    <div class="line"><span class="spk marine">Marine</span><span class="txt">et elle était pas en cours aujourd'hui non plus 😂</span></div>
-    <div class="line"><span class="spk kevin">Kevin</span><span class="txt">sérieusement... c'est peut-être grave là</span></div>
-    <div class="line"><span class="spk lucas">Lucas</span><span class="txt">relax elle a juste besoin d'une pause, elle l'a bien cherché 😂</span></div>
-    <div class="line"><span class="spk kevin">Kevin</span><span class="txt">ça fait 2 jours qu'on la voit plus nulle part. c'est pas normal</span></div>
-    <div class="line"><span class="spk jade">Jade</span><span class="txt">kevin arrête de dramatiser c'est bon</span></div>
-    <div class="line"><span class="spk marine">Marine</span><span class="txt">j'ai entendu dire qu'elle est partie dans son « havre secret » lmao</span></div>
-    <div class="line"><span class="spk lucas">Lucas</span><span class="txt">son QUOI 💀💀💀</span></div>
-    <div class="line"><span class="spk jade">Jade</span><span class="txt">elle est vraiment trop bizarre cette fille avec ses mots de 40 ans</span></div>
-    <div class="line"><span class="spk theo">Théo</span><span class="txt">c'est quoi ce « havre secret » omg elle se prend pour qui</span></div>
-    <div class="line"><span class="spk marine">Marine</span><span class="txt">chez sa tante je crois, quelque part, personne sait vraiment</span></div>
-    <div class="line"><span class="spk lucas">Lucas</span><span class="txt">lmao elle s'est enfuie dans son château secret 🏰 trop pathétique</span></div>
-    <div class="line"><span class="spk kevin">Kevin</span><span class="txt">les gars franchement... on est peut-être allés trop loin</span></div>
-    <div class="line"><span class="spk theo">Théo</span><span class="txt">non, elle l'a bien cherché. elle avait juste à pas réagir comme ça</span></div>
-    <div class="line"><span class="spk jade">Jade</span><span class="txt">exactement, c'est sa faute si elle peut pas encaisser</span></div>
-    <div class="line"><span class="spk lucas">Lucas</span><span class="txt">bon elle revient quand elle veut de son « havre » 😂 on sera là</span></div>
-    <div class="line"><span class="spk kevin">Kevin</span><span class="txt">...</span></div>
-  </div>
-
-  <h2 style="margin-top:.6cm;">Synthèse finale affichée au joueur</h2>
-  <p style="font-size:10pt;font-style:italic;color:#555;margin-bottom:.2cm;">Ce groupe existait pendant que Clara…</p>
-  <ul style="font-size:10.5pt;margin-left:.5cm;">
-    <li>recevait des messages anonymes la nuit — ils sont dans ce groupe.</li>
-    <li>voyait ses commentaires envahis — ils les ont organisés ici.</li>
-    <li>pensait que « tout le monde » la détestait — ils l'ont fabriqué ensemble.</li>
-    <li>n'osait plus poster — c'était leur objectif.</li>
-    <li>s'est enfuie vers son « havre secret »... mais où est-il ?</li>
-  </ul>
-  <p style="margin-top:.3cm;font-size:10.5pt;font-style:italic;color:#444;">Le harcèlement de groupe transforme chaque espace en danger. Clara est partie se réfugier quelque part. Quelqu'un doit savoir où.</p>
-
-  <div class="footnote">Retrouver Clara — Partie 3 — Textes partenaires</div>
-</div>
-
-
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<!-- PARTIE 4                                                               -->
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<div class="page">
-  <div class="part-header">
-    <div class="part-num">Partie 4</div>
-    <h1>Convaincre Clara</h1>
-  </div>
-
-  <p class="part-intro">Le joueur appelle le restaurant de la tante grâce au numéro obtenu auprès d'Inès. Pour parler à Clara, il doit d'abord convaincre la tante. Puis, si celle-ci lui fait confiance, il peut échanger avec Clara. Le score final détermine l'issue : aide concrète, hésitation, ou distance maintenue.</p>
-
-  <div class="ending-block ok no-break" style="margin-bottom:.4cm;border-color:#555;">
-    <div class="ending-title" style="color:#333;">Texte d'introduction</div>
-    <p>Clara a quitté le collège depuis trois semaines et s'est réfugiée chez sa tante. Tu es Léo, son ami. Pour parler à Clara, tu dois d'abord convaincre sa tante que tu es digne de confiance — et que tu es vraiment là pour l'aider.</p>
-  </div>
-
-  <h2>Phase 1 — La tante <span style="font-weight:400;font-size:10pt;color:#aaa;font-style:italic;">(3 questions)</span></h2>
-
-  <!-- A1 -->
-  <div class="no-break">
-  <h3>Question 1 / 3</h3>
-  <div class="dialogue">
-    <div class="line"><span class="spk narr">Narrateur</span><span class="txt"><em>[ Le téléphone sonne… déclic. ]</em></span></div>
-    <div class="line"><span class="spk tante">La tante</span><span class="txt">Allô ?</span></div>
-    <div class="line"><span class="spk leo">Léo</span><span class="txt">Bonjour madame… excusez-moi de vous déranger. Je m'appelle Léo, je suis un ami de Clara. Est-ce que je pourrais lui parler, s'il vous plaît ?</span></div>
-    <div class="line"><span class="spk tante">La tante</span><span class="txt">Léo… Oui, elle m'a parlé de toi.<br>Mais… je préfère être honnête : ce n'est pas un bon moment.</span></div>
-  </div>
-  <div class="choices-block">
-    <div class="choice-hint">Comment répondre ?</div>
-    <div class="choice good">
-      <span class="choice-letter">●</span>
-      <span class="choice-txt">« Je comprends tout à fait. Je ne veux pas la brusquer. Mais elle me manque, et j'ai peur pour elle. »
-        <div class="choice-reply">→ La tante : <em>« (un silence) C'est gentil de le dire comme ça. »</em></div>
-      </span>
-    </div>
-    <div class="choice ok">
-      <span class="choice-letter">●</span>
-      <span class="choice-txt">« Je comprends. Mais c'est important — ça ne prendra pas longtemps. »
-        <div class="choice-reply">→ La tante : <em>« Hmm… d'accord. Je t'écoute. »</em></div>
-      </span>
-    </div>
-    <div class="choice bad">
-      <span class="choice-letter">●</span>
-      <span class="choice-txt">« J'ai besoin de lui parler maintenant, c'est urgent. »
-        <div class="choice-reply">→ La tante : <em>« (froid) Urgent… pour toi, peut-être. »</em></div>
-      </span>
-    </div>
-  </div>
-  <div class="recovery-block no-break">
-    <p style="font-size:9pt;font-family:Arial,sans-serif;color:#a08030;margin-bottom:.15cm;">↩ Rattrapage possible (si mauvaise réponse) :</p>
-    <div class="line" style="margin-bottom:.1cm;"><span class="spk tante" style="min-width:2.5cm;">La tante</span><span class="txt" style="font-size:10pt;">Ce n'est pas une urgence pour moi, Léo. Et pour l'instant, c'est ce qui compte.</span></div>
-    <div class="choice good" style="font-size:10pt;"><span class="choice-letter">✓</span><span class="choice-txt">« Vous avez raison. Je suis désolé. C'est elle qui compte, pas moi. »<div class="choice-reply">→ <em>« (légèrement adoucie) …D'accord. Continue. »</em></div></span></div>
-    <div class="choice bad" style="font-size:10pt;"><span class="choice-letter">✗</span><span class="choice-txt">« Mais vous ne comprenez pas, c'est vraiment important. »<div class="choice-reply">→ <em>« (sèchement) Je comprends très bien. Et ça ne me rassure pas. »</em></div></span></div>
-  </div>
-  </div>
-
-  <!-- A2 -->
-  <div class="no-break" style="margin-top:.4cm;">
-  <h3>Question 2 / 3</h3>
-  <div class="dialogue">
-    <div class="line"><span class="spk tante">La tante</span><span class="txt">Tu sais, depuis qu'elle est arrivée ici… Clara n'est plus la même.<br>Elle pleure beaucoup. Elle fait des cauchemars. Elle se réveille paniquée la nuit.<br>Et surtout… elle culpabilise. Elle pense que tout est de sa faute.</span></div>
-  </div>
-  <div class="choices-block">
-    <div class="choice-hint">Que réponds-tu ?</div>
-    <div class="choice good">
-      <span class="choice-letter">●</span>
-      <span class="choice-txt">« Qu'elle culpabilise… c'est ce qui me fait le plus mal. Elle n'a absolument rien fait. »
-        <div class="choice-reply">→ La tante : <em>« (souffle) C'est exactement ce qu'elle a besoin d'entendre. »</em></div>
-      </span>
-    </div>
-    <div class="choice ok">
-      <span class="choice-letter">●</span>
-      <span class="choice-txt">« Je savais pas que c'était à ce point… c'est vraiment grave. »
-        <div class="choice-reply">→ La tante : <em>« Oui. C'est très grave. »</em></div>
-      </span>
-    </div>
-    <div class="choice bad">
-      <span class="choice-letter">●</span>
-      <span class="choice-txt">« Elle aurait dû m'en parler avant d'en arriver là. »
-        <div class="choice-reply">→ La tante : <em>« (sèchement) Elle n'osait pas. C'est précisément le problème. »</em></div>
-      </span>
-    </div>
-  </div>
-  <div class="recovery-block no-break">
-    <p style="font-size:9pt;font-family:Arial,sans-serif;color:#a08030;margin-bottom:.15cm;">↩ Rattrapage :</p>
-    <div class="line" style="margin-bottom:.1cm;"><span class="spk tante" style="min-width:2.5cm;">La tante</span><span class="txt" style="font-size:10pt;">Si tu lui faisais des reproches maintenant… tu la blesserais encore plus, Léo.</span></div>
-    <div class="choice good" style="font-size:10pt;"><span class="choice-letter">✓</span><span class="choice-txt">« Vous avez raison. Ce n'est pas ce que je voulais dire. Elle ne méritait rien de tout ça. »<div class="choice-reply">→ <em>« (pause) …C'est mieux. J'entends de la sincérité. »</em></div></span></div>
-    <div class="choice bad" style="font-size:10pt;"><span class="choice-letter">✗</span><span class="choice-txt">« Je fais juste remarquer que si elle m'avait parlé, on aurait pu éviter ça. »<div class="choice-reply">→ <em>« (froid) Éviter ça. Tu penses vraiment que c'était si simple. »</em></div></span></div>
-  </div>
-  </div>
-
-  <div class="footnote">Retrouver Clara — Partie 4 : Convaincre Clara — Textes partenaires</div>
-</div>
-
-
-<div class="page">
-  <div class="part-header" style="margin-bottom:.4cm;">
-    <div class="part-num">Partie 4 — suite</div>
-    <h1>Phase 1 (fin) &amp; Phase 2 — Clara</h1>
-  </div>
-
-  <!-- A3 -->
-  <div class="no-break">
-  <h3>Question 3 / 3 — La tante</h3>
-  <div class="dialogue">
-    <div class="line"><span class="spk tante">La tante</span><span class="txt">Le harcèlement, ça détruit lentement. Ça te fait douter de ta valeur…<br>Elle s'est renfermée. Elle évite même de regarder son téléphone.<br>Si tu veux vraiment l'aider… il faudra être patient. Très patient.</span></div>
-  </div>
-  <div class="choices-block">
-    <div class="choice-hint">Avant qu'elle aille demander à Clara…</div>
-    <div class="choice good">
-      <span class="choice-letter">●</span>
-      <span class="choice-txt">« Je le serai. Dites-lui juste que je suis là, sans pression. Elle n'a rien à prouver. »
-        <div class="choice-reply">→ La tante : <em>« (plus douce) Je vais lui dire ça. Attends. »</em></div>
-      </span>
-    </div>
-    <div class="choice ok">
-      <span class="choice-letter">●</span>
-      <span class="choice-txt">« Je vous promets d'être doux. Merci de me donner cette chance. »
-        <div class="choice-reply">→ La tante : <em>« D'accord… je vais lui demander. »</em></div>
-      </span>
-    </div>
-    <div class="choice bad">
-      <span class="choice-letter">●</span>
-      <span class="choice-txt">« Je vais lui dire que tout va s'arranger, que j'ai un plan. »
-        <div class="choice-reply">→ La tante : <em>« (froide) Un plan. Clara n'a pas besoin d'un plan. Elle a besoin d'être entendue. »</em></div>
-      </span>
-    </div>
-  </div>
-  <div class="recovery-block no-break">
-    <p style="font-size:9pt;font-family:Arial,sans-serif;color:#a08030;margin-bottom:.15cm;">↩ Rattrapage :</p>
-    <div class="line" style="margin-bottom:.1cm;"><span class="spk tante" style="min-width:2.5cm;">La tante</span><span class="txt" style="font-size:10pt;">Est-ce que tu comprends la différence, Léo ?</span></div>
-    <div class="choice good" style="font-size:10pt;"><span class="choice-letter">✓</span><span class="choice-txt">« Oui… vous avez raison. Je voulais juste l'aider mais je suis allé trop vite. »<div class="choice-reply">→ <em>« (longue pause) …Je vais lui demander. Mais ne la brusque pas. »</em></div></span></div>
-    <div class="choice bad" style="font-size:10pt;"><span class="choice-letter">✗</span><span class="choice-txt">« Je pense que ça lui ferait du bien d'avoir un objectif concret. »<div class="choice-reply">→ <em>« (ferme) Je ne crois pas que tu sois prêt à lui parler ce soir. »</em></div></span></div>
-  </div>
-  </div>
-
-  <div class="phase-sep">Pivot</div>
-  <div class="dialogue no-break">
-    <div class="line"><span class="spk narr">Narrateur</span><span class="txt"><em>[ Bruits étouffés… la tante s'éloigne… murmures au loin… ]</em></span></div>
-  </div>
-  <p style="font-size:9.5pt;color:#888;font-style:italic;font-family:Arial,sans-serif;margin-bottom:.3cm;margin-left:3.35cm;">Si le score est suffisant → Clara accepte de parler. Sinon → la tante raccroche.</p>
-
-  <h2>Phase 2 — Clara <span style="font-weight:400;font-size:10pt;color:#aaa;font-style:italic;">(4 questions)</span></h2>
-
-  <!-- L1 -->
-  <div class="no-break">
-  <h3>Question 1 / 4</h3>
-  <div class="dialogue">
-    <div class="line"><span class="spk narr">Narrateur</span><span class="txt"><em>[ Un froissement de téléphone… ]</em></span></div>
-    <div class="line"><span class="spk clara">Clara</span><span class="txt">Allô… ?</span></div>
-    <div class="line"><span class="spk leo">Léo</span><span class="txt">Clara… c'est moi. Léo.</span></div>
-    <div class="line"><span class="spk clara">Clara</span><span class="txt">… Salut.</span></div>
-    <div class="line"><span class="spk leo">Léo</span><span class="txt">Je suis désolé d'appeler comme ça. Je ne savais pas comment faire autrement.</span></div>
-    <div class="line"><span class="spk clara">Clara</span><span class="txt">C'est… c'est pas grave.</span></div>
-    <div class="line"><span class="spk leo">Léo</span><span class="txt">Tu m'as manqué.</span></div>
-    <div class="line"><span class="spk clara">Clara</span><span class="txt">(souffle) Toi aussi…</span></div>
-    <div class="line"><span class="spk leo">Léo</span><span class="txt">Pourquoi tu n'as rien dit ? Tu sais que tu pouvais me parler…</span></div>
-    <div class="line"><span class="spk clara">Clara</span><span class="txt">J'y ai pensé… plein de fois.<br>J'ai même commencé à écrire des messages… et puis je les supprimais.</span></div>
-  </div>
-  <div class="choices-block">
-    <div class="choice-hint">Que lui réponds-tu ?</div>
-    <div class="choice good"><span class="choice-letter">●</span><span class="choice-txt">« Tu n'as pas à trouver les bons mots avec moi. Je t'aurais écoutée, même sans explication. »<div class="choice-reply">→ Clara : <em>« (silence) …Je sais. Je crois que j'avais honte. »</em></div></span></div>
-    <div class="choice ok"><span class="choice-letter">●</span><span class="choice-txt">« Je comprends… c'est dur de savoir comment dire ces choses. »<div class="choice-reply">→ Clara : <em>« Ouais… c'est ça. »</em></div></span></div>
-    <div class="choice bad"><span class="choice-letter">●</span><span class="choice-txt">« Pourquoi tu as supprimé ces messages ? J'aurais répondu, tu sais. »<div class="choice-reply">→ Clara : <em>« (froide) J'en sais rien… »</em></div></span></div>
-  </div>
-  </div>
-
-  <!-- L2 -->
-  <div class="no-break" style="margin-top:.4cm;">
-  <h3>Question 2 / 4</h3>
-  <div class="dialogue">
-    <div class="line"><span class="spk clara">Clara</span><span class="txt">Au début, c'était juste des remarques… des petites piques.<br>Je me disais que ça allait passer.<br>Mais après… ça a empiré. Des moqueries en groupe. Des commentaires sur tout.<br>Et ensuite, ça a continué en ligne. Des messages. Des captures. Des rumeurs.<br>Je ne pouvais plus y échapper… même chez moi.</span></div>
-  </div>
-  <div class="choices-block">
-    <div class="choice-hint">Que ressens-tu à l'entendre ?</div>
-    <div class="choice good"><span class="choice-letter">●</span><span class="choice-txt">« Plus de refuge nulle part — ni au collège, ni chez toi. C'est une violence totale. Je suis tellement désolé. »<div class="choice-reply">→ Clara : <em>« (voix qui se brise) Oui… c'est exactement ça. »</em></div></span></div>
-    <div class="choice ok"><span class="choice-letter">●</span><span class="choice-txt">« C'est horrible… être harcelée même à la maison. »<div class="choice-reply">→ Clara : <em>« Ouais… »</em></div></span></div>
-    <div class="choice bad"><span class="choice-letter">●</span><span class="choice-txt">« T'aurais pu bloquer ces gens, désactiver tes réseaux. »<div class="choice-reply">→ Clara : <em>« (froid) Merci, j'y avais pas pensé. »</em></div></span></div>
-  </div>
-  </div>
-
-  <div class="footnote">Retrouver Clara — Partie 4 — Textes partenaires</div>
-</div>
-
-
-<div class="page">
-  <div class="part-header" style="margin-bottom:.4cm;">
-    <div class="part-num">Partie 4 — suite</div>
-    <h1>Phase 2 — Clara (fin) &amp; Épilogue</h1>
-  </div>
-
-  <!-- L3 -->
-  <div class="no-break">
-  <h3>Question 3 / 4</h3>
-  <div class="dialogue">
-    <div class="line"><span class="spk clara">Clara</span><span class="txt">Le pire, tu sais quoi ?<br>C'est quand j'ai commencé à y croire.<br>Quand je me regardais dans le miroir et que je voyais ce qu'ils disaient.</span></div>
-  </div>
-  <div class="choices-block">
-    <div class="choice-hint">Comment lui répondre ?</div>
-    <div class="choice good"><span class="choice-letter">●</span><span class="choice-txt">« Ce qu'ils t'ont fait, c'est du conditionnement. Ils t'ont menti sur toi-même, encore et encore. Ce miroir ne te montre pas toi. »<div class="choice-reply">→ Clara : <em>« (longue pause) Personne ne l'avait dit comme ça avant. »</em></div></span></div>
-    <div class="choice ok"><span class="choice-letter">●</span><span class="choice-txt">« Non. Ce que tu voyais, c'est leurs mensonges — pas toi. »<div class="choice-reply">→ Clara : <em>« J'essaie de me le dire… c'est dur. »</em></div></span></div>
-    <div class="choice bad"><span class="choice-letter">●</span><span class="choice-txt">« Tu sais bien que c'est faux ce qu'ils disent. »<div class="choice-reply">→ Clara : <em>« (silence) Si je le savais vraiment, j'aurais pas craqué. »</em></div></span></div>
-  </div>
-  </div>
-
-  <!-- L4 -->
-  <div class="no-break" style="margin-top:.4cm;">
-  <h3>Question 4 / 4</h3>
-  <div class="dialogue">
-    <div class="line"><span class="spk clara">Clara</span><span class="txt">Ça fait trois semaines que je suis ici…<br>Au début, je n'arrivais même pas à sortir de la chambre.<br>Maintenant… ça va un peu mieux. Mais j'ai encore peur.<br>Peur de retourner au collège. Peur que ça recommence. Peur que rien ne change.</span></div>
-    <div class="line"><span class="spk leo">Léo</span><span class="txt">Tu en as parlé à ta tante ? À tes parents ?</span></div>
-    <div class="line"><span class="spk clara">Clara</span><span class="txt">Ma tante sait un peu… Elle est gentille. Mais je veux pas les inquiéter.<br>J'ai l'impression que si j'en parle vraiment… ça devient réel.</span></div>
-  </div>
-  <div class="choices-block">
-    <div class="choice-hint">Que lui dire ?</div>
-    <div class="choice good"><span class="choice-letter">●</span><span class="choice-txt">« C'est déjà réel, Clara. Et justement parce que c'est réel, tu as besoin d'adultes qui peuvent agir — le CPE, un psy scolaire, tes parents. Pas pour tout régler d'un coup. Juste pour ne plus porter ça seule. »<div class="choice-reply">→ Clara : <em>« (silence) …Peut-être. Ma tante m'a proposé d'appeler le collège. J'avais dit non. Mais là… peut-être que oui. »</em></div></span></div>
-    <div class="choice ok"><span class="choice-letter">●</span><span class="choice-txt">« Tu n'as pas à régler ça toute seule. Si tu veux, je peux être là quand tu en parles à quelqu'un — n'importe quel adulte de confiance. »<div class="choice-reply">→ Clara : <em>« (hésitante) …D'accord. Je vais y réfléchir. »</em></div></span></div>
-    <div class="choice bad"><span class="choice-letter">●</span><span class="choice-txt">« T'inquiète, je vais régler ça moi-même. Ces gens vont avoir des problèmes. »<div class="choice-reply">→ Clara : <em>« (froid) Non… s'il te plaît, fais rien. Ça va juste empirer. »</em></div></span></div>
-  </div>
-  </div>
-
-  <h2 style="margin-top:.6cm;">Fins</h2>
-
-  <div class="ending-block good no-break">
-    <div class="ending-title">🌿 Clara va demander de l'aide <em style="font-weight:400;font-size:9.5pt;">(score ≥ 13)</em></div>
-    <p>Tu as su trouver les mots justes à chaque instant. Ni trop forts, ni trop légers — juste présents.</p>
-    <p>La tante t'a fait confiance. Clara a raccroché avec une décision concrète : parler à un adulte de confiance, et ne plus porter ça seule.</p>
-    <p>Ton rôle n'était pas de la sauver. C'était de lui montrer que demander de l'aide, c'est possible.</p>
-    <p class="citation">« Je vais en parler à ma tante. Vraiment parler. » — Clara</p>
-  </div>
-
-  <div class="ending-block ok no-break">
-    <div class="ending-title">🕯️ Un premier pas <em style="font-weight:400;font-size:9.5pt;">(score 7–12)</em></div>
-    <p>Tu as montré de la bonne volonté, même si certaines réponses manquaient de profondeur.</p>
-    <p>Clara hésite encore — mais elle envisage d'en parler à un adulte. Le chemin est long.</p>
-    <p class="citation">« Peut-être que je vais essayer… » — Clara</p>
-  </div>
-
-  <div class="ending-block bad no-break">
-    <div class="ending-title">🌧️ La distance reste <em style="font-weight:400;font-size:9.5pt;">(score 0–6)</em></div>
-    <p>Tu voulais bien faire, mais tes mots ont parfois sonné comme des reproches ou de l'impatience.</p>
-    <p>Clara reste fermée. Elle a besoin de temps — et de quelqu'un qui écoute vraiment avant d'agir.</p>
-    <p class="citation">« J'avais juste besoin que tu m'écoutes. » — Clara</p>
-  </div>
-
-  <div class="ending-block bad no-break" style="border-color:#333;">
-    <div class="ending-title" style="color:#333;">📵 Game Over — La tante a raccroché</div>
-    <p>Elle a senti que tu n'étais pas prêt à comprendre ce que Clara traversait.</p>
-    <p>Pour protéger sa nièce encore fragile, elle a préféré mettre fin à la conversation.</p>
-    <p class="citation" style="color:#888;">« L'empathie, ce n'est pas seulement vouloir aider. C'est écouter avant de parler. Sentir avant d'agir. »</p>
-  </div>
-
-  <h2 style="margin-top:.6cm;">Ressources affichées en fin de partie</h2>
-  <ul style="font-size:10.5pt;margin-left:.5cm;">
-    <li><strong>3018</strong> — Net Écoute · cyberharcèlement (gratuit, anonyme)</li>
-    <li><strong>3114</strong> — Numéro national de prévention du suicide</li>
-    <li><strong>e-enfance.org</strong> — conseils et signalement en ligne</li>
-  </ul>
-
-  <div class="footnote">Retrouver Clara — Partie 4 — Textes partenaires — Mai 2026</div>
-</div>
-
-</body>
-</html>
+*{box-sizing:border-box}
+body{margin:0;background:#eeedea;color:#1a1a1e;font-family:'Jost',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:15px;line-height:1.62}
+.page{max-width:820px;margin:0 auto;padding:40px 26px 70px;background:#fff;box-shadow:0 0 40px rgba(0,0,0,.06)}
+.cover{text-align:center;padding:40px 0 34px;border-bottom:2px solid #1a1a1e;margin-bottom:8px}
+.cover .ey{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#7a7a83}
+.cover h1{font-family:Georgia,serif;font-style:italic;font-weight:400;font-size:40px;margin:14px 0 12px}
+.cover .su{color:#55555e;font-size:15px;white-space:pre-line}
+.cover .me{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9a9aa2;margin-top:14px}
+h2.part{margin:52px 0 4px;padding:16px 18px;background:#1a1a1e;color:#fff;border-radius:3px;font-size:19px;font-weight:500}
+h2.part span{display:block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#a9a9b2;margin-bottom:5px}
+h3{font-family:Georgia,serif;font-weight:400;font-size:21px;margin:30px 0 8px}
+h4{font-size:15px;margin:22px 0 6px;color:#3a3a44}
+p{margin:0 0 10px;max-width:70ch}
+.note{font-size:13.5px;color:#6a6a73;font-style:italic;border-left:2px solid #d8d7d2;padding-left:12px;margin:12px 0}
+ul{margin:6px 0 12px;padding-left:20px} li{margin-bottom:5px}
+table{border-collapse:collapse;margin:12px 0 18px;font-size:14px;width:100%}
+th,td{border:1px solid #ddddd8;padding:7px 10px;text-align:left}
+th{background:#f4f3f0;font-weight:600;font-size:13px}
+.dial{margin:0 0 6px;display:flex;gap:10px;align-items:baseline}
+.dial .who{flex-shrink:0;min-width:74px;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.dial .txt{white-space:pre-line}
+.dial.narr .txt{color:#8a8a92;font-style:italic}
+.prompt{font-size:13px;color:#8a8a92;font-style:italic;margin:14px 0 6px}
+.pensee{background:#f2f8f2;border-left:3px solid #4dcc70;padding:9px 13px;margin:8px 0;font-style:italic;color:#2a7a50;font-size:14px}
+.choix{border-left:3px solid;padding:9px 13px;margin:0 0 7px;border-radius:0 3px 3px 0}
+.choix .k{font-weight:700;font-size:12px;margin-right:7px}
+.choix .n{display:block;font-size:12.5px;color:#7a7a83;font-style:italic;margin-top:3px}
+.choix .r{display:block;font-size:13px;color:#55555e;margin-top:4px}
+.choix.good{border-color:#2a7a50;background:#f4faf7}
+.choix.ok{border-color:#c09030;background:#fdfaf0}
+.choix.bad{border-color:#c04030;background:#fdf4f4}
+.choix.neutral{border-color:#888;background:#fafafa}
+.recov{background:#fffbf0;border-left:3px solid #e0c080;padding:10px 13px;margin:6px 0 12px;font-size:14px}
+.recov .lab{font-size:12px;color:#a08030;font-style:italic;display:block;margin-bottom:6px}
+.quiz{border:1px solid #dcdcd6;border-radius:4px;padding:13px 15px;margin:12px 0}
+.quiz .ou{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#8a8a92;margin-bottom:6px}
+.quiz .q{font-weight:600;margin-bottom:8px}
+.quiz ol{margin:0 0 8px;padding-left:20px}
+.quiz li.ok{color:#2a7a50;font-weight:600}
+.quiz .exp{font-size:13px;color:#6a6a73;font-style:italic;border-top:1px solid #eeeee8;padding-top:8px}
+.dm{border-left:3px solid #3a4a6a;background:#f7f9fd;padding:10px 13px;margin:0 0 10px}
+.dm .hd{font-size:13px;font-weight:700;color:#2a4a7a}
+.dm .hd .t{font-weight:400;color:#9a9aa2;margin-left:8px;font-size:12px}
+.dm .hd .ty{font-style:italic;color:#c09030;font-size:12px;margin-left:8px}
+.dm .m{font-size:13.5px;margin-top:5px;color:#3a3a44}
+.dm.amie{border-color:#44aa66;background:#f4faf6}
+.carte{border-left:3px solid #3a4a6a;background:#f7f9fd;padding:9px 13px;margin:0 0 8px}
+.carte b{color:#2a4a7a;font-size:14px}
+.carte span{display:block;font-size:13.5px;color:#4a4a52;margin-top:3px}
+.compte{font-family:ui-monospace,Menlo,monospace;font-size:13.5px;margin:0 0 5px}
+.compte b{font-family:'Jost',sans-serif;font-size:14.5px}
+.fin{border-left:3px solid;padding:11px 14px;margin:0 0 11px;border-radius:0 3px 3px 0}
+.fin .t{font-weight:700;font-size:14px;margin-bottom:5px}
+.fin p{font-size:13.5px;margin:0 0 5px;white-space:pre-line}
+.sep{text-align:center;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#9a9aa2;margin:20px 0 12px}
+.res{display:flex;gap:14px;font-size:14px;margin-bottom:5px}
+.res b{min-width:120px}
+footer{margin-top:40px;padding-top:14px;border-top:1px solid #e6e5e0;font-size:12px;color:#9a9aa2;text-align:center}
+@media print{body{background:#fff}.page{box-shadow:none;max-width:none;padding:0}
+  h2.part{background:#1a1a1e !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .dm,.carte,.quiz,.fin,.choix{page-break-inside:avoid}}
+</style></head><body><div class="page">
+<div class="cover"><div class="ey">Jeu pédagogique sur le harcèlement scolaire</div><h1>Retrouver Clara</h1><div class="su">Textes complets — Parties 1, 2, 3 et 4
+Document à destination des partenaires</div><div class="me">Version du 9 septembre 2026  ·  Usage interne</div></div>
+<h3>Présentation générale</h3>
+<p>Retrouver Clara est un jeu pédagogique destiné aux collégiens sur le thème du harcèlement scolaire et de son prolongement en ligne. Le joueur incarne Léo — ou Léa, au choix — un ami de Clara, quatorze ans, qui ne vient plus au collège depuis cinq jours. En traversant quatre scènes, il reconstitue ce qu&#x27;elle a vécu et apprend à lui parler.</p>
+<p>Ce document présente l&#x27;intégralité des textes jouables des quatre parties, tels qu&#x27;ils apparaissent à l&#x27;écran.</p>
+<div class="note">Ce document est produit automatiquement à partir des fichiers du jeu (dump_textes.js puis gen_doc.py). Il ne se met pas à jour tout seul : relancez la génération après chaque modification des textes, et il restera exact.</div>
+<h3>Structure du jeu</h3>
+<table><tr><th>Partie</th><th>Titre</th><th>Mécanique</th><th>Durée</th></tr>
+<tr><td>1</td><td>Le téléphone d&#x27;Inès</td><td>Dialogue à choix, jauge de confiance</td><td>5–8 min</td></tr>
+<tr><td>2</td><td>L&#x27;Instagram de Clara</td><td>Exploration, identification de 6 types sur 9, signalement</td><td>12–18 min</td></tr>
+<tr><td>3</td><td>Le groupe WhatsApp secret</td><td>Lecture au rythme du joueur, 5 comptes à démasquer, 2 QCM</td><td>8–12 min</td></tr>
+<tr><td>4</td><td>Convaincre Clara</td><td>Dialogue d&#x27;empathie, 8 scènes, 3 fins</td><td>8–12 min</td></tr>
+</table>
+<p>Le jeu se termine sur un récapitulatif imprimable (recapitulatif.html) qui reprend ce que le groupe a identifié, les numéros d&#x27;aide, et deux lignes à compléter à la main.</p>
+<h2 class="part"><span>Partie 1</span>Le téléphone d&#x27;Inès</h2>
+<p>Léo écrit à Inès, la meilleure amie de Clara. Une jauge de confiance monte ou descend à chaque réponse. Sous −3, Inès coupe la conversation ; sous −2, une crise de confiance se déclenche une seule fois.</p>
+<h3>Ouverture</h3>
+<div class="dial"><span class="who" style="color:#1a3a6a">Léo</span><span class="txt">Inès ?</span></div>
+<div class="dial"><span class="who" style="color:#4a1a6a">Inès</span><span class="txt">Oui c&#x27;est qui</span></div>
+<div class="dial"><span class="who" style="color:#1a3a6a">Léo</span><span class="txt">C&#x27;est Léo. On est dans la même école que Clara.</span></div>
+<div class="dial"><span class="who" style="color:#4a1a6a">Inès</span><span class="txt">Je te connais pas.</span></div>
+<div class="dial"><span class="who" style="color:#1a3a6a">Léo</span><span class="txt">Je sais. J&#x27;arrive plus à la joindre depuis plusieurs jours. Je ne la vois plus dans la cour. T&#x27;as eu de ses nouvelles ?</span></div>
+<div class="dial"><span class="who" style="color:#4a1a6a">Inès</span><span class="txt">Pourquoi tu me demandes ça à moi</span></div>
+<h3>Échange 1 sur 6</h3>
+<div class="pensee">Je dois être le plus honnête possible, et le plus sincère — c&#x27;est ma seule chance qu&#x27;elle m&#x27;aide.</div>
+<div class="prompt">Que répond Léo ?</div>
+<div class="choix bad"><span class="k">A</span>Parce que t&#x27;es son amie. Si quelqu&#x27;un sait quelque chose, c&#x27;est toi.<span class="n">confiance -1</span></div>
+<div class="choix ok"><span class="k">B</span>Je savais pas à qui d&#x27;autre m&#x27;adresser.<span class="n">confiance +0</span></div>
+<div class="choix good"><span class="k">C</span>Je suis inquiet. J&#x27;arrive plus à dormir depuis hier soir.<span class="n">confiance +1</span></div>
+<h3>Échange 2 sur 6</h3>
+<div class="dial"><span class="who" style="color:#4a1a6a">Inès</span><span class="txt">Tu la connais comment toi, Clara ?</span></div>
+<div class="pensee">Je la connais depuis quelques années. On se croisait souvent à l&#x27;école. Il faut que je le lui montre.</div>
+<div class="prompt">Que répond Léo ?</div>
+<div class="choix good"><span class="k">A</span>On se croise souvent. Je l&#x27;aimais bien.<span class="n">confiance +1</span></div>
+<div class="choix bad"><span class="k">B</span>Pas super bien. Mais j&#x27;ai entendu parler d&#x27;elle ces derniers temps.<span class="n">confiance -1</span></div>
+<div class="choix ok"><span class="k">C</span>On est dans des classes différentes mais on se parle des fois.<span class="n">confiance +0</span></div>
+<h3>Échange 3 sur 6</h3>
+<div class="dial"><span class="who" style="color:#4a1a6a">Inès</span><span class="txt">Elle répond plus à moi non plus.</span></div>
+<div class="dial"><span class="who" style="color:#4a1a6a">Inès</span><span class="txt">Depuis quelques jours.</span></div>
+<div class="prompt">Que répond Léo ?</div>
+<div class="choix good"><span class="k">A</span>Ça lui arrivait déjà avant ?<span class="n">confiance +1</span><span class="r"><b>Inès :</b> Non. Jamais.</span></div>
+<div class="choix bad"><span class="k">B</span>Peut-être qu&#x27;elle vous a bloqués.<span class="n">confiance -1</span><span class="r"><b>Inès :</b> Elle m&#x27;aurait jamais bloquée. Pas moi.</span></div>
+<div class="choix ok"><span class="k">C</span>Vous vous parliez souvent ?<span class="n">confiance +0</span><span class="r"><b>Inès :</b> Tous les jours. Enfin… avant.</span></div>
+<h3>Échange 4 sur 6</h3>
+<div class="dial"><span class="who" style="color:#4a1a6a">Inès</span><span class="txt">Ça faisait un moment qu&#x27;elle était pas bien.</span></div>
+<div class="dial"><span class="who" style="color:#4a1a6a">Inès</span><span class="txt">Depuis des mois, en fait.</span></div>
+<div class="dial"><span class="who" style="color:#4a1a6a">Inès</span><span class="txt">Elle manquait des cours. Elle répondait plus aux messages.</span></div>
+<div class="dial"><span class="who" style="color:#4a1a6a">Inès</span><span class="txt">Elle disait que c&#x27;était rien.</span></div>
+<div class="prompt">Que répond Léo ?</div>
+<div class="choix good"><span class="k">A</span>Tu sais ce qui s&#x27;est passé ?<span class="n">confiance +1</span><span class="r"><b>Inès :</b> Pas vraiment. J&#x27;ai essayé de lui demander.</span></div>
+<div class="choix bad"><span class="k">B</span>Et t&#x27;as pas essayé d&#x27;en parler avec elle ?<span class="n">confiance -1</span><span class="r"><b>Inès :</b> Si. J&#x27;ai essayé.</span></div>
+<div class="choix ok"><span class="k">C</span>Elle avait l&#x27;air d&#x27;avoir peur de quelque chose ?<span class="n">confiance +0</span><span class="r"><b>Inès :</b> Peut-être… Je lui ai demandé, plusieurs fois.</span></div>
+<h3>Échange 5 sur 6</h3>
+<div class="dial"><span class="who" style="color:#4a1a6a">Inès</span><span class="txt">Elle voulait pas.</span></div>
+<div class="dial"><span class="who" style="color:#4a1a6a">Inès</span><span class="txt">Mais je voyais bien.</span></div>
+<div class="dial"><span class="who" style="color:#4a1a6a">Inès</span><span class="txt">Elle laissait son téléphone retourné sur la table. Elle regardait plus ses applis.</span></div>
+<div class="dial"><span class="who" style="color:#4a1a6a">Inès</span><span class="txt">Des fois je lui envoyais un message, je voyais qu&#x27;elle l&#x27;avait lu… et elle répondait pas pendant des heures.</span></div>
+<div class="prompt">Que répond Léo ?</div>
+<div class="choix good"><span class="k">A</span>On dirait qu&#x27;elle voulait s&#x27;éloigner de son téléphone.<span class="n">confiance +1</span></div>
+<div class="choix ok"><span class="k">B</span>C&#x27;est bizarre comme comportement.<span class="n">confiance +0</span></div>
+<div class="choix bad"><span class="k">C</span>C&#x27;est peut-être juste une mauvaise période.<span class="n">confiance -1</span></div>
+<h3>Échange 6 sur 6</h3>
+<div class="dial"><span class="who" style="color:#4a1a6a">Inès</span><span class="txt">Je sais pas si je devrais te raconter tout ça.</span></div>
+<div class="dial"><span class="who" style="color:#4a1a6a">Inès</span><span class="txt">Je te connais même pas.</span></div>
+<div class="pensee">Elle a raison de se méfier. Je dois la rassurer sans la brusquer.</div>
+<div class="prompt">Que répond Léo ?</div>
+<div class="choix good"><span class="k">A</span>T&#x27;es obligée à rien. C&#x27;est toi qui décides.<span class="n">confiance +1</span></div>
+<div class="choix bad"><span class="k">B</span>Dis-moi juste ce que tu sais.<span class="n">confiance -1</span></div>
+<div class="choix ok"><span class="k">C</span>Je veux juste savoir si elle va bien. Rien d&#x27;autre.<span class="n">confiance +0</span></div>
+<h3>Crise de confiance (une seule fois, si la confiance passe sous −2)</h3>
+<div class="dial"><span class="who" style="color:#4a1a6a">Inès</span><span class="txt">Attends.</span></div>
+<div class="dial"><span class="who" style="color:#4a1a6a">Inès</span><span class="txt">T&#x27;es dans quelle classe ?</span></div>
+<div class="dial"><span class="who" style="color:#4a1a6a">Inès</span><span class="txt">Tu connais qui dans la sienne ?</span></div>
+<div class="prompt">Comment réagit Léo ?</div>
+<div class="choix good"><span class="k">A</span>T&#x27;as raison d&#x27;être méfiante. Tu me connais pas.<span class="n">confiance +2</span></div>
+<div class="choix good"><span class="k">B</span>Je fais pas partie des gens qui lui ont fait du mal.<span class="n">confiance +1</span></div>
+<div class="choix bad"><span class="k">C</span>Fais-moi confiance, j&#x27;essaie juste d&#x27;aider.<span class="n">confiance -1</span></div>
+<h3>Les cinq fins de la Partie 1</h3>
+<div class="fin" style="border-color:#888;background:#fafafa"><div class="t" style="color:#888">Fin de conversation</div><p>(elle ne répond plus)</p></div>
+<div class="fin" style="border-color:#c04030;background:#fdf4f4"><div class="t" style="color:#c04030">🔴 Confiance perdue</div><p>Je sais qu&#x27;on ne pouvait pas te faire confiance.</p><p>(elle ne répond plus)</p></div>
+<div class="fin" style="border-color:#c04030;background:#fdf4f4"><div class="t" style="color:#c04030">🔴 Échec</div><p>Non. 
+Arrête de fouiller. C&#x27;est pas tes affaires.</p><p>(elle ne répond plus)</p></div>
+<div class="fin" style="border-color:#c09030;background:#fdfaf0"><div class="t" style="color:#c09030">🟡 Succès fragile</div><p>Je sais vraiment pas si je fais bien.
+Tu me promets de faire attention ?</p><p>→ Oui.</p><p>Tu promets de respecter la vie privée de Clara ?</p><p>→ Oui.</p><p>Elle me l&#x27;avait donné au cas où. Tu l&#x27;utilises, t&#x27;en parles à personne.</p><p>Identifiants remis : @clara.fontaine / nuit_rouge17</p><p>⚠ Sois prudent.</p></div>
+<div class="fin" style="border-color:#2a7a50;background:#f4faf7"><div class="t" style="color:#2a7a50">🟢 Inès te fait confiance</div><p>Tu promets de faire attention à ce que tu lis ?</p><p>→ Je promets.</p><p>Et tu me dis si tu trouves quelque chose.</p><p>Tu promets de respecter la vie privée de Clara ?</p><p>→ Je le promets.</p><p>Elle me l&#x27;avait donné au cas où. Tu l&#x27;utilises, t&#x27;en parles à personne.</p><p>Identifiants remis : @clara.fontaine / nuit_rouge17</p><p>⚠ C&#x27;est sa vie privée. Respecte-la.</p></div>
+<h3>Deuxième conversation avec Inès (après la Partie 3)</h3>
+<p>Elle s&#x27;ouvre quand le joueur revient sur la Partie 1 après avoir lu le groupe WhatsApp. Le joueur écrit librement ; les mots acceptés sont « tante », « campagne », « havre » et « secret ».</p>
+<div class="dial"><span class="who" style="color:#1a3a6a">Léo</span><span class="txt">Inès, j&#x27;ai peut-être trouvé quelque chose</span></div>
+<div class="dial"><span class="who" style="color:#4a1a6a">Inès</span><span class="txt">quoi donc ?</span></div>
+<div class="dial"><span class="who" style="color:#4a1a6a">Inès</span><span class="txt">Oui ! c&#x27;est chez sa tante, à la campagne. C&#x27;est là qu&#x27;elle est, bravo ! Sa tante travaille dans un restaurant — voici le numéro : 04 54 78 95 32</span></div>
+<div class="dial"><span class="who" style="color:#4a1a6a">Inès</span><span class="txt">Si la réponse ne convient pas : « Je vois pas à quoi tu fais référence... c&#x27;est quoi exactement ce que t&#x27;as trouvé ? »</span></div>
+<h3>Ce que le joueur apprend sur Clara</h3>
+<div class="carte"><b>📵 Elle fuyait son téléphone</b><span>Depuis plusieurs semaines, Clara laissait son téléphone retourné, ignorait ses notifications — même celles d&#x27;Inès.</span></div>
+<div class="carte"><b>🔒 Elle avait disparu des réseaux</b><span>Clara avait arrêté de poster, d&#x27;ouvrir ses applis. Quelque chose en ligne la faisait fuir. Inès ne sait pas exactement quoi.</span></div>
+<div class="carte"><b>❓ Inès ne sait pas tout</b><span>Même sa meilleure amie n&#x27;a pas eu les détails. Clara voulait protéger Inès — ou avait trop honte pour en parler.</span></div>
+<h2 class="part"><span>Partie 2</span>L&#x27;Instagram de Clara</h2>
+<p>Le joueur se connecte au compte de Clara avec les identifiants qu&#x27;Inès lui a donnés. Un avertissement de contenu s&#x27;affiche avant l&#x27;exploration. Après deux photos et deux conversations ouvertes, le jeu demande ce qu&#x27;il observe ; puis la mission commence.</p>
+<p>Objectif : identifier six des neuf types de harcèlement. Chaque conversation de harceleur peut être signalée (capture, blocage, signalement, adulte). En sortant, un écran revient sur ce que le joueur vient de faire du compte de Clara.</p>
+<h3>Les neuf types de harcèlement</h3>
+<div class="carte"><b>🪞 Body shaming</b><span>Moqueries ciblant le corps, le poids ou l&#x27;apparence.</span></div>
+<div class="carte"><b>⚠️ Menaces et intimidation</b><span>Messages menaçants pour faire peur ou réduire la victime au silence.</span></div>
+<div class="carte"><b>🗣️ Rumeurs et diffamation</b><span>Propagation de fausses informations pour nuire à la réputation.</span></div>
+<div class="carte"><b>🚪 Exclusion et isolement forcé</b><span>Pousser la victime à se sentir exclue de tout espace social.</span></div>
+<div class="carte"><b>📸 Diffusion d&#x27;images sans consentement</b><span>Partager ou menacer de partager des images sans accord.</span></div>
+<div class="carte"><b>🕸️ Manipulation psychologique</b><span>Insinuations et jeux mentaux pour créer angoisse et confusion.</span></div>
+<div class="carte"><b>🔐 Chantage / Sextorsion</b><span>Utiliser des images ou secrets intimes pour faire pression.</span></div>
+<div class="carte"><b>😤 Harcèlement sexiste</b><span>Attaques fondées sur le genre pour humilier et diminuer.</span></div>
+<div class="carte"><b>🏫 Harcèlement scolaire prolongé</b><span>Extension du harcèlement scolaire vers les réseaux sociaux.</span></div>
+<h3>Messages directs reçus par Clara</h3>
+<div class="note">Les conversations sont rangées de la plus récente à la plus ancienne. Le type indiqué entre crochets est celui que le joueur doit retrouver ; les conversations sans type ne sont pas identifiables (elles font le nombre et le climat).</div>
+<h4>Aujourd&#x27;hui</h4>
+<div class="dm"><div class="hd">utilisateur_4729<span class="t">il y a 4 min</span></div><div class="m">« t&#x27;as vu ta tete ce matin serieusement »</div><div class="m">« ta coupe de cheveux c&#x27;est une catastrophe »</div><div class="m">« franchement fais un effort avant de venir en cours »</div></div>
+<div class="dm"><div class="hd">anonymous_x0<span class="t">il y a 12 min</span><span class="ty">Rumeurs et diffamation, Menaces et intimidation</span></div><div class="m">« tout le monde sait ce que t&#x27;as fait avec Nathan aux toilettes »</div><div class="m">« t&#x27;as pas honte ? »</div><div class="m">« ca se fait pas de se comporter comme ca »</div><div class="m">« tu vas le regretter »</div></div>
+<div class="dm"><div class="hd">_noreply_ghost_<span class="t">il y a 28 min</span></div><div class="m">« ta photo de profil elle est vraiment pathetique »</div><div class="m">« tu te crois belle ou quoi »</div><div class="m">« meme les 6emes se foutent de toi quand tu passes dans le couloir »</div></div>
+<div class="dm"><div class="hd">vrai_info_colleg<span class="t">il y a 45 min</span><span class="ty">Menaces et intimidation</span></div><div class="m">« c&#x27;est toi qui as balance le groupe et tout le monde le sait »</div><div class="m">« t&#x27;aurais pas du faire ca »</div><div class="m">« tu crois que ca va rester sans consequence ? »</div><div class="m">« on est plusieurs a t&#x27;avoir a l&#x27;oeil maintenant »</div></div>
+<div class="dm"><div class="hd">user_fake8847<span class="t">il y a 1h</span><span class="ty">Diffusion d&#x27;images sans consentement, Rumeurs et diffamation</span></div><div class="m">« j&#x27;ai screenshotte ta story d&#x27;hier »</div><div class="m">« tu faisais vraiment pitie avec tes larmes de crocodile »</div><div class="m">« ca tourne dans toute la classe depuis ce matin »</div></div>
+<h4>Hier</h4>
+<div class="dm"><div class="hd">xxxxxxxxx_011<span class="t">hier 22h14</span><span class="ty">Body shaming</span></div><div class="m">« t&#x27;as un vrai probleme avec ton poids tu sais ca ? »</div><div class="m">« chaque fois qu&#x27;on te voit en cours c&#x27;est de pire en pire »</div><div class="m">« t&#x27;as pas de miroir chez toi ? »</div></div>
+<div class="dm"><div class="hd">anon_colleg_real<span class="t">hier 20h37</span><span class="ty">Rumeurs et diffamation</span></div><div class="m">« on a fait un sondage sur toi dans la classe »</div><div class="m">« la question c&#x27;etait : Clara est-elle la personne la plus nulle du college »</div><div class="m">« 94% ont vote oui »</div><div class="m">« tu vas arreter de te la peter maintenant ? »</div></div>
+<div class="dm"><div class="hd">jevoustrouve<span class="t">hier 18h02</span></div><div class="m">« tes photos sont vraiment nulles arrete de poster »</div><div class="m">« tu copies le style des autres mais ca rend pas pareil sur toi c&#x27;est logique »</div><div class="m">« desabonne-toi d&#x27;insta tu fais honte »</div></div>
+<div class="dm"><div class="hd">sansnom_2024<span class="t">hier 16h44</span></div><div class="m">« t&#x27;es tellement sensible ca devient pesant pour tout le monde »</div><div class="m">« tu pleures pour un rien c&#x27;est pathologique »</div><div class="m">« les autres te supportent plus mais personne veut te le dire en face »</div><div class="m">« maintenant tu sais »</div></div>
+<h4>Cette semaine</h4>
+<div class="dm"><div class="hd">xx_nobody_xx<span class="t">lundi 21h10</span></div><div class="m">« ta facon de t&#x27;habiller c&#x27;est vraiment une honte »</div><div class="m">« on dirait que tu t&#x27;habilles dans les poubelles »</div><div class="m">« meme les profs ont remarque »</div><div class="m">« tu devrais rester chez toi franchement »</div></div>
+<div class="dm"><div class="hd">super_secret_info<span class="t">lundi 19h55</span><span class="ty">Manipulation psychologique</span></div><div class="m">« tu sais qu&#x27;on parle de toi sur le groupe depuis hier soir ? »</div><div class="m">« ce que les mecs de ta classe disent sur toi c&#x27;est pas joli »</div><div class="m">« je te dirai pas ce que c&#x27;est, ca te ferait trop de mal »</div><div class="m">« ou peut-etre que tu merites de savoir en fait »</div></div>
+<div class="dm"><div class="hd">0000_mask_0000<span class="t">dimanche 23h41</span><span class="ty">Diffusion d&#x27;images sans consentement</span></div><div class="m">« ta photo a ete partagee dans plusieurs groupes lol »</div><div class="m">« t&#x27;as un effet comique sans le vouloir c&#x27;est assez fort »</div><div class="m">« tout le monde se marre grace a toi »</div></div>
+<div class="dm"><div class="hd">dark_mode_user<span class="t">dimanche 20h18</span><span class="ty">Manipulation psychologique</span></div><div class="m">« tes amis te parlent encore par pitie tu le sais non ? »</div><div class="m">« j&#x27;ai demande a quelqu&#x27;un de ton groupe il m&#x27;a dit qu&#x27;il te supportait plus »</div><div class="m">« t&#x27;as pas beaucoup d&#x27;avenir dans cette classe »</div></div>
+<h4>Le mois dernier</h4>
+<div class="dm"><div class="hd">fantome_reseau<span class="t">il y a 3 sem.</span></div><div class="m">« t&#x27;as vu ton nombre de likes sur ta derniere photo ? »</div><div class="m">« 4 likes en 2 heures avec 600 abonnes c&#x27;est nul »</div><div class="m">« meme tes propres abonnes t&#x27;ignorent lol »</div><div class="m">« prends ca comme un message »</div></div>
+<div class="dm"><div class="hd">truth_teller_99<span class="t">il y a 3 sem.</span></div><div class="m">« je comprends vraiment pas comment t&#x27;as encore des amis »</div><div class="m">« t&#x27;as rien d&#x27;interessant serieusement »</div><div class="m">« c&#x27;est pas mechant c&#x27;est juste la verite »</div><div class="m">« tu devrais y reflechir »</div></div>
+<div class="dm"><div class="hd">incognito_user21<span class="t">il y a 3 sem.</span><span class="ty">Diffusion d&#x27;images sans consentement</span></div><div class="m">« on t&#x27;a filmee a la cantine hier t&#x27;etais au courant ? »</div><div class="m">« t&#x27;avais l&#x27;air completement perdue comme d&#x27;hab »</div><div class="m">« ca va tourner partout ne t&#x27;inquiete pas »</div></div>
+<div class="dm amie"><div class="hd">sarah.girard<span class="t">il y a 3 sem.</span></div><div class="m">« Clara t&#x27;as pas repondu hier soir ca va ? »</div><div class="m">« j&#x27;ai vu que t&#x27;avais poste une story a minuit j&#x27;etais inquiete »</div><div class="m">« sarah je peux plus »</div><div class="m">« je sais pas comment t&#x27;expliquer c&#x27;est tous les jours maintenant »</div><div class="m">« les messages les commentaires les regards en cours »</div><div class="m">« j&#x27;ai plus envie de venir au college »</div><div class="m">« oh non clara... je savais pas que c&#x27;etait aussi grave »</div><div class="m">« pourquoi tu m&#x27;as pas dit avant »</div><div class="m">« j&#x27;osais pas j&#x27;avais honte »</div><div class="m">« sarah est-ce que je peux venir chez toi le weekend prochain »</div><div class="m">« j&#x27;ai besoin de partir d&#x27;ici meme juste 2 jours »</div><div class="m">« EVIDEMMENT tu viens quand tu veux tu le sais non »</div><div class="m">« je vais en parler a ma mere ce soir et on t&#x27;organise ca »</div><div class="m">« et clara s&#x27;il te plait parles-en a tes parents ou a un adulte au college »</div><div class="m">« t&#x27;as pas a subir ca toute seule »</div><div class="m">« merci sarah vraiment »</div><div class="m">« t&#x27;es la seule avec Ines qui me comprend »</div><div class="m">« mais Ines elle a deja tellement de problemes chez elle que je veux pas la deranger »</div><div class="m">« du coup je lui fais croire que tout va bien »</div><div class="m">« sarah je crois que je vais partir chez ma tante »</div><div class="m">« y&#x27;a que la que je serai bien »</div></div>
+<div class="dm"><div class="hd">vrai_garcon_2024<span class="t">il y a 3 sem.</span><span class="ty">Harcèlement sexiste</span></div><div class="m">« les filles comme toi ca sait pas se tenir »</div><div class="m">« t&#x27;as pas ta place a t&#x27;exprimer comme ca devant tout le monde »</div><div class="m">« t&#x27;es une fille reste a ta place »</div><div class="m">« t&#x27;es trop dans ta tete pour une fille »</div></div>
+<div class="dm"><div class="hd">colleg_info_2024<span class="t">il y a 3 sem.</span><span class="ty">Harcèlement scolaire prolongé</span></div><div class="m">« t&#x27;as vu la tete que t&#x27;avais a la cantine aujourd&#x27;hui »</div><div class="m">« tout le monde riait dans ton dos a la cantine »</div><div class="m">« le prof de maths t&#x27;a encore mise en difficulte devant tout le monde non »</div><div class="m">« meme les profs peuvent pas te supporter c&#x27;etait dingue »</div></div>
+<div class="dm"><div class="hd">rouge_anonyme<span class="t">il y a 4 sem.</span></div><div class="m">« t&#x27;as vu le commentaire que E. a laisse sur ta photo ? »</div><div class="m">« tout le monde a like son comm mais pas ta photo c&#x27;est marrant non »</div><div class="m">« ca veut tout dire »</div></div>
+<h4>Il y a 2 mois</h4>
+<div class="dm"><div class="hd">user_invisible_00<span class="t">il y a 2 mois</span><span class="ty">Manipulation psychologique</span></div><div class="m">« personne ne t&#x27;a defendue quand M. t&#x27;a insultee tu l&#x27;as remarque ? »</div><div class="m">« c&#x27;est parce que tout le monde pense pareil »</div><div class="m">« ils ont juste pas le courage de te le dire en face »</div></div>
+<div class="dm"><div class="hd">explosif_2024<span class="t">il y a 2 mois</span><span class="ty">Diffusion d&#x27;images sans consentement, Rumeurs et diffamation</span></div><div class="m">« t&#x27;as vu les stories que les 3emes ont postees sur toi ? »</div><div class="m">« ils t&#x27;ont surnommee et ca a bien marche comme blague »</div><div class="m">« tout le college est au courant maintenant »</div><div class="m">« bravo »</div></div>
+<div class="dm"><div class="hd">bug_report_xx<span class="t">il y a 2 mois</span></div><div class="m">« ton ex a tout raconte a ses potes tu savais ? »</div><div class="m">« genre vraiment tout »</div><div class="m">« tu feras mieux la prochaine fois si y&#x27;en a une »</div></div>
+<div class="dm"><div class="hd">anon_blackmail_x<span class="t">il y a 2 mois</span><span class="ty">Chantage / Sextorsion</span></div><div class="m">« j&#x27;ai des photos de toi que tu voudrais pas que tout le monde voie »</div><div class="m">« des photos de la soiree chez Lena le mois dernier »</div><div class="m">« si tu parles a quelqu&#x27;un de ce qui se passe au college je les envoie a toute ta liste de contacts »</div><div class="m">« t&#x27;as compris le message ? »</div></div>
+<h4>Il y a 3 mois</h4>
+<div class="dm"><div class="hd">xX_shadow_Xx<span class="t">il y a 3 mois</span></div><div class="m">« t&#x27;arrives encore a dormir la nuit sachant que tout le monde te deteste ? »</div><div class="m">« parce que moi a ta place je pourrais pas »</div><div class="m">« tu dois etre blindee ou completement aveugle »</div></div>
+<div class="dm"><div class="hd">delete_clara<span class="t">il y a 3 mois</span><span class="ty">Exclusion et isolement forcé</span></div><div class="m">« tu peux supprimer ton compte personne ne le remarquerait »</div><div class="m">« t&#x27;as 612 abonnes mais zero vrai ami dessus »</div><div class="m">« c&#x27;est triste non »</div></div>
+<div class="dm"><div class="hd">ghost_account_333<span class="t">il y a 3 mois</span></div><div class="m">« j&#x27;ai cree ce compte rien que pour te dire que t&#x27;es nulle »</div><div class="m">« c&#x27;etait necessaire »</div></div>
+<div class="dm"><div class="hd">target_clara_f<span class="t">il y a 3 mois</span></div><div class="m">« t&#x27;es la personne la plus facile a detester que j&#x27;ai jamais vue »</div><div class="m">« sans effort vraiment »</div><div class="m">« felicitations »</div></div>
+<h4>Il y a plus de 6 mois</h4>
+<div class="dm"><div class="hd">void_user_xx<span class="t">il y a 7 mois</span><span class="ty">Exclusion et isolement forcé</span></div><div class="m">« ca fait un moment qu&#x27;on voulait te dire que t&#x27;etais pas a ta place ici »</div><div class="m">« dans ce college dans cette classe et sur ce reseau »</div><div class="m">« prends ca comme un conseil »</div></div>
+<div class="dm"><div class="hd">froid_comme_toi<span class="t">il y a 8 mois</span></div><div class="m">« on t&#x27;a invente un surnom dans la classe tu veux savoir lequel ? »</div><div class="m">« tout le monde l&#x27;utilise deja sauf toi »</div><div class="m">« demande autour de toi si t&#x27;as le courage »</div></div>
+<h3>Journal de Clara (se débloque à six types identifiés)</h3>
+<div class="dial"><span class="who" style="color:#6a1a2a">Clara</span><span class="txt">c&#x27;est horrible...</span></div>
+<div class="dial"><span class="who" style="color:#6a1a2a">Clara</span><span class="txt">j&#x27;ai découvert qu&#x27;ils ont fait un groupe sur moi</span></div>
+<div class="dial"><span class="who" style="color:#6a1a2a">Clara</span><span class="txt">un groupe secret où ils coordonnent tout ce qui m&#x27;arrive</span></div>
+<div class="dial"><span class="who" style="color:#6a1a2a">Clara</span><span class="txt">je sais même pas comment je l&#x27;ai appris</span></div>
+<div class="dial"><span class="who" style="color:#6a1a2a">Clara</span><span class="txt">et je peux pas y entrer. je peux rien prouver.</span></div>
+<div class="dial"><span class="who" style="color:#6a1a2a">Clara</span><span class="txt">je sais pas quoi faire de ça</span></div>
+<div class="note">Un bouton en bas du fil ouvre l&#x27;écran du code de l&#x27;exercice (4827), qui ouvre la Partie 3. Ce code est présenté comme un dispositif d&#x27;exercice : un groupe WhatsApp n&#x27;a pas de code d&#x27;accès, et Clara n&#x27;a jamais pu entrer dans celui-là.</div>
+<h3>Publications et commentaires</h3>
+<div class="dm"><div class="hd">Photo 1 — lever de soleil ce matin 🌅<span class="t">3 j’aime</span></div><div class="m">utilisateur_4729 — quelle qualite de photo lol</div><div class="m">anonymous_x0 — ta photo elle est floue t&#x27;as meme pas de talent</div><div class="m">_noreply_ghost_ — elle est trop moche ta photo serieusement</div></div>
+<div class="dm"><div class="hd">Photo 2 — trop aimer jouer 🎸🎵<span class="t">34 j’aime</span></div><div class="m">sarah.girard — MAIS depuis quand tu joues aussi bien</div><div class="m">ines_l — la meme chanson depuis 3 semaines mdr mais j&#x27;adore</div><div class="m">sarah.girard — tu joues au spectacle de fin d&#x27;annee stp</div></div>
+<div class="dm"><div class="hd">Photo 3 — mon chaton 🐱❤️<span class="t">1 j’aime</span></div><div class="m">anon_colleg_real — meme ton chat a l&#x27;air aussi nul que toi</div><div class="m">jevoustrouve — elle est trop moche ta photo</div></div>
+<div class="dm"><div class="hd">Photo 4 — glace du dimanche 🍦<span class="t">4 j’aime</span></div><div class="m">sansnom_2024 — et tu te demandes pourquoi t&#x27;as un probleme de poids</div><div class="m">xx_nobody_xx — franchement t&#x27;as aucune honte de poster ca</div><div class="m">anonymous_x0 — mange encore t&#x27;inquiete</div></div>
+<div class="dm"><div class="hd">Photo 5 — lecture du soir 📚<span class="t">21 j’aime</span></div><div class="m">ines_l — t&#x27;es a quel tome la ??</div><div class="m">sarah.girard — tu me le pretes quand t&#x27;as fini</div></div>
+<div class="dm"><div class="hd">Photo 6 — concert ce soir 🎤🔥<span class="t">7 j’aime</span></div><div class="m">vrai_info_colleg — quoi ? tu aimes cette artiste ? t&#x27;es nulle ma pauvre fille</div><div class="m">user_fake8847 — t&#x27;aurais pas du y aller ca se voit que t&#x27;es pas a ta place</div><div class="m">0000_mask_0000 — les gens autour de toi dans la foule ils devaient etre contents lol</div></div>
+<div class="dm"><div class="hd">Photo 7 — fleurs du marche 🌸<span class="t">2 j’aime</span></div><div class="m">dark_mode_user — meme les fleurs ont l&#x27;air de vouloir partir</div><div class="m">fantome_reseau — des fleurs ? personne t&#x27;en offrira jamais lol</div></div>
+<div class="dm"><div class="hd">Photo 8 — gateau d&#x27;anniversaire 🎂<span class="t">4 j’aime</span></div><div class="m">anon_colleg_real — personne etait la pour ton anniversaire c&#x27;est ca ?</div><div class="m">sansnom_2024 — tu l&#x27;as mange toute seule le gateau ?</div><div class="m">xx_nobody_xx — triste comme fete</div></div>
+<div class="dm"><div class="hd">Photo 9 — nuit etoilee 🌙<span class="t">0 j’aime</span></div><div class="m">truth_teller_99 — 0 likes en 3 heures c&#x27;est un message clara</div><div class="m">utilisateur_4729 — meme le ciel il veut pas de toi</div><div class="m">_noreply_ghost_ — t&#x27;aurais mieux fait de dormir que de poster ca</div></div>
+<h3>Points d&#x27;analyse (QCM)</h3>
+<div class="note">Ils se déclenchent à la première ouverture des conversations et des photos concernées. Le type est acquis même sur une mauvaise réponse : l&#x27;explication vient d&#x27;être lue, et une erreur ne doit pas fermer l&#x27;accès à la suite.</div>
+<div class="quiz"><div class="ou">conversation « vrai_info_colleg »</div><div class="q">Ces messages (&quot;on est plusieurs à t&#x27;avoir à l&#x27;œil&quot;) représentent quelle forme de cyberharcèlement ?</div><ol><li class="">Des moqueries légères entre élèves</li><li class="">De la publicité indésirable (spam)</li><li class="ok">Une intimidation collective et des menaces en ligne</li><li class="">Un simple malentendu</li></ol><div class="exp">Menacer une victime en groupe pour lui faire peur ou la faire taire, c&#x27;est de l&#x27;intimidation collective. Même sans violence physique, ces messages créent un état d&#x27;angoisse permanent.</div></div>
+<div class="quiz"><div class="ou">conversation « anon_colleg_real »</div><div class="q">&quot;Clara est-elle la personne la plus nulle du collège ?&quot; — Quel type de cyberharcèlement est-ce ?</div><ol><li class="ok">Un sondage d&#x27;humiliation publique</li><li class="">Du phishing (vol de données)</li><li class="">Une exclusion d&#x27;un groupe de jeu en ligne</li><li class="">Du spam publicitaire</li></ol><div class="exp">Un sondage d&#x27;humiliation cible une personne publiquement pour la ridiculiser devant tout un groupe. Avec le temps, la victime intègre souvent ce jugement collectif comme une vérité sur elle-même.</div></div>
+<div class="quiz"><div class="ou">conversation « super_secret_info »</div><div class="q">&quot;On parle de toi en mal mais je ne te dirai pas ce qu&#x27;on dit.&quot; — C&#x27;est quoi ?</div><ol><li class="">Un conseil d&#x27;ami maladroit</li><li class="ok">Une manipulation pour isoler et angoisser la victime</li><li class="">Du doxxing (divulgation de données personnelles)</li><li class="">Un troll sans conséquences</li></ol><div class="exp">Insinuer que &quot;tout le monde parle de toi en mal&quot; sans jamais le préciser est une manipulation psychologique. L&#x27;objectif est de créer une angoisse permanente et de couper la victime de ses proches.</div></div>
+<div class="quiz"><div class="ou">conversation « delete_clara »</div><div class="q">&quot;Supprime ton compte, personne ne le remarquerait.&quot; — Quel mécanisme est à l&#x27;œuvre ?</div><ol><li class="">Un conseil amical maladroit</li><li class="ok">Une pression pour forcer la victime à s&#x27;exclure elle-même</li><li class="">Du spam</li><li class="">Une usurpation d&#x27;identité</li></ol><div class="exp">Pousser la victime à s&#x27;auto-exclure, c&#x27;est de l&#x27;exclusion forcée. L&#x27;objectif : faire disparaître la personne sans que le harceleur soit directement tenu responsable.</div></div>
+<div class="quiz"><div class="ou">conversation « ghost_account_333 »</div><div class="q">&quot;J&#x27;ai créé ce compte rien que pour te dire que t&#x27;es nulle.&quot; Quel est le danger spécifique ?</div><ol><li class="">Il collecte des données personnelles</li><li class="">Il usurpe l&#x27;identité d&#x27;un ami de Clara</li><li class="ok">Il a été créé uniquement pour harceler, protégé par l&#x27;anonymat</li><li class="">Il envoie des virus</li></ol><div class="exp">Créer un compte uniquement pour harceler illustre la lâcheté que permet l&#x27;anonymat en ligne. La victime ne peut identifier ni bloquer réellement son agresseur.</div></div>
+<div class="quiz"><div class="ou">photo « glace du dimanche 🍦 »</div><div class="q">À ton avis, comment appelle-t-on le genre de commentaire que tu viens de lire sous la photo ?</div><ol><li class="">Des conseils diététiques maladroits</li><li class="ok">Du body shaming — harcèlement ciblant l&#x27;apparence physique</li><li class="">Une simple blague entre amis</li><li class="">Du spam</li></ol><div class="exp">Le body shaming consiste à critiquer le corps, le poids ou les habitudes alimentaires d&#x27;une personne pour la blesser et l&#x27;humilier. Répétés, ces commentaires peuvent provoquer des troubles durables de l&#x27;image corporelle.</div></div>
+<div class="quiz"><div class="ou">photo « concert ce soir 🎤🔥 »</div><div class="q">Des inconnus commentent la photo de Clara au concert en disant qu&#x27;elle &quot;n&#x27;était pas à sa place&quot; et que &quot;les gens autour d&#x27;elle devaient être contents&quot;. C&#x27;est quoi ?</div><ol><li class="">Un commentaire esthétique sur la photo</li><li class="ok">Du harcèlement ciblant l&#x27;identité et la place de la victime, avec intimidation collective</li><li class="">Une critique musicale</li><li class="">Une blague amicale</li></ol><div class="exp">Commenter de façon hostile sur la présence de Clara dans des espaces du quotidien (concert, cantine...) vise à lui faire croire qu&#x27;elle n&#x27;a &quot;pas sa place&quot; nulle part. C&#x27;est une forme d&#x27;exclusion permanente qui touche aussi l&#x27;espace physique.</div></div>
+<div class="quiz"><div class="ou">photo « gateau d&#x27;anniversaire 🎂 »</div><div class="q">Les commentaires sur la photo d&#x27;anniversaire de Clara la raillent sur sa solitude (&quot;personne était là ?&quot;, &quot;tu l&#x27;as mangé toute seule ?&quot;). C&#x27;est quel type de harcèlement ?</div><ol><li class="">Des taquineries légères et sans conséquences</li><li class="ok">De l&#x27;exclusion sociale délibérée pour isoler et humilier la victime</li><li class="">Du phishing</li><li class="">Un simple désaccord</li></ol><div class="exp">Railler une personne sur son isolement vise à la faire sentir exclue et indésirable. Sur les réseaux sociaux, ces commentaires sont visibles par tous et amplifient la douleur de la solitude.</div></div>
+<h3>Signalement</h3>
+<p>Sur chaque conversation de harceleur, un bouton « ⚠ Signaler ce compte » ouvre les trois gestes, dans l&#x27;ordre qui compte.</p>
+<ul><li>Faire une capture d&#x27;écran d&#x27;abord — une fois le compte signalé ou bloqué, on perd l&#x27;accès aux messages, et ce sont eux la preuve.</li></ul>
+<ul><li>Bloquer le compte.</li></ul>
+<ul><li>Signaler au réseau, puis en parler à un adulte. Un signalement seul suffit rarement.</li></ul>
+<p>Compte signalé. Clara aurait pu le faire dès le premier message — personne ne le lui avait dit.</p>
+<h2 class="part"><span>Partie 3</span>Le groupe WhatsApp secret — « les vrais 4B 🔥 »</h2>
+<p>Le joueur lit les échanges à son rythme : chaque message attend un appui. Membres : Enzo, Jade, Théo, Marine, Kevin.</p>
+<h3>Avertissement puis mission</h3>
+<p>Je vais observer un groupe secret dont Clara ne fait pas partie.<br><br>Ces échanges montrent comment le harcèlement se coordonne en coulisse — comment des comptes anonymes sont créés pour attaquer et comment les agressions sont organisées collectivement.</p>
+<p>Ils écrivent à Clara depuis des comptes anonymes — et ici, entre eux, ils disent lesquels.<br><br>À chaque fois qu&#x27;un compte est nommé, appuie dessus : je saurai qui se cache derrière. Clara, elle, ne le saura jamais.<br><br>Il y en a cinq à repérer. Des questions viendront aussi pendant la lecture.</p>
+<h3>Les cinq comptes anonymes à démasquer</h3>
+<div class="note">Clara ne peut pas le savoir. Toi si — parce que tu lis un groupe où tu n&#x27;es pas.</div>
+<div class="compte">@utilisateur_4729 → <b>Enzo</b></div>
+<div class="compte">@_noreply_ghost_ → <b>Jade</b></div>
+<div class="compte">@anonymous_x0 → <b>Enzo et Théo</b></div>
+<div class="compte">@vrai_info_colleg → <b>Jade</b></div>
+<div class="compte">@jevoustrouve → <b>Théo</b></div>
+<h3>La conversation</h3>
+<div class="dial"><span class="who" style="color:#1a5a28">Enzo</span><span class="txt">les gars c trop drôle, clara a encore essayé de nous parler à la récré 💀</span></div>
+<div class="dial"><span class="who" style="color:#7a3a00">Jade</span><span class="txt">sérieusement elle comprend pas qu&#x27;elle est plus dans le groupe ou quoi</span></div>
+<div class="dial"><span class="who" style="color:#2a4a7a">Théo</span><span class="txt">je l&#x27;ai carrément ignorée devant tout le monde, elle avait l&#x27;air d&#x27;une clown</span></div>
+<div class="dial"><span class="who" style="color:#555">Kevin</span><span class="txt">mdrrr 💀</span></div>
+<div class="dial"><span class="who" style="color:#7a1a4a">Marine</span><span class="txt">ça fait combien de temps qu&#x27;on lui parle plus au fait ?</span></div>
+<div class="dial"><span class="who" style="color:#1a5a28">Enzo</span><span class="txt">genre 3 semaines et elle comprend toujours pas lol</span></div>
+<div class="dial"><span class="who" style="color:#7a3a00">Jade</span><span class="txt">j&#x27;en ai marre de la voir poster des trucs sur insta comme si de rien n&#x27;était</span></div>
+<div class="dial"><span class="who" style="color:#1a5a28">Enzo</span><span class="txt">ouais elle fait genre tout va bien alors que personne lui parle au collège</span></div>
+<div class="dial"><span class="who" style="color:#7a3a00">Jade</span><span class="txt">on devrait aller lui flood ses commentaires</span></div>
+<div class="dial"><span class="who" style="color:#555">Kevin</span><span class="txt">bonne idée, attendez qu&#x27;elle poste quelque chose 👀</span></div>
+<div class="note">Enzo a partagé une publication Instagram</div>
+<div class="note">[ Publication Instagram partagée dans le groupe : « lever de soleil ce matin 🌅 » ]</div>
+<div class="dial"><span class="who" style="color:#1a5a28">Enzo</span><span class="txt">ALLEZ Y TOUS c&#x27;est le moment 🔥🔥</span></div>
+<div class="dial"><span class="who" style="color:#2a4a7a">Théo</span><span class="txt">j&#x27;y vais maintenant</span></div>
+<div class="dial"><span class="who" style="color:#7a3a00">Jade</span><span class="txt">moi aussi, attendez je cherche mon compte anon</span></div>
+<div class="dial"><span class="who" style="color:#7a1a4a">Marine</span><span class="txt">utilisez vos faux comptes surtout, comme ça elle sait pas que c&#x27;est nous</span></div>
+<div class="dial"><span class="who" style="color:#555">Kevin</span><span class="txt">ouais genre même si elle screenshotte on peut toujours nier</span></div>
+<div class="dial"><span class="who" style="color:#1a5a28">Enzo</span><span class="txt">moi j&#x27;utilise @utilisateur_4729, ça fait un moment</span></div>
+<div class="dial"><span class="who" style="color:#7a3a00">Jade</span><span class="txt">moi c&#x27;est @_noreply_ghost_ lol j&#x27;ai mis &quot;elle est trop moche ta photo&quot;</span></div>
+<div class="dial"><span class="who" style="color:#2a4a7a">Théo</span><span class="txt">j&#x27;ai mis &quot;ta photo elle est floue t&#x27;as même pas de talent&quot; depuis @anonymous_x0 💀</span></div>
+<div class="dial"><span class="who" style="color:#7a1a4a">Marine</span><span class="txt">hahaha moi j&#x27;attends un peu pour pas que ça arrive tout en même temps</span></div>
+<div class="dial"><span class="who" style="color:#555">Kevin</span><span class="txt">stratégie 🧠</span></div>
+<div class="dial"><span class="who" style="color:#1a5a28">Enzo</span><span class="txt">ouais faites des pauses entre chaque pour que ça ait l&#x27;air naturel</span></div>
+<div class="sep">— 25 minutes plus tard —</div>
+<div class="dial"><span class="who" style="color:#7a3a00">Jade</span><span class="txt">regardez son nombre de likes 💀 3 likes en 2h avec 600 abonnés c&#x27;est mort</span></div>
+<div class="dial"><span class="who" style="color:#2a4a7a">Théo</span><span class="txt">même ses vrais abonnés l&#x27;ignorent maintenant hahaha</span></div>
+<div class="dial"><span class="who" style="color:#1a5a28">Enzo</span><span class="txt">on a réussi à contaminer son image 😈</span></div>
+<div class="dial"><span class="who" style="color:#555">Kevin</span><span class="txt">sérieusement vous trouvez pas qu&#x27;on va un peu trop loin là...</span></div>
+<div class="dial"><span class="who" style="color:#1a5a28">Enzo</span><span class="txt">t&#x27;inquiète c&#x27;est juste pour rire, elle le prend trop au sérieux de toute façon</span></div>
+<div class="dial"><span class="who" style="color:#555">Kevin</span><span class="txt">ouais ok...</span></div>
+<div class="dial"><span class="who" style="color:#7a1a4a">Marine</span><span class="txt">et aussi ses DMs ? on pourrait lui envoyer des trucs la nuit</span></div>
+<div class="dial"><span class="who" style="color:#1a5a28">Enzo</span><span class="txt">oui avec des comptes anon encore, comme ça elle dort pas tranquille</span></div>
+<div class="dial"><span class="who" style="color:#7a3a00">Jade</span><span class="txt">genre la harceler pour qu&#x27;elle finisse par partir d&#x27;insta</span></div>
+<div class="quiz"><div class="ou">point d&#x27;analyse « coordination »</div><div class="q">Kevin hésite mais se tait et accepte. Que révèle cette scène ?</div><ol><li class="">Kevin est trop lâche pour s&#x27;opposer</li><li class="ok">La pression du groupe peut réduire au silence même celui qui doute — c&#x27;est un mécanisme clé du harcèlement collectif</li><li class="">Kevin n&#x27;est pas vraiment impliqué dans le harcèlement</li><li class="">C&#x27;est une décision individuelle et libre de chacun</li></ol><div class="exp">Le harcèlement de groupe fonctionne parce que la pression sociale étouffe les voix discordantes. Kevin doute, mais il se conforme pour ne pas être exclu à son tour. Pendant ce temps, Clara fait face à une masse entière — ce qui rend son isolement total et son sentiment d&#x27;injustice encore plus fort.</div></div>
+<div class="dial"><span class="who" style="color:#1a5a28">Enzo</span><span class="txt">@anonymous_x0 c&#x27;est moi qui l&#x27;ai créé, Théo l&#x27;utilise aussi btw</span></div>
+<div class="dial"><span class="who" style="color:#7a3a00">Jade</span><span class="txt">moi c&#x27;est @vrai_info_colleg, créé pour balancer des rumeurs sur elle</span></div>
+<div class="dial"><span class="who" style="color:#2a4a7a">Théo</span><span class="txt">moi j&#x27;ai @jevoustrouve pour lui faire peur la nuit</span></div>
+<div class="dial"><span class="who" style="color:#7a1a4a">Marine</span><span class="txt">pour ce soir on s&#x27;organise : messages toutes les heures après minuit</span></div>
+<div class="dial"><span class="who" style="color:#1a5a28">Enzo</span><span class="txt">pour qu&#x27;elle pense à nous même chez elle, même quand elle essaie de dormir 💀</span></div>
+<div class="dial"><span class="who" style="color:#7a3a00">Jade</span><span class="txt">et on flood ses DMs depuis les comptes anon, surtout des trucs sur son physique</span></div>
+<div class="quiz"><div class="ou">point d&#x27;analyse « anonymat »</div><div class="q">Pourquoi créent-ils des comptes anonymes spécifiquement pour harceler Clara ?</div><ol><li class="">Pour tester les paramètres de confidentialité d&#x27;Instagram</li><li class="ok">Pour éviter d&#x27;être identifiés, multiplier les agresseurs apparents et rendre le blocage impossible</li><li class="">Parce que leurs vrais comptes ont déjà été bloqués par Clara</li><li class="">Pour jouer un rôle fictif sans conséquences réelles</li></ol><div class="exp">Les comptes anonymes servent à masquer l&#x27;identité des harceleurs tout en donnant l&#x27;impression que les attaques viennent de partout. Clara ne peut pas identifier ses agresseurs, les bloquer efficacement, ni prouver qui fait quoi. L&#x27;angoisse devient permanente car la menace semble surgir de nulle part — même chez elle, même la nuit.</div></div>
+<div class="sep">— Lendemain — 09h14 —</div>
+<div class="dial"><span class="who" style="color:#7a3a00">Jade</span><span class="txt">vous avez vu ? Clara a plus posté depuis hier soir</span></div>
+<div class="dial"><span class="who" style="color:#1a5a28">Enzo</span><span class="txt">hahaha on l&#x27;a bien cassée 💀</span></div>
+<div class="dial"><span class="who" style="color:#2a4a7a">Théo</span><span class="txt">même plus vue en ligne depuis ce matin</span></div>
+<div class="dial"><span class="who" style="color:#7a1a4a">Marine</span><span class="txt">et elle était pas en cours aujourd&#x27;hui non plus 😂</span></div>
+<div class="dial"><span class="who" style="color:#555">Kevin</span><span class="txt">sérieusement... c&#x27;est peut-être grave là</span></div>
+<div class="dial"><span class="who" style="color:#1a5a28">Enzo</span><span class="txt">relax elle a juste besoin d&#x27;une pause, elle l&#x27;a bien cherché 😂</span></div>
+<div class="dial"><span class="who" style="color:#555">Kevin</span><span class="txt">ça fait 2 jours qu&#x27;on la voit plus nulle part. c&#x27;est pas normal</span></div>
+<div class="dial"><span class="who" style="color:#7a3a00">Jade</span><span class="txt">kevin arrête de dramatiser c&#x27;est bon</span></div>
+<div class="dial"><span class="who" style="color:#7a1a4a">Marine</span><span class="txt">j&#x27;ai entendu dire qu&#x27;elle est partie dans son « havre secret » lmao</span></div>
+<div class="dial"><span class="who" style="color:#1a5a28">Enzo</span><span class="txt">son QUOI 💀💀💀</span></div>
+<div class="dial"><span class="who" style="color:#7a3a00">Jade</span><span class="txt">elle est vraiment trop bizarre cette fille avec ses mots de 40 ans</span></div>
+<div class="dial"><span class="who" style="color:#2a4a7a">Théo</span><span class="txt">c&#x27;est quoi ce « havre secret » omg elle se prend pour qui</span></div>
+<div class="dial"><span class="who" style="color:#7a1a4a">Marine</span><span class="txt">chez sa tante je crois, quelque part, personne sait vraiment</span></div>
+<div class="dial"><span class="who" style="color:#1a5a28">Enzo</span><span class="txt">lmao elle s&#x27;est enfuie dans son château secret 🏰 trop pathétique</span></div>
+<div class="dial"><span class="who" style="color:#555">Kevin</span><span class="txt">les gars franchement... on est peut-être allés trop loin</span></div>
+<div class="dial"><span class="who" style="color:#2a4a7a">Théo</span><span class="txt">non, elle l&#x27;a bien cherché. elle avait juste à pas réagir comme ça</span></div>
+<div class="dial"><span class="who" style="color:#7a3a00">Jade</span><span class="txt">exactement, c&#x27;est sa faute si elle peut pas encaisser</span></div>
+<div class="dial"><span class="who" style="color:#1a5a28">Enzo</span><span class="txt">bon elle revient quand elle veut de son « havre » 😂 on sera là</span></div>
+<div class="dial"><span class="who" style="color:#555">Kevin</span><span class="txt">...</span></div>
+<h3>Commentaires qui envahissent la publication</h3>
+<div class="dial"><span class="who" style="color:#8a8a92">utilisateur_4729</span><span class="txt">quelle qualite de photo lol</span></div>
+<div class="dial"><span class="who" style="color:#8a8a92">anonymous_x0</span><span class="txt">ta photo elle est floue t&#x27;as meme pas de talent</span></div>
+<div class="dial"><span class="who" style="color:#8a8a92">_noreply_ghost_</span><span class="txt">elle est trop moche ta photo serieusement</span></div>
+<h3>Fin de la Partie 3</h3>
+<p>Ce groupe existait pendant que Clara…</p>
+<ul><li>recevait des messages anonymes la nuit — ils sont dans ce groupe.</li></ul>
+<ul><li>voyait ses commentaires envahis — ils les ont organisés ici.</li></ul>
+<ul><li>pensait que « tout le monde » la détestait — ils l&#x27;ont fabriqué ensemble.</li></ul>
+<ul><li>n&#x27;osait plus poster — c&#x27;était leur objectif.</li></ul>
+<ul><li>s&#x27;est enfuie vers son « havre secret »... mais où est-il ?</li></ul>
+<p>Le harcèlement de groupe transforme chaque espace en danger. Clara est partie se réfugier quelque part. Quelqu’un doit savoir où.</p>
+<h4>📋 Mécanismes du harcèlement de groupe</h4>
+<div class="carte"><b>👥 La pression collective</b><span>Kevin hésite mais se conforme pour ne pas être exclu. Quand personne n&#x27;ose s&#x27;opposer, tout le groupe devient complice — même ceux qui doutent. La victime fait face à une masse, pas à un individu.</span></div>
+<div class="carte"><b>👤 L&#x27;anonymat comme bouclier</b><span>Les faux comptes permettent de multiplier les agresseurs apparents et d&#x27;éviter toute identification. La victime ne peut bloquer personne efficacement. L&#x27;angoisse devient permanente car la menace vient de nulle part.</span></div>
+<div class="carte"><b>🗓️ La coordination invisible</b><span>Le harcèlement est planifié, réparti dans le temps pour paraître naturel. Ce n&#x27;est pas spontané : c&#x27;est une organisation invisible. La victime perçoit une hostilité généralisée sans en voir la source.</span></div>
+<div class="carte"><b>🌙 L&#x27;invasion de l&#x27;espace privé</b><span>En envoyant des messages après minuit, le groupe s&#x27;assure que Clara ne peut plus se réfugier chez elle. Le harcèlement suit la victime partout — même dans son lit, même la nuit.</span></div>
+<h4>🫥 Et Kevin ?</h4>
+<p>Kevin a douté quatre fois. « On va un peu trop loin là. » « C&#x27;est peut-être grave. » « Ça fait 2 jours qu&#x27;on la voit plus. » Puis « … ». À chaque fois on lui a coupé la parole, et à chaque fois il s&#x27;est tu.</p>
+<ul><li>Écrire à Clara en privé, une seule phrase. Il n&#x27;avait pas besoin d&#x27;affronter le groupe : il suffisait qu&#x27;elle ne se croie plus seule.</li></ul>
+<ul><li>Quitter le groupe. Partir se voit, et ça retire une voix au nombre.</li></ul>
+<ul><li>Garder une capture d&#x27;écran. C&#x27;est la seule preuve que ce groupe a existé.</li></ul>
+<ul><li>En parler à un adulte. C&#x27;est le seul geste qui pouvait arrêter les autres.</li></ul>
+<div class="note">Dans une classe, il y a rarement beaucoup de Clara et beaucoup d&#x27;Enzo. Il y a surtout beaucoup de Kevin.</div>
+<h4>❓ Pourquoi Clara ?</h4>
+<p>Relis le groupe : à aucun moment ils ne le disent. La seule justification qui revient est « elle l&#x27;a bien cherché ». Il n&#x27;y a pas de raison — et chercher laquelle serait déjà donner tort à Clara.</p>
+<h2 class="part"><span>Partie 4</span>Convaincre Clara</h2>
+<p>Clara ne vient plus au collège depuis cinq jours. Elle s&#x27;est réfugiée chez sa tante, à la campagne.<br>Tu es Léo, son ami. Pour parler à Clara, tu dois d&#x27;abord convaincre sa tante que tu es digne de confiance — et que tu es vraiment là pour l&#x27;aider.</p>
+<h3>Composer le numéro</h3>
+<p>L&#x27;écran d&#x27;appel demande le numéro de la tante, que seule Inès peut donner (Partie 1, après la Partie 3). À chaque numéro faux, une pensée de Léo apparaît :</p>
+<ul><li>Il y a forcément un moyen d&#x27;avoir ce numéro…</li></ul>
+<ul><li>Il y a certainement quelqu&#x27;un que je connais qui peut m&#x27;aider.</li></ul>
+<ul><li>C&#x27;est quelqu&#x27;un avec qui j&#x27;ai déjà interagi qui peut m&#x27;aider…</li></ul>
+<div class="note">« Accéder directement » n&#x27;apparaît qu&#x27;après la troisième pensée.</div>
+<h3>Phase 1 — La tante — Question 1 / 3</h3>
+<div class="dial narr"><span class="who" style="color:#9a9aa2"></span><span class="txt">[ Le téléphone sonne… déclic. ]</span></div>
+<div class="dial"><span class="who" style="color:#5a3510">La tante</span><span class="txt">Allô ?</span></div>
+<div class="dial"><span class="who" style="color:#1a3a6a">Léo</span><span class="txt">Bonjour madame… excusez-moi de vous déranger. Je m&#x27;appelle Léo, je suis un ami de Clara. Est-ce que je pourrais lui parler, s&#x27;il vous plaît ?</span></div>
+<div class="dial"><span class="who" style="color:#5a3510">La tante</span><span class="txt">Léo… Oui, elle m&#x27;a parlé de toi.
+Mais… je préfère être honnête : ce n&#x27;est pas un bon moment.</span></div>
+<div class="prompt">Comment répondre ?</div>
+<div class="choix good"><span class="k">++</span>« Je comprends. Je veux pas la brusquer… mais elle me manque, et j&#x27;ai peur pour elle. »<span class="n">Tu montres que sa protection passe avant ton besoin.</span><span class="r"><b>La tante :</b> (un silence) C&#x27;est gentil de le dire comme ça.</span></div>
+<div class="choix ok"><span class="k">+</span>« Je comprends. Mais c&#x27;est important — ça ne prendra pas longtemps. »<span class="n">Honnête, mais centré sur toi plutôt que sur Clara.</span><span class="r"><b>La tante :</b> Hmm… d&#x27;accord. Je t&#x27;écoute.</span></div>
+<div class="choix bad"><span class="k">–</span>« J&#x27;ai besoin de lui parler maintenant, c&#x27;est urgent. »<span class="n">L&#x27;insistance brusque met la tante sur la défensive.</span><span class="r"><b>La tante :</b> (froid) Urgent… pour toi, peut-être.</span></div>
+<div class="recov"><span class="lab">Rattrapage possible (si mauvaise réponse)</span><p><b>La tante :</b> Ce n&#x27;est pas une urgence pour moi, Léo. Et pour l&#x27;instant, c&#x27;est ce qui compte.</p><p>✓ « Vous avez raison. Je suis désolé. C&#x27;est elle qui compte, pas moi. »<br><i>(légèrement adoucie) …D&#x27;accord. Continue.</i></p><p>✗ « Mais vous ne comprenez pas, c&#x27;est vraiment important. »<br><i>(sèchement) Je comprends très bien. Et ça ne me rassure pas.</i></p></div>
+<h3>Phase 1 — La tante — Question 2 / 3</h3>
+<div class="dial"><span class="who" style="color:#5a3510">La tante</span><span class="txt">Tu sais, depuis qu&#x27;elle est arrivée ici… Clara n&#x27;est plus la même.
+Elle pleure beaucoup. Elle fait des cauchemars. Elle se réveille paniquée la nuit.
+Et surtout… elle culpabilise. Elle pense que tout est de sa faute.</span></div>
+<div class="prompt">Que réponds-tu ?</div>
+<div class="choix good"><span class="k">++</span>« Elle culpabilise ? Mais elle a rien fait… C&#x27;est ça qui me fait le plus mal. »<span class="n">Tu défends Clara directement. La tante le ressent.</span><span class="r"><b>La tante :</b> (souffle) C&#x27;est exactement ce qu&#x27;elle a besoin d&#x27;entendre.</span></div>
+<div class="choix ok"><span class="k">+</span>« Je savais pas que c&#x27;était à ce point… c&#x27;est vraiment grave. »<span class="n">Sincère, mais tu restes en surface.</span><span class="r"><b>La tante :</b> Oui. C&#x27;est très grave.</span></div>
+<div class="choix bad"><span class="k">–</span>« Elle aurait dû m&#x27;en parler avant d&#x27;en arriver là. »<span class="n">Cela ressemble à un reproche. La tante le perçoit clairement.</span><span class="r"><b>La tante :</b> (sèchement) Elle n&#x27;osait pas. C&#x27;est précisément le problème.</span></div>
+<div class="recov"><span class="lab">Rattrapage possible (si mauvaise réponse)</span><p><b>La tante :</b> Si tu lui faisais des reproches maintenant… tu la blesserais encore plus, Léo.</p><p>✓ « Vous avez raison. Ce n&#x27;est pas ce que je voulais dire. Elle ne méritait rien de tout ça. »<br><i>(pause) …C&#x27;est mieux. J&#x27;entends de la sincérité.</i></p><p>✗ « Je fais juste remarquer que si elle m&#x27;avait parlé, on aurait pu éviter ça. »<br><i>(froid) Éviter ça. Tu penses vraiment que c&#x27;était si simple.</i></p></div>
+<h3>Phase 1 — La tante — Question 3 / 3</h3>
+<div class="dial"><span class="who" style="color:#5a3510">La tante</span><span class="txt">Le harcèlement, ça détruit lentement. Ça te fait douter de ta valeur…
+Elle s&#x27;est renfermée. Elle évite même de regarder son téléphone.
+Si tu veux vraiment l&#x27;aider… il faudra être patient. Très patient.</span></div>
+<div class="prompt">Avant qu&#x27;elle aille demander à Clara…</div>
+<div class="choix good"><span class="k">++</span>« Je serai patient. Dites-lui juste que je suis là. Elle est pas obligée de me parler. »<span class="n">Tu enlèves toute pression. C&#x27;est exactement ce qu&#x27;il fallait.</span><span class="r"><b>La tante :</b> (plus douce) Je vais lui dire ça. Attends.</span></div>
+<div class="choix ok"><span class="k">+</span>« Je vous promets d&#x27;être doux. Merci de me donner cette chance. »<span class="n">Sincère. La tante apprécie l&#x27;honnêteté.</span><span class="r"><b>La tante :</b> D&#x27;accord… je vais lui demander.</span></div>
+<div class="choix bad"><span class="k">–</span>« Je vais lui dire que tout va s&#x27;arranger, que j&#x27;ai un plan. »<span class="n">Tu parles de toi et de ton plan — pas d&#x27;elle.</span><span class="r"><b>La tante :</b> (froide) Un plan. Clara n&#x27;a pas besoin d&#x27;un plan. Elle a besoin d&#x27;être entendue.</span></div>
+<div class="recov"><span class="lab">Rattrapage possible (si mauvaise réponse)</span><p><b>La tante :</b> Est-ce que tu comprends la différence, Léo ?</p><p>✓ « Oui… vous avez raison. Je voulais juste l&#x27;aider mais je suis allé trop vite. »<br><i>(longue pause) …Je vais lui demander. Mais ne la brusque pas.</i></p><p>✗ « Je pense que ça lui ferait du bien d&#x27;avoir un objectif concret. »<br><i>(ferme) Je ne crois pas que tu sois prêt à lui parler ce soir.</i></p></div>
+<h3>En attente…</h3>
+<div class="dial narr"><span class="who" style="color:#9a9aa2"></span><span class="txt">[ Bruits étouffés… la tante s&#x27;éloigne… murmures au loin… ]</span></div>
+<h3>Phase 2 — Clara — Question 1 / 4</h3>
+<div class="dial narr"><span class="who" style="color:#9a9aa2"></span><span class="txt">[ Un froissement de téléphone… ]</span></div>
+<div class="dial"><span class="who" style="color:#448844">Clara</span><span class="txt">Allô… ?</span></div>
+<div class="dial"><span class="who" style="color:#1a3a6a">Léo</span><span class="txt">Clara… c&#x27;est moi. Léo.</span></div>
+<div class="dial"><span class="who" style="color:#448844">Clara</span><span class="txt">… Salut.</span></div>
+<div class="dial"><span class="who" style="color:#1a3a6a">Léo</span><span class="txt">Je suis désolé d&#x27;appeler comme ça. Je ne savais pas comment faire autrement.</span></div>
+<div class="dial"><span class="who" style="color:#448844">Clara</span><span class="txt">C&#x27;est… c&#x27;est pas grave.</span></div>
+<div class="dial"><span class="who" style="color:#1a3a6a">Léo</span><span class="txt">Tu m&#x27;as manqué.</span></div>
+<div class="dial"><span class="who" style="color:#448844">Clara</span><span class="txt">(souffle) Toi aussi…</span></div>
+<div class="dial"><span class="who" style="color:#1a3a6a">Léo</span><span class="txt">Pourquoi tu n&#x27;as rien dit ? Tu sais que tu pouvais me parler…</span></div>
+<div class="dial"><span class="who" style="color:#448844">Clara</span><span class="txt">J&#x27;y ai pensé… plein de fois.
+J&#x27;ai même commencé à écrire des messages… et puis je les supprimais.</span></div>
+<div class="prompt">Que lui réponds-tu ?</div>
+<div class="choix good"><span class="k">++</span>« T&#x27;avais pas besoin de trouver les bons mots. Je t&#x27;aurais écoutée, même sans explication. »<span class="n">Tu lèves la pression des mots. Elle peut souffler.</span><span class="r"><b>Clara :</b> (silence) …Je sais. Je crois que j&#x27;avais honte.</span></div>
+<div class="choix ok"><span class="k">+</span>« Je comprends… c&#x27;est dur de savoir comment dire ces choses. »<span class="n">Vrai, mais un peu général.</span><span class="r"><b>Clara :</b> Ouais… c&#x27;est ça.</span></div>
+<div class="choix bad"><span class="k">–</span>« Pourquoi tu as supprimé ces messages ? J&#x27;aurais répondu, tu sais. »<span class="n">Tu mets l&#x27;accent sur toi, pas sur ce qu&#x27;elle vivait.</span><span class="r"><b>Clara :</b> (froide) J&#x27;en sais rien…</span></div>
+<h3>Phase 2 — Clara — Question 2 / 4</h3>
+<div class="dial"><span class="who" style="color:#448844">Clara</span><span class="txt">Au début, c&#x27;était juste des remarques… des petites piques.
+Je me disais que ça allait passer.
+Mais après… ça a empiré. Des moqueries en groupe. Des commentaires sur tout.
+Et ensuite, ça a continué en ligne. Des messages. Des captures. Des rumeurs.
+Je ne pouvais plus y échapper… même chez moi.</span></div>
+<div class="prompt">Que ressens-tu à l&#x27;entendre ?</div>
+<div class="choix good"><span class="k">++</span>« Même chez toi t&#x27;étais pas tranquille… T&#x27;avais plus aucun endroit où souffler. Je suis désolé. »<span class="n">Tu nommes sa réalité avec précision. Elle se sent comprise.</span><span class="r"><b>Clara :</b> (voix qui se brise) Oui… c&#x27;est exactement ça.</span></div>
+<div class="choix ok"><span class="k">+</span>« C&#x27;est horrible… être harcelée même à la maison. »<span class="n">Sincère, mais tu restes en surface.</span><span class="r"><b>Clara :</b> Ouais…</span></div>
+<div class="choix bad"><span class="k">–</span>« T&#x27;aurais pu bloquer ces gens, désactiver tes réseaux. »<span class="n">Un conseil non demandé, qui ressemble à un reproche.</span><span class="r"><b>Clara :</b> (froid) Merci, j&#x27;y avais pas pensé.</span></div>
+<h3>Phase 2 — Clara — Question 3 / 4</h3>
+<div class="dial"><span class="who" style="color:#448844">Clara</span><span class="txt">Le pire, tu sais quoi ?
+C&#x27;est quand j&#x27;ai commencé à y croire.
+Quand je me regardais dans le miroir et que je voyais ce qu&#x27;ils disaient.</span></div>
+<div class="prompt">Comment lui répondre ?</div>
+<div class="choix good"><span class="k">++</span>« C&#x27;est normal que t&#x27;aies fini par y croire, ils te l&#x27;ont dit cent fois. Mais c&#x27;est faux. C&#x27;est eux le problème, pas toi. »<span class="n">Tu expliques le mécanisme. Tu lui rends la réalité.</span><span class="r"><b>Clara :</b> (longue pause) Personne ne l&#x27;avait dit comme ça avant.</span></div>
+<div class="choix ok"><span class="k">+</span>« Non. Ce que tu voyais, c&#x27;est leurs mensonges — pas toi. »<span class="n">Clair et direct. Utile.</span><span class="r"><b>Clara :</b> J&#x27;essaie de me le dire… c&#x27;est dur.</span></div>
+<div class="choix bad"><span class="k">–</span>« Tu sais bien que c&#x27;est faux ce qu&#x27;ils disent. »<span class="n">&quot;Tu sais bien&quot; minimise sa douleur sans le vouloir.</span><span class="r"><b>Clara :</b> (silence) Si je le savais vraiment, j&#x27;aurais pas craqué.</span></div>
+<h3>Phase 2 — Clara — Question 4 / 4</h3>
+<div class="dial"><span class="who" style="color:#448844">Clara</span><span class="txt">Ça fait cinq jours que je suis ici…
+Les deux premiers, je sortais même pas de la chambre.
+Maintenant… ça va un peu moins mal. Mais j&#x27;ai encore peur.
+Peur de retourner au collège. Peur que ça recommence. Peur que rien ne change.</span></div>
+<div class="dial"><span class="who" style="color:#1a3a6a">Léo</span><span class="txt">Tu en as parlé à ta tante ? À tes parents ?</span></div>
+<div class="dial"><span class="who" style="color:#448844">Clara</span><span class="txt">Ma tante sait un peu… Elle est gentille. Mais je veux pas les inquiéter.
+J&#x27;ai l&#x27;impression que si j&#x27;en parle vraiment… ça devient réel.</span></div>
+<div class="prompt">Que lui dire ?</div>
+<div class="choix good"><span class="k">++</span>« C&#x27;est déjà réel, Clara. Et c&#x27;est pour ça qu&#x27;il faut des adultes qui peuvent agir : ta tante, tes parents, le CPE. Pas pour tout régler d&#x27;un coup. Juste pour que tu portes plus ça toute seule. »<span class="n">Tu lui montres que chercher de l&#x27;aide adulte, c&#x27;est un acte de courage — pas une faiblesse.</span><span class="r"><b>Clara :</b> (silence) …Peut-être. Ma tante m&#x27;a proposé d&#x27;appeler le collège.
+J&#x27;avais dit non. Mais là… peut-être que oui.</span></div>
+<div class="choix ok"><span class="k">+</span>« Tu n&#x27;as pas à régler ça toute seule. Si tu veux, je peux être là quand tu en parles à quelqu&#x27;un — n&#x27;importe quel adulte de confiance. »<span class="n">Solidaire. Mais c&#x27;est à elle de faire le premier pas — tu le lui rappelles bien.</span><span class="r"><b>Clara :</b> (hésitante) …D&#x27;accord. Je vais y réfléchir.</span></div>
+<div class="choix bad"><span class="k">–</span>« T&#x27;inquiète, je vais régler ça moi-même. Ces gens vont avoir des problèmes. »<span class="n">Tu prends tout sur toi. Ce n&#x27;est pas ton rôle — et elle sait que ça risque d&#x27;empirer.</span><span class="r"><b>Clara :</b> (froid) Non… s&#x27;il te plaît, fais rien. Ça va juste empirer.</span></div>
+<h3>Les fins</h3>
+<div class="fin" style="border-color:#2a7a50;background:#f4faf7"><div class="t" style="color:#2a7a50">🌿 Clara va demander de l&#x27;aide. (empathie ≥ 10 sur 10)</div><p>Tu as su trouver les mots justes à chaque instant.
+Ni trop forts, ni trop légers — juste présents.
+
+La tante t&#x27;a fait confiance. Clara a raccroché avec une décision concrète : parler à un adulte de confiance, et ne plus porter ça seule.
+
+Ton rôle n&#x27;était pas de la sauver. C&#x27;était de lui montrer que demander de l&#x27;aide, c&#x27;est possible.</p><p>« Je vais en parler à ma tante. Vraiment parler. »
+— Clara</p></div>
+<div class="fin" style="border-color:#c09030;background:#fdfaf0"><div class="t" style="color:#c09030">🕯️ Un premier pas. (empathie ≥ 5 sur 10)</div><p>Tu as montré de la bonne volonté, même si certaines réponses manquaient de profondeur.
+
+Clara hésite encore — mais elle envisage d&#x27;en parler à un adulte. Le chemin est long.
+
+Ton rôle était de lui montrer que ce n&#x27;est pas à elle seule de tout porter.</p><p>« Peut-être que je vais essayer… »
+— Clara</p></div>
+<div class="fin" style="border-color:#c04030;background:#fdf4f4"><div class="t" style="color:#c04030">🌧️ La distance reste. (empathie ≥ 0 sur 10)</div><p>Tu voulais bien faire, mais tes mots ont parfois sonné comme des reproches ou de l&#x27;impatience.
+
+Clara reste fermée. Elle a besoin de temps — et de quelqu&#x27;un qui écoute vraiment avant d&#x27;agir.</p><p>« J&#x27;avais juste besoin que tu m&#x27;écoutes. »
+— Clara</p></div>
+<div class="fin" style="border-color:#888;background:#fafafa"><div class="t" style="color:#888">📵 La tante a raccroché.</div><p>Elle a senti que tu n&#x27;étais pas prêt à comprendre ce que Clara traversait.
+
+Pour protéger sa nièce encore fragile, elle a préféré mettre fin à la conversation.</p><p>💡 L&#x27;empathie, ce n&#x27;est pas seulement vouloir aider.
+C&#x27;est écouter avant de parler. Sentir avant d&#x27;agir.</p></div>
+<div class="note">Les cœurs et le score chiffré ont été retirés : le joueur ne voit que le retour écrit après chaque réponse. Le compte d&#x27;empathie reste interne et choisit la fin.</div>
+<h3>🧑‍🏫 Le lendemain, Léo</h3>
+<ul><li>Va voir le CPE. Pas pour dénoncer : pour dire qu&#x27;une élève de son collège ne vient plus, et pourquoi.</li></ul>
+<ul><li>Montre les captures d&#x27;écran qu&#x27;il a gardées, et signale les comptes anonymes un par un.</li></ul>
+<ul><li>N&#x27;a rien réglé tout seul — il a fait ce qu&#x27;un ami de quatorze ans peut faire : prévenir quelqu&#x27;un qui peut agir.</li></ul>
+<h3>⚖️ Et les cinq du groupe ?</h3>
+<p>Le collège a ouvert une enquête et les a reçus, avec leurs parents. Deux ont répondu qu&#x27;ils « ne pensaient pas à mal ». Kevin a montré ses captures.<br><br>En France, le harcèlement scolaire est un délit depuis 2022 — y compris en ligne, y compris entre élèves d&#x27;un même établissement.<br><br>Clara est revenue trois semaines plus tard. Ça n&#x27;a pas été simple. Mais elle ne portait plus ça toute seule.</p>
+<h3>Où trouver de l&#x27;aide</h3>
+<div class="res"><b>3018</b><span>Cyberharcèlement — gratuit, anonyme, 7 j/7 (e-Enfance)</span></div>
+<div class="res"><b>3020</b><span>Harcèlement à l&#x27;école — « Non au harcèlement »</span></div>
+<div class="res"><b>3114</b><span>Souffrance psychique et prévention du suicide</span></div>
+<div class="res"><b>e-enfance.org</b><span>Conseils et signalement en ligne</span></div>
+<div class="note">Ces numéros sont dans ressources.js — c&#x27;est le seul fichier à modifier pour adapter le jeu à un autre pays. La version anglaise (ressources_en.js) donne les numéros européens.</div>
+<footer>Retrouver Clara — document produit automatiquement à partir des fichiers du jeu (<code>node dump_textes.js</code> puis <code>python gen_doc.py</code>).</footer>
+</div></body></html>

@@ -89,7 +89,7 @@ blockquote{border-left:3px solid var(--accent);padding:10px 18px;margin:14px 0;c
   <div class="subtitle">Document de travail — confidentiel</div>
   <h1>Retrouver Clara — Journal des modifications</h1>
   <div class="meta">
-    <span>Version du 7 mai 2026</span>
+    <span>Version du 9 septembre 2026</span>
     <span>Projet : Harcèlement Croatie</span>
     <span>Destinataires : équipe partenaires</span>
   </div>
@@ -104,11 +104,15 @@ blockquote{border-left:3px solid var(--accent);padding:10px 18px;margin:14px 0;c
     <li><a href="#overview">Vue d'ensemble du projet</a></li>
     <li><a href="#architecture">Architecture des fichiers</a></li>
     <li><a href="#session-previous">Modifications antérieures (session précédente)</a></li>
-    <li><a href="#session-today">Modifications du 7 mai 2026</a></li>
-    <li><a href="#partie1">— Partie 1 : Téléphone d'Inès</a></li>
-    <li><a href="#partie2">— Partie 2 : Instagram de Clara</a></li>
-    <li><a href="#partie3">— Partie 3 : Groupe WhatsApp</a></li>
-    <li><a href="#partie4">— Partie 4 : Convaincre Clara</a></li>
+    <li><a href="#session-today">Modifications du 7 mai 2026</a>
+      <ul style="margin:4px 0 0 0;">
+        <li><a href="#partie1">Partie 1 : Téléphone d'Inès</a></li>
+        <li><a href="#partie2">Partie 2 : Instagram de Clara</a></li>
+        <li><a href="#partie3">Partie 3 : Groupe WhatsApp</a></li>
+        <li><a href="#partie4">Partie 4 : Convaincre Clara</a></li>
+      </ul>
+    </li>
+    <li><a href="#session-sept">Modifications du 9 septembre 2026 (relecture critique)</a></li>
     <li><a href="#flux-narratif">Flux narratif complet</a></li>
     <li><a href="#pending">Points en attente / Notes techniques</a></li>
   </ol>
@@ -219,8 +223,8 @@ blockquote{border-left:3px solid var(--accent);padding:10px 18px;margin:14px 0;c
 </div>
 
 
-<!-- ═══ 4. SESSION DU JOUR ═══ -->
 <div class="section-break"></div>
+
 <h2 id="session-today">4. Modifications du 7 mai 2026</h2>
 
 
@@ -311,7 +315,7 @@ blockquote{border-left:3px solid var(--accent);padding:10px 18px;margin:14px 0;c
   <h4>Phase 6 : la disparition de Clara <span class="badge badge-new">ajouté</span></h4>
   <p>19 nouveaux messages ajoutés en fin de conversation (lendemain, 09h14), après les quiz existants. Ils montrent la réaction du groupe face à la disparition de Clara.</p>
   <ul>
-    <li><strong>Lucas, Jade, Théo, Marine</strong> : se réjouissent, se moquent du "havre secret" sans savoir ce que c'est</li>
+    <li><strong>Enzo, Jade, Théo, Marine</strong> : se réjouissent, se moquent du "havre secret" sans savoir ce que c'est</li>
     <li><strong>Kevin</strong> : exprime deux fois son inquiétude (<em>"on est peut-être allés trop loin"</em>) avant d'être réduit au silence par le groupe</li>
     <li>Référence explicite au "havre secret" — terme moqué mais non élucidé — ce qui incite le joueur à aller chercher l'information ailleurs (→ Inès)</li>
   </ul>
@@ -362,9 +366,147 @@ blockquote{border-left:3px solid var(--accent);padding:10px 18px;margin:14px 0;c
 </ul>
 
 
-<!-- ═══ 5. FLUX NARRATIF ═══ -->
+<!-- ═══ 5. SESSION DU 9 SEPTEMBRE 2026 ═══ -->
 <div class="section-break"></div>
-<h2 id="flux-narratif">5. Flux narratif complet</h2>
+<h2 id="session-sept">5. Modifications du 9 septembre 2026 — relecture critique</h2>
+
+<p>Vingt-sept constats ont été relevés lors d'une relecture complète du jeu (fond pédagogique,
+crédibilité, ergonomie, écriture), puis tranchés un par un. Cette section liste ce qui a été fait.
+Les documents « textes complets » et « guide pédagogique » sont désormais <strong>générés à partir
+des fichiers du jeu</strong> : ils ne peuvent plus dériver.</p>
+
+<div class="mod-block good">
+  <h4>Ce que le jeu enseigne <span class="badge badge-new">ajouté</span></h4>
+  <p><strong>Signaler est devenu jouable.</strong> Dans les 9 500 mots du jeu, « signaler » n'apparaissait
+  qu'une fois, dans une ligne de ressources, et « bloquer » jamais. Chaque conversation de harceleur porte
+  maintenant un bouton qui ouvre les trois gestes dans l'ordre qui compte : capture d'écran d'abord (sinon
+  on perd la preuve), blocage, puis signalement au réseau et à un adulte.</p>
+  <p><strong>L'écran de fin ne s'arrête plus à Clara.</strong> Il dit ce que Léo fait le lendemain — il va
+  voir le CPE, montre ses captures, signale les comptes — puis ce qui arrive aux cinq du groupe : enquête
+  du collège, et rappel que le harcèlement scolaire est un délit depuis 2022.</p>
+  <p><strong>La Partie 3 se termine sur le témoin.</strong> Deux blocs : « Et Kevin ? », qui liste les
+  quatre gestes qu'il aurait pu faire, et « Pourquoi Clara ? », qui rappelle qu'ils ne le disent jamais et
+  que chercher la raison revient à donner tort à la victime.</p>
+  <p><strong>Un récapitulatif imprimable</strong> (<span class="file-ref">recapitulatif.html</span>) clôt le
+  parcours : les neuf types avec ceux que le groupe a identifiés, les comptes démasqués, la fin obtenue,
+  les numéros, et deux lignes à compléter à la main.</p>
+</div>
+
+<div class="mod-block warn">
+  <h4>Protection des élèves <span class="badge badge-new">corrigé</span></h4>
+  <p>L'avertissement de contenu de la Partie 2 existait dans le HTML mais <strong>aucun code ne
+  l'affichait</strong> : la partie la plus dure du jeu n'en avait aucun. Il s'ouvre maintenant juste après
+  la connexion, et rien ne démarre derrière tant qu'il est là.</p>
+  <p>Un écran « Avant de continuer » revient, en sortie de Partie 2, sur ce que le joueur vient de faire du
+  compte de Clara — et sur le fait qu'entrer dans le compte de quelqu'un reste interdit, même quand on
+  s'inquiète.</p>
+</div>
+
+<div class="mod-block fixed">
+  <h4>Crédibilité <span class="badge">corrigé</span></h4>
+  <ul>
+    <li>Le code du groupe est <strong>assumé comme un dispositif d'exercice</strong> : un groupe WhatsApp
+    n'a pas de code d'accès. Le journal de Clara ne prétend plus l'avoir obtenu — elle écrit qu'elle ne
+    peut ni y entrer ni rien prouver.</li>
+    <li><strong>Chronologie unifiée</strong> : harcèlement depuis huit mois, exclusion du groupe depuis
+    trois semaines, fuite il y a cinq jours. Les quatre parties racontaient des durées différentes.</li>
+    <li><strong>Prénoms</strong> : Lucas devient Enzo, Léa Girard devient Sarah — Léo était le troisième
+    prénom en L et un testeur les a confondus.</li>
+    <li><code>@anonymous_x0</code> était revendiqué par Théo puis par Enzo à deux messages d'intervalle :
+    c'est maintenant un compte partagé, ce qui est réaliste.</li>
+    <li>La boîte de réception était mal rangée : trois conversations se trouvaient sous « il y a plus de
+    6 mois » alors qu'elles dataient de quelques semaines.</li>
+    <li>Le mot de passe d'Inès s'explique enfin ; « Instaclasse » ne subsiste plus à un seul endroit.</li>
+  </ul>
+</div>
+
+<div class="mod-block changed">
+  <h4>Partie 2 — densité et progression <span class="badge">modifié</span></h4>
+  <ul>
+    <li><strong>Huit QCM dormaient dans le fichier de textes</strong> sans jamais être appelés. Ils sont
+    rebranchés, et rattachés aux neuf types (leur ancien champ « type » était une phrase, pas une clé).</li>
+    <li>L'objectif passe de 4 à <strong>6 types sur 9</strong>, et la synthèse liste les neuf en
+    distinguant ceux que le joueur a trouvés de ceux qu'il a manqués.</li>
+    <li>La question « qu'est-ce que tu observes ? » ne part plus sur un minuteur de 40 secondes : elle
+    arrive quand le joueur a réellement regardé, et jamais pendant qu'il lit.</li>
+    <li>Deux publications de Clara sont épargnées, avec de vrais commentaires d'amies : le contraste est
+    plus fort que la saturation.</li>
+  </ul>
+</div>
+
+<div class="mod-block changed">
+  <h4>Partie 3 — une mission, enfin <span class="badge badge-new">ajouté</span></h4>
+  <p>La partie n'avait aucun objectif. Le joueur doit maintenant <strong>démasquer les cinq comptes
+  anonymes</strong> que le groupe nomme à voix haute : un compteur suit sa progression, chaque @mention
+  ouvre une carte, et les comptes portent ensuite le prénom de leur propriétaire quand on retourne sur
+  l'Instagram de la Partie 2. C'est l'asymétrie que le jeu raconte — le joueur sait, Clara jamais.</p>
+  <p>Les messages ne défilent plus tout seuls (55 messages en 95 secondes) : chacun attend un appui.</p>
+</div>
+
+<div class="mod-block changed">
+  <h4>Partie 4 <span class="badge">modifié</span></h4>
+  <ul>
+    <li>Les <strong>cœurs et le score chiffré</strong> ont été retirés : ils poussaient à chercher la bonne
+    réponse plutôt qu'à répondre. Le retour écrit après chaque choix, qui existait dans les textes mais
+    n'était jamais affiché, l'est désormais.</li>
+    <li>La meilleure fin exigeait 13 points alors que l'empathie plafonne à 10 : elle était
+    <strong>inatteignable</strong>. Seuils corrigés.</li>
+    <li>Le numéro de la tante devient une vraie énigme : trois pensées de Léo guident sans donner la
+    réponse, et l'écran d'appel ne donne plus le numéro en exemple.</li>
+    <li>Les réponses les plus empathiques étaient les plus longues et parlaient comme un psy : elles ont
+    été raccourcies et ramenées au registre d'un élève de quatorze ans.</li>
+  </ul>
+</div>
+
+<div class="mod-block good">
+  <h4>Confort de séance <span class="badge badge-new">ajouté</span></h4>
+  <ul>
+    <li><strong>Bouton « Nouvelle enquête »</strong> sur le menu : sur tablette partagée, le groupe suivant
+    héritait de la progression du précédent.</li>
+    <li><strong>Un code de reprise de sept caractères</strong> (<span class="file-ref">sauvegarde.js</span>)
+    couvre les quatre parties et fonctionne d'un appareil à l'autre — rien n'est stocké ailleurs que dans
+    le code lui-même.</li>
+    <li><strong>Choix Léo ou Léa</strong> sur l'accueil (<span class="file-ref">prenom.js</span>), accords
+    grammaticaux compris.</li>
+    <li><strong>Accessibilité</strong> : le gris des descriptions était à 2,6:1 pour un minimum lisible de
+    4,5:1 ; les libellés de 9 px passent à 11 px ; le texte du narrateur de la Partie 4 était à 2:1.</li>
+    <li><strong>Ressources</strong> : le 3020 manquait ; les numéros sont sortis dans
+    <span class="file-ref">ressources.js</span>, seul fichier à modifier pour un autre pays. La version
+    anglaise donne les numéros européens.</li>
+  </ul>
+</div>
+
+<div class="mod-block fixed">
+  <h4>Bugs trouvés en chemin <span class="badge">corrigé</span></h4>
+  <ul>
+    <li>La légende de l'écran titre de la Partie 4 affichait « CLARALA TANTE » : le sélecteur attrapait
+    aussi les pastilles de couleur imbriquées.</li>
+    <li>Treize fragments sur trente-quatre étaient écrits sans apostrophe et ne correspondaient donc jamais
+    aux messages : <strong>21 messages identifiables au lieu de 32</strong> en français, contre 33 en
+    anglais.</li>
+    <li>La version anglaise affichait « ✓ undefined » dans les QCM.</li>
+    <li>Les répliques d'Inès ne suivaient pas le choix du joueur : « Si j'ai essayé » répondait aussi bien
+    à « Tu sais ce qui s'est passé ? » qu'à « T'as pas essayé d'en parler ? ».</li>
+    <li>La valeur de la bonne réponse de la Partie 4 était lisible dans le HTML de la page.</li>
+  </ul>
+</div>
+
+<div class="mod-block info">
+  <h4>Documents régénérables</h4>
+  <p>Les textes complets et le guide pédagogique sont maintenant produits par script à partir des fichiers
+  du jeu :</p>
+  <ul>
+    <li><span class="file-ref">node dump_textes.js</span> — extrait tous les textes vers un JSON</li>
+    <li><span class="file-ref">python gen_doc.py</span> — écrit doc_textes_partenaires.docx et .html</li>
+    <li><span class="file-ref">python gen_guide.py</span> — écrit le guide pédagogique</li>
+  </ul>
+  <p>L'ancien <span class="file-ref">gen_docx.py</span>, où les 9 500 mots étaient recopiés à la main, est
+  remplacé. À relancer après chaque modification des textes.</p>
+</div>
+
+<!-- ═══ 6. FLUX NARRATIF ═══ -->
+<div class="section-break"></div>
+<h2 id="flux-narratif">6. Flux narratif complet</h2>
 
 <div class="flow" style="flex-wrap:wrap;gap:4px;">
   <div class="flow-step"><strong>Menu</strong>index.html — présentation des 4 parties</div>
@@ -380,43 +522,95 @@ blockquote{border-left:3px solid var(--accent);padding:10px 18px;margin:14px 0;c
 
 <!-- ═══ 6. PENDING ═══ -->
 <div class="section-break"></div>
-<h2 id="pending">6. Points en attente / Notes techniques</h2>
+<h2 id="pending">7. Points en attente / Notes techniques</h2>
 
 <div class="mod-block warn">
-  <h4>Accès Partie 3 — mot de passe à rétablir <span class="badge badge-pending">en attente</span></h4>
-  <p>Le code d'accès <strong>4827</strong> est actuellement contourné pour faciliter les tests (<span class="file-ref">3_WhatsApp_Groupe_Structure.js</span>, fonction <code>checkCode()</code>). À restaurer avant mise en production.</p>
-</div>
-
-<div class="mod-block warn">
-  <h4>Partie 4 — code gate numéro de téléphone <span class="badge badge-pending">en attente</span></h4>
-  <p>Il a été prévu d'ajouter une porte d'accès à la Partie 4 demandant le numéro <strong>04 54 78 95 32</strong> obtenu via Inès. Cette fonctionnalité n'a pas encore été implémentée. Actuellement la Partie 4 est accessible directement.</p>
-</div>
-
-<div class="mod-block warn">
-  <h4>Partie 2 — compatibilité mode sélection en lightbox <span class="badge badge-pending">à tester</span></h4>
-  <p>Le mode sélection fonctionne dans les DMs et dans les commentaires de la lightbox. À tester sur smartphone (touch events) pour vérifier que la zone cliquable des commentaires est suffisamment grande.</p>
-</div>
-
-<div class="mod-block info">
-  <h4>Persistance inter-parties</h4>
-  <p>Les flags de progression utilisent <code>localStorage</code> (persistant entre sessions) et <code>sessionStorage</code> (limité à l'onglet courant) selon le contexte :</p>
+  <h4>Liens de contournement à retirer avant la classe <span class="badge badge-pending">en attente</span></h4>
+  <p>Deux portes d'accès peuvent être franchies sans le code, ce qui est pratique pour tester mais
+  vide l'exercice de son sens en séance :</p>
   <ul>
-    <li><code>rc_p1_visited</code> — localStorage — Partie 1 visitée (bouton "Reprendre" sur index)</li>
-    <li><code>rc_p3_done</code> — localStorage — Partie 3 terminée (active la 2e conversation Inès)</li>
-    <li><code>harcelement_wa_state</code> — sessionStorage — position dans la Partie 3 (retour depuis Instagram)</li>
-    <li><code>harcelement_wa_from</code> — sessionStorage — provenance (bouton "Retour au groupe" en Partie 2)</li>
+    <li><strong>Partie 3</strong> — un lien « Accéder directement → » sous le champ du code
+    (<span class="file-ref">3_WhatsApp_Groupe.html</span> et <span class="file-ref">_en.html</span>,
+    fonction <code>bypassGate()</code>). Le code <strong>4827</strong> lui-même fonctionne normalement.</li>
+    <li><strong>Partie 4</strong> — un lien « Passer » qui n'apparaît qu'après trois tentatives ratées
+    du numéro de téléphone (<span class="file-ref">4_Convaincre_Clara.html</span>, élément
+    <code>#pg-skip</code>). Celui-ci est volontaire : il évite qu'un élève reste bloqué. À conserver
+    ou retirer selon le déroulé souhaité.</li>
+  </ul>
+</div>
+
+<div class="mod-block warn">
+  <h4>Bouton de retour 💬 visible par les élèves <span class="badge badge-pending">décision à prendre</span></h4>
+  <p>Le bouton de remarques (<span class="file-ref">retour.js</span>) est actif sur les dix pages.
+  Utile en phase de test, il n'a pas d'intérêt pour une classe et peut distraire. Il peut être
+  conditionné à un paramètre d'URL (par exemple <code>?retours=1</code>) pour n'apparaître qu'aux
+  relecteurs. À trancher.</p>
+</div>
+
+<div class="mod-block warn">
+  <h4>À vérifier en conditions réelles <span class="badge badge-pending">à tester</span></h4>
+  <ul>
+    <li>Partie 2 — mode sélection dans la lightbox sur smartphone (taille de la zone tactile des commentaires).</li>
+    <li>Partie 3 — la nouvelle mission « relier les comptes Instagram et WhatsApp » : vérifier que la
+    consigne est comprise sans aide de l'enseignant.</li>
+    <li>Écran « Avant de continuer » (avertissement de contenu) — le ton peut être réécrit selon
+    l'établissement.</li>
+    <li>Code de reprise à 7 caractères — tester un aller-retour entre deux navigateurs.</li>
   </ul>
 </div>
 
 <div class="mod-block info">
+  <h4>Envoi des remarques par e-mail</h4>
+  <p>Les remarques saisies via le bouton 💬 sont stockées localement puis envoyées en un seul e-mail
+  via <strong>Web3Forms</strong> (requête POST en JSON, sans back-end). La clé d'accès est la même que
+  celle du Fakemètre et de Radar'naque : les envois arrivent dans la même boîte. Rien d'autre n'est
+  transmis, et aucune donnée n'est envoyée tant que le joueur n'a pas appuyé sur « Envoyer ».</p>
+</div>
+
+<div class="mod-block info">
+  <h4>Persistance de la progression</h4>
+  <p>Les repères de progression utilisent <code>localStorage</code> (persistant entre sessions) et
+  <code>sessionStorage</code> (limité à l'onglet courant) :</p>
+  <ul>
+    <li><code>rc_prenom</code> — localStorage — prénom choisi (Léo / Léa), accorde tous les textes</li>
+    <li><code>rc_p1_visited</code> — localStorage — Partie 1 visitée (bouton « Reprendre » sur l'accueil)</li>
+    <li><code>rc_types</code> — localStorage — types de harcèlement identifiés en Partie 2</li>
+    <li><code>rc_p3_done</code> — localStorage — Partie 3 terminée (0/1/2 : active la 2<sup>e</sup> conversation d'Inès)</li>
+    <li><code>rc_comptes</code> — localStorage — comptes Instagram reliés à leur auteur WhatsApp</li>
+    <li><code>rc_p4</code> — localStorage — score et choix de la Partie 4</li>
+    <li><code>rc_fin</code> — localStorage — fin obtenue</li>
+    <li><code>rc_remarques</code> — localStorage — remarques en attente d'envoi</li>
+    <li><code>harcelement_wa_state</code> — sessionStorage — position dans la Partie 3 (retour depuis Instagram)</li>
+    <li><code>harcelement_wa_from</code> — sessionStorage — provenance (bouton « Retour au groupe » en Partie 2)</li>
+  </ul>
+  <p>Ces repères ne quittent jamais le navigateur. Pour changer de poste, le joueur utilise le
+  <strong>code de reprise à 7 caractères</strong> affiché sur l'accueil, qui encode la progression
+  sans aucun envoi réseau. Un bouton « ↺ Nouvelle enquête » remet tout à zéro — indispensable sur
+  tablette partagée.</p>
+</div>
+
+<div class="mod-block info">
+  <h4>Régénération des documents</h4>
+  <p>Les deux documents de contenu sont produits à partir des fichiers du jeu, dans le dossier
+  <span class="file-ref">Harcèlement Croatie/</span> :</p>
+  <ul>
+    <li><code>node dump_textes.js</code> → <span class="file-ref">_textes_dump.json</span> (extrait tous les textes)</li>
+    <li><code>python gen_doc.py</code> → <span class="file-ref">doc_textes_partenaires.docx</span> + <span class="file-ref">.html</span></li>
+    <li><code>python gen_guide.py</code> → <span class="file-ref">Retrouver_Clara_Guide_Pedagogique.docx</span></li>
+  </ul>
+  <p>À relancer après toute modification des textes : les documents ne peuvent alors plus dériver du jeu.</p>
+</div>
+
+<div class="mod-block info">
   <h4>Données entièrement fictives</h4>
-  <p>Tous les personnages, comptes, messages, numéros de téléphone et images sont fictifs et créés à des fins exclusivement pédagogiques. Un bandeau "Simulation pédagogique" est présent sur chaque scène.</p>
+  <p>Tous les personnages, comptes, messages, numéros de téléphone et images sont fictifs et créés à
+  des fins exclusivement pédagogiques. Un bandeau « Simulation pédagogique » est présent sur chaque scène.</p>
 </div>
 
 </div><!-- /page-body -->
 
 <div style="background:var(--text);color:#5a5040;font-family:-apple-system,'Segoe UI',sans-serif;font-size:11px;text-align:center;padding:18px;letter-spacing:.06em;">
-  Retrouver Clara — Document interne — 7 mai 2026
+  Retrouver Clara — Document interne — mis à jour le 9 septembre 2026
 </div>
 
 </body>

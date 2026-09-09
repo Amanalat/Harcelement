@@ -161,7 +161,7 @@ var TEXTES = {
     {
       "intro": [
         "She hadn't been doing well for a while.",
-        "Since at least last month.",
+        "For months, really.",
         "She was missing classes. She wasn't replying to messages anymore.",
         "She said it was nothing."
       ],

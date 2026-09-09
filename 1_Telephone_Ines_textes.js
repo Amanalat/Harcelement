@@ -104,7 +104,7 @@ var TEXTES = {
         },
         {
           "l": "C",
-          "t": "Je suis inquiet. J'arrive plus à dormir depuis hier soir.",
+          "t": "Je suis {inquiet|inquiète}. J'arrive plus à dormir depuis hier soir.",
           "e": 1
         }
       ]
@@ -161,7 +161,7 @@ var TEXTES = {
     {
       "intro": [
         "Ça faisait un moment qu'elle était pas bien.",
-        "Depuis le mois dernier au moins.",
+        "Depuis des mois, en fait.",
         "Elle manquait des cours. Elle répondait plus aux messages.",
         "Elle disait que c'était rien."
       ],

@@ -1,33 +1,9 @@
 // ═══════════════════════════════════════════════════════════════
-//  SAVE CODE  (empathy 0-10, sceneIndex 0-15, auntScore 0-10, auntStrikes 0-2)
-//  value = emp*528 + scene*33 + score*3 + strikes  →  3 base-36 chars + 1 checksum
+//  SAUVEGARDE — un seul code pour les quatre parties (voir sauvegarde.js)
 // ═══════════════════════════════════════════════════════════════
-function encodeState(){
-  const v = empathy*528 + sceneIndex*33 + auntScore*3 + auntStrikes;
-  const b36 = v.toString(36).toUpperCase().padStart(3,'0');
-  const chk = (empathy+sceneIndex+auntScore+auntStrikes) % 36;
-  return b36 + chk.toString(36).toUpperCase();
-}
-
-function decodeState(raw){
-  const code = raw.trim().toUpperCase();
-  if(!/^[0-9A-Z]{4}$/.test(code)) return null;
-  const v   = parseInt(code.slice(0,3), 36);
-  const chk = parseInt(code[3], 36);
-  if(isNaN(v)||isNaN(chk)) return null;
-  const strikes = v % 3;
-  const r1      = Math.floor(v/3);
-  const score   = r1 % 11;
-  const r2      = Math.floor(r1/11);
-  const scene   = r2 % 16;
-  const emp     = Math.floor(r2/16);
-  if((emp+scene+score+strikes) % 36 !== chk) return null;
-  if(emp>10 || scene>=TEXTES.SCENES.length || score>10 || strikes>2) return null;
-  return { empathy:emp, sceneIndex:scene, auntScore:score, auntStrikes:strikes };
-}
-
 function showSaveModal(){
-  document.getElementById('save-code').textContent = encodeState();
+  saveP4();
+  document.getElementById('save-code').textContent = Sauvegarde.code();
   document.getElementById('modal-save').classList.add('open');
 }
 function hideSaveModal(){
@@ -37,13 +13,17 @@ function hideSaveModal(){
 function resumeFromCode(){
   const raw   = document.getElementById('code-input').value;
   const errEl = document.getElementById('code-error');
-  const state = decodeState(raw);
+  const state = Sauvegarde.lire(raw);
   if(!state){ errEl.textContent=UI.invalidCode; return; }
+  Sauvegarde.reprendre(raw);
   errEl.textContent='';
   clearTimers();
-  empathy=state.empathy; sceneIndex=state.sceneIndex;
-  auntScore=state.auntScore; auntStrikes=state.auntStrikes;
+  empathy=state.empathy; sceneIndex=state.scene;
+  auntScore=state.aunt; auntStrikes=state.strikes;
   buildHearts();
+  // Le code rouvre aussi la serrure du numéro : elle a déjà été franchie.
+  const gate=document.getElementById('phone-gate'); if(gate) gate.style.display='none';
+  const intro=document.getElementById('intro4'); if(intro) intro.style.display='none';
   switchScreen('game');
   loadScene(sceneIndex);
 }
@@ -68,7 +48,9 @@ function initTextes(){
   document.querySelector('.t-eyebrow').textContent=t.eyebrow;
   document.querySelector('.t-main').textContent=t.main;
   document.querySelector('.t-sub').innerHTML=t.sub.replace(/\n/g,'<br>');
-  const legs=document.querySelectorAll('.legend span');
+  // « .legend span » attrapait aussi les pastilles de couleur imbriquées :
+  // les trois libellés atterrissaient un cran trop loin (« CLARALA TANTE »).
+  const legs=document.querySelectorAll('.legend > span');
   t.legende.forEach((l,i)=>{ if(legs[i]) legs[i].appendChild(document.createTextNode(l)); });
   document.querySelector('.btn-start').textContent=t.bouton;
 
@@ -94,6 +76,14 @@ const MAX_EMP = 10;
 let _timers = [];
 
 function later(fn, ms){ const id=setTimeout(fn,ms); _timers.push(id); return id; }
+
+// L'état de cette partie est rangé avec celui des trois autres : le code de
+// sauvegarde couvre le jeu entier (voir sauvegarde.js).
+function saveP4(){
+  try {
+    localStorage.setItem('rc_p4', JSON.stringify({ e: empathy, s: sceneIndex, a: auntScore, k: auntStrikes }));
+  } catch (e) {}
+}
 function clearTimers(){ _timers.forEach(clearTimeout); _timers=[]; }
 
 function startGame(){
@@ -110,26 +100,21 @@ function switchScreen(id){
   document.getElementById('screen-'+id).classList.add('active');
 }
 
-// ═══ HEARTS ═══
+// ═══ EMPATHIE ═══
+// Les cœurs et le score chiffré ont été retirés : ils poussaient à chercher
+// la bonne réponse plutôt qu'à répondre. Le compte reste en interne, il
+// choisit la fin ; le joueur, lui, ne voit que le retour écrit.
 function buildHearts(){
-  const c=document.getElementById('hearts'); c.innerHTML='';
-  for(let i=0;i<MAX_EMP;i++){
-    const d=document.createElement('div');
-    d.className='hrt'+(i<4?' lv1':i<7?' lv2':' lv3');
-    c.appendChild(d);
-  }
-  updateHearts();
+  const c=document.getElementById('hearts'); if(c) c.innerHTML='';
+  const a=document.querySelector('.emp-area'); if(a) a.style.display='none';
 }
-function updateHearts(){
-  document.querySelectorAll('.hrt').forEach((d,i)=>{
-    i<empathy ? d.classList.add('on') : d.classList.remove('on');
-  });
-}
-function addEmpathy(n){ empathy=Math.min(MAX_EMP,empathy+n); updateHearts(); }
+function updateHearts(){}
+function addEmpathy(n){ empathy=Math.min(MAX_EMP,empathy+n); saveP4(); }
 
 // ═══ LOAD SCENE ═══
 function loadScene(idx){
   sceneIndex=idx;
+  saveP4();
   const scene=TEXTES.SCENES[idx];
   if(!scene){ showEnding(); return; }
 
@@ -195,7 +180,7 @@ function showChoices(choices, prompt, callback){
   const shuffled=shuffle(choices);
   shuffled.forEach((c,i)=>{
     const btn=document.createElement('button');
-    btn.className='cbtn'; btn.dataset.emp=c.emp!==undefined?c.emp:'?';
+    btn.className='cbtn';
     btn.innerHTML=c.txt;
     btn.addEventListener('click', ()=>{
       wrap.querySelectorAll('.cbtn').forEach((b,j)=>{b.disabled=true; b.style.opacity=j===i?'1':'.38';});
@@ -320,13 +305,33 @@ function nextStep(){
 
 // ═══ ENDING ═══
 function buildResourcesHTML(){
-  const items=TEXTES.ressources.map(r=>
-    `<div><span style="color:rgba(255,255,255,.45);">${r.label}</span> — ${r.txt}</div>`
+  const R = (window.RESSOURCES || { titre: '', liste: [] });
+  const items=R.liste.map(r=>
+    `<div><span style="color:rgba(255,255,255,.7);">${r.label}</span> — ${r.txt}</div>`
   ).join('');
-  return `<div style="margin-top:18px;border-top:1px solid rgba(255,255,255,.06);padding-top:14px;font-family:'Jost',sans-serif;font-size:11px;color:rgba(255,255,255,.25);line-height:1.8;text-align:left;">
-  <div style="color:rgba(255,255,255,.4);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:9px;margin-bottom:6px;">${TEXTES.ressourcesTitre}</div>
+  return `<div style="margin-top:18px;border-top:1px solid rgba(255,255,255,.06);padding-top:14px;font-family:'Jost',sans-serif;font-size:11px;color:rgba(255,255,255,.55);line-height:1.8;text-align:left;">
+  <div style="color:rgba(255,255,255,.6);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:11px;margin-bottom:6px;">${R.titre}</div>
   ${items}
 </div>`;
+}
+
+function buildSuiteHTML(){
+  const S=TEXTES.suite, E=TEXTES.epilogue;
+  let h='';
+  if(S){
+    h+=`<div class="end-block"><h4>${S.icon} ${S.titre}</h4><ul>`
+      + S.items.map(i=>`<li>${i}</li>`).join('') + `</ul></div>`;
+  }
+  if(E){
+    h+=`<div class="end-block end-block-law"><h4>${E.icon} ${E.titre}</h4><p>${E.corps.replace(/\n/g,'<br>')}</p></div>`;
+  }
+  return h;
+}
+
+function buildRecapHTML(){
+  if(!TEXTES.recapBtn) return '';
+  const url = (typeof UI!=='undefined' && UI.recapUrl) ? UI.recapUrl : 'recapitulatif.html';
+  return `<a class="end-recap" href="${url}">${TEXTES.recapBtn}</a>`;
 }
 
 function showEnding(){
@@ -338,7 +343,8 @@ function showEnding(){
   document.getElementById('end-title').className='end-title '+fin.cls;
   document.getElementById('end-body').textContent=fin.corps;
   document.getElementById('end-quote').textContent=fin.citation;
-  document.getElementById('end-score').innerHTML=`${TEXTES.jeu.scoreLabel}<span>${s} / ${MAX_EMP}</span>${buildResourcesHTML()}`;
+  document.getElementById('end-score').innerHTML = buildSuiteHTML() + buildResourcesHTML() + buildRecapHTML();
+  try { localStorage.setItem('rc_fin', fin.cls); } catch(e){}
   switchScreen('end');
 }
 

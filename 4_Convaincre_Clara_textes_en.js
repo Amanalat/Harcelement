@@ -5,7 +5,7 @@ var TEXTES = {
   titre: {
     eyebrow: "A game about empathy — School bullying",
     main:    "Convincing Clara",
-    sub:     "Clara left school three weeks ago and took refuge at her aunt's house.\nYou are Léo, her friend. To speak to Clara, you must first convince her aunt that you are trustworthy — and that you are truly there to help her.",
+    sub:     "Clara has not been to school for five days. She has taken refuge at her aunt's, out in the countryside.\nYou are Léo, her friend. To speak to Clara, you must first convince her aunt that you are trustworthy — and that you are truly there to help her.",
     legende: ["The aunt", "Clara", "You — Léo"],
     bouton:  "☎  Call",
     // Léo's thoughts after each wrong number: the player has to work out that
@@ -33,14 +33,28 @@ var TEXTES = {
 
   locuteurs: { aunt: "The aunt", lea: "Clara", thomas: "Léo" },
 
-  // ─── Resources, end screen ────────────────────────────────────────────
+  // Les numéros d'aide sont dans ressources.js — un seul endroit à changer.
 
-  ressourcesTitre: "Resources",
-  ressources: [
-    { label: "3018",          txt: "Net Écoute · cyberbullying, free and anonymous" },
-    { label: "3114",          txt: "National suicide prevention hotline" },
-    { label: "e-enfance.org", txt: "advice and online reporting" }
-  ],
+
+  // ─── What Léo does next, and what happens to the group ───────────────────
+
+  suite: {
+    icon:  "🧑‍🏫",
+    titre: "The next day, Léo",
+    items: [
+      "Goes to see the school counsellor. Not to denounce anyone: to say that a student has stopped coming, and why.",
+      "Shows the screenshots he kept, and reports the anonymous accounts one by one.",
+      "Did not fix anything on his own — he did what a fourteen-year-old friend can do: tell someone who can act."
+    ]
+  },
+
+  epilogue: {
+    icon:  "⚖️",
+    titre: "And the five in the group?",
+    corps: "The school opened an investigation and met them, with their parents. Two answered that they \"didn't mean any harm\". Kevin showed his screenshots.\n\nIn France, school bullying has been a criminal offence since 2022 — online included, between pupils of the same school included.\n\nClara came back three weeks later. It was not easy. But she was no longer carrying it alone.",
+  },
+
+  recapBtn: "🖨 Printable summary",
 
   // ─── Endings, descending score order ───────────────────────────────────
 
@@ -251,7 +265,7 @@ var TEXTES = {
     { id:'L4', phase:'2', phaseName:'Phase 2 — Clara', stepLabel:'Question 4 / 4',
       pdotCount:4, pdotActive:3,
       dialogueBefore:[
-        {spk:'lea',    txt:"I've been here for three weeks…\nAt first, I couldn't even leave the bedroom.\nNow… it's a little better. But I'm still scared.\nScared to go back to school. Scared it will start again. Scared that nothing will change."},
+        {spk:'lea',    txt:"I've been here five days…\nThe first two, I couldn't even leave the bedroom.\nNow… it hurts a little less. But I'm still scared.\nScared to go back to school. Scared it will start again. Scared that nothing will change."},
         {spk:'thomas', txt:"Have you talked to your aunt about it? To your parents?"},
         {spk:'lea',    txt:"My aunt knows a little… She's kind. But I don't want to worry them.\nI feel like if I really talk about it… it becomes real."},
       ],
@@ -274,5 +288,6 @@ var TEXTES = {
 };
 
 const UI = {
+  recapUrl: "recapitulatif_en.html",
   invalidCode: "Invalid code — check the 4 characters."
 };

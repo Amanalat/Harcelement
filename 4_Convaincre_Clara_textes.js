@@ -5,7 +5,7 @@ var TEXTES = {
   titre: {
     eyebrow: "Un jeu sur l'empathie — Harcèlement scolaire",
     main:    "Convaincre Clara",
-    sub:     "Clara a quitté le collège depuis trois semaines et s'est réfugiée chez sa tante.\nTu es Léo, son ami. Pour parler à Clara, tu dois d'abord convaincre sa tante que tu es digne de confiance — et que tu es vraiment là pour l'aider.",
+    sub:     "Clara ne vient plus au collège depuis cinq jours. Elle s'est réfugiée chez sa tante, à la campagne.\nTu es Léo, son ami{e}. Pour parler à Clara, tu dois d'abord convaincre sa tante que tu es digne de confiance — et que tu es vraiment là pour l'aider.",
     legende: ["La tante", "Clara", "Toi — Léo"],
     bouton:  "☎  Appeler",
     // Pensées de Léo après chaque numéro faux : le joueur doit deviner qu'Inès
@@ -22,7 +22,7 @@ var TEXTES = {
   gameover: {
     icon:  "📵",
     titre: "La tante a raccroché.",
-    corps: "Elle a senti que tu n'étais pas prêt à comprendre ce que Clara traversait.\n\nPour protéger sa nièce encore fragile, elle a préféré mettre fin à la conversation.",
+    corps: "Elle a senti que tu n'étais pas prêt{e} à comprendre ce que Clara traversait.\n\nPour protéger sa nièce encore fragile, elle a préféré mettre fin à la conversation.",
     lecon: "💡 L'empathie, ce n'est pas seulement vouloir aider.\nC'est écouter avant de parler. Sentir avant d'agir."
   },
 
@@ -33,14 +33,30 @@ var TEXTES = {
 
   locuteurs: { aunt: "La tante", lea: "Clara", thomas: "Léo" },
 
-  // ─── Ressources (écran de fin) ────────────────────────────────────────────
+  // Les numéros d'aide sont dans ressources.js — un seul endroit à changer.
 
-  ressourcesTitre: "Ressources",
-  ressources: [
-    { label: "3018",          txt: "Net Écoute · cyberharcèlement (gratuit, anonyme)" },
-    { label: "3114",          txt: "Numéro national de prévention du suicide" },
-    { label: "e-enfance.org", txt: "conseils et signalement en ligne" }
-  ],
+
+  // ─── Ce que Léo fait le lendemain, et ce qui arrive au groupe ────────────
+  // Le jeu disait « il faut des adultes qui peuvent agir » après quarante
+  // minutes passées à enquêter seul. Voici la démarche qui manquait.
+
+  suite: {
+    icon:  "🧑‍🏫",
+    titre: "Le lendemain, Léo",
+    items: [
+      "Va voir le CPE. Pas pour dénoncer : pour dire qu'une élève de son collège ne vient plus, et pourquoi.",
+      "Montre les captures d'écran qu'il a gardées, et signale les comptes anonymes un par un.",
+      "N'a rien réglé tout seul — il a fait ce qu'un ami de quatorze ans peut faire : prévenir quelqu'un qui peut agir."
+    ]
+  },
+
+  epilogue: {
+    icon:  "⚖️",
+    titre: "Et les cinq du groupe ?",
+    corps: "Le collège a ouvert une enquête et les a reçus, avec leurs parents. Deux ont répondu qu'ils « ne pensaient pas à mal ». Kevin a montré ses captures.\n\nEn France, le harcèlement scolaire est un délit depuis 2022 — y compris en ligne, y compris entre élèves d'un même établissement.\n\nClara est revenue trois semaines plus tard. Ça n'a pas été simple. Mais elle ne portait plus ça toute seule."
+  },
+
+  recapBtn: "🖨 Récapitulatif à imprimer",
 
   // ─── Fins (ordre décroissant de score) ───────────────────────────────────
 
@@ -88,7 +104,7 @@ var TEXTES = {
       dialogueBefore:[
         {spk:'narrator', txt:'[ Le téléphone sonne… déclic. ]'},
         {spk:'aunt',     txt:'Allô ?'},
-        {spk:'thomas',   txt:"Bonjour madame… excusez-moi de vous déranger. Je m'appelle Léo, je suis un ami de Clara. Est-ce que je pourrais lui parler, s'il vous plaît ?"},
+        {spk:'thomas',   txt:"Bonjour madame… excusez-moi de vous déranger. Je m'appelle Léo, je suis {un ami|une amie} de Clara. Est-ce que je pourrais lui parler, s'il vous plaît ?"},
         {spk:'aunt',     txt:"Léo… Oui, elle m'a parlé de toi.\nMais… je préfère être honnête : ce n'est pas un bon moment."},
       ],
       prompt:'Comment répondre ?',
@@ -105,7 +121,7 @@ var TEXTES = {
           recovery:{
             auntLine: "Ce n'est pas une urgence pour moi, Léo. Et pour l'instant, c'est ce qui compte.",
             prompt:   'La tante attend. Que dis-tu ?',
-            good:{ txt:"« Vous avez raison. Je suis désolé. C'est elle qui compte, pas moi. »",
+            good:{ txt:"« Vous avez raison. Je suis désolé{e}. C'est elle qui compte, pas moi. »",
                    reply:{spk:'aunt', txt:"(légèrement adoucie) …D'accord. Continue."} },
             bad: { txt:"« Mais vous ne comprenez pas, c'est vraiment important. »",
                    reply:{spk:'aunt', txt:"(sèchement) Je comprends très bien. Et ça ne me rassure pas."} }
@@ -149,10 +165,10 @@ var TEXTES = {
       ],
       prompt:"Avant qu'elle aille demander à Clara…",
       choices:[
-        { emp:2, txt:"« Je serai patient. Dites-lui juste que je suis là. Elle est pas obligée de me parler. »",
+        { emp:2, txt:"« Je serai patient{e}. Dites-lui juste que je suis là. Elle est pas obligée de me parler. »",
           fb:{type:'good', msg:"Tu enlèves toute pression. C'est exactement ce qu'il fallait."},
           reply:{spk:'aunt', txt:"(plus douce) Je vais lui dire ça. Attends."}},
-        { emp:1, txt:"« Je vous promets d'être doux. Merci de me donner cette chance. »",
+        { emp:1, txt:"« Je vous promets d'être {doux|douce}. Merci de me donner cette chance. »",
           fb:{type:'ok', msg:"Sincère. La tante apprécie l'honnêteté."},
           reply:{spk:'aunt', txt:"D'accord… je vais lui demander."}},
         { emp:0, txt:"« Je vais lui dire que tout va s'arranger, que j'ai un plan. »",
@@ -161,10 +177,10 @@ var TEXTES = {
           recovery:{
             auntLine: "Est-ce que tu comprends la différence, Léo ?",
             prompt:   '',
-            good:{ txt:"« Oui… vous avez raison. Je voulais juste l'aider mais je suis allé trop vite. »",
+            good:{ txt:"« Oui… vous avez raison. Je voulais juste l'aider mais je suis allé{e} trop vite. »",
                    reply:{spk:'aunt', txt:"(longue pause) …Je vais lui demander. Mais ne la brusque pas."} },
             bad: { txt:"« Je pense que ça lui ferait du bien d'avoir un objectif concret. »",
-                   reply:{spk:'aunt', txt:"(ferme) Je ne crois pas que tu sois prêt à lui parler ce soir."} }
+                   reply:{spk:'aunt', txt:"(ferme) Je ne crois pas que tu sois prêt{e} à lui parler ce soir."} }
           }
         },
       ]
@@ -189,7 +205,7 @@ var TEXTES = {
         {spk:'lea',      txt:'Allô… ?'},
         {spk:'thomas',   txt:'Clara… c\'est moi. Léo.'},
         {spk:'lea',      txt:'… Salut.'},
-        {spk:'thomas',   txt:"Je suis désolé d'appeler comme ça. Je ne savais pas comment faire autrement."},
+        {spk:'thomas',   txt:"Je suis désolé{e} d'appeler comme ça. Je ne savais pas comment faire autrement."},
         {spk:'lea',      txt:"C'est… c'est pas grave."},
         {spk:'thomas',   txt:"Tu m'as manqué."},
         {spk:'lea',      txt:"(souffle) Toi aussi…"},
@@ -217,7 +233,7 @@ var TEXTES = {
       ],
       prompt:"Que ressens-tu à l'entendre ?",
       choices:[
-        { emp:2, txt:"« Même chez toi t'étais pas tranquille… T'avais plus aucun endroit où souffler. Je suis désolé. »",
+        { emp:2, txt:"« Même chez toi t'étais pas tranquille… T'avais plus aucun endroit où souffler. Je suis désolé{e}. »",
           fb:{type:'good', msg:'Tu nommes sa réalité avec précision. Elle se sent comprise.'},
           reply:{spk:'lea', txt:"(voix qui se brise) Oui… c'est exactement ça."}},
         { emp:1, txt:"« C'est horrible… être harcelée même à la maison. »",
@@ -251,7 +267,7 @@ var TEXTES = {
     { id:'L4', phase:'2', phaseName:'Phase 2 — Clara', stepLabel:'Question 4 / 4',
       pdotCount:4, pdotActive:3,
       dialogueBefore:[
-        {spk:'lea',    txt:"Ça fait trois semaines que je suis ici…\nAu début, je n'arrivais même pas à sortir de la chambre.\nMaintenant… ça va un peu mieux. Mais j'ai encore peur.\nPeur de retourner au collège. Peur que ça recommence. Peur que rien ne change."},
+        {spk:'lea',    txt:"Ça fait cinq jours que je suis ici…\nLes deux premiers, je sortais même pas de la chambre.\nMaintenant… ça va un peu moins mal. Mais j'ai encore peur.\nPeur de retourner au collège. Peur que ça recommence. Peur que rien ne change."},
         {spk:'thomas', txt:"Tu en as parlé à ta tante ? À tes parents ?"},
         {spk:'lea',    txt:"Ma tante sait un peu… Elle est gentille. Mais je veux pas les inquiéter.\nJ'ai l'impression que si j'en parle vraiment… ça devient réel."},
       ],
@@ -274,5 +290,6 @@ var TEXTES = {
 };
 
 const UI = {
+  recapUrl: "recapitulatif.html",
   invalidCode: "Code invalide — vérifie les 4 caractères."
 };

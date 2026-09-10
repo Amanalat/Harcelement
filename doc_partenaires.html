@@ -107,12 +107,13 @@ blockquote{border-left:3px solid var(--accent);padding:10px 18px;margin:14px 0;c
     <li><a href="#session-today">Modifications du 7 mai 2026</a>
       <ul style="margin:4px 0 0 0;">
         <li><a href="#partie1">Partie 1 : Téléphone d'Inès</a></li>
-        <li><a href="#partie2">Partie 2 : Instagram de Clara</a></li>
-        <li><a href="#partie3">Partie 3 : Groupe WhatsApp</a></li>
+        <li><a href="#partie2">Partie 2 : Instaclasse de Clara</a></li>
+        <li><a href="#partie3">Partie 3 : Groupe Whatsupp</a></li>
         <li><a href="#partie4">Partie 4 : Convaincre Clara</a></li>
       </ul>
     </li>
     <li><a href="#session-sept">Modifications du 9 septembre 2026 (relecture critique)</a></li>
+    <li><a href="#marques">Noms d'applications fictifs (10 septembre 2026)</a></li>
     <li><a href="#flux-narratif">Flux narratif complet</a></li>
     <li><a href="#pending">Points en attente / Notes techniques</a></li>
   </ol>
@@ -130,8 +131,8 @@ blockquote{border-left:3px solid var(--accent);padding:10px 18px;margin:14px 0;c
   <thead><tr><th>Partie</th><th>Mécanique principale</th><th>Durée estimée</th><th>Statut</th></tr></thead>
   <tbody>
     <tr><td><strong>1 — Téléphone d'Inès</strong></td><td>Dialogue à choix multiples, jauge de confiance</td><td>5–8 min</td><td>✅ Fonctionnel</td></tr>
-    <tr><td><strong>2 — Instagram de Clara</strong></td><td>Exploration d'un profil fictif, identification de types de harcèlement</td><td>10–15 min</td><td>✅ Refonte complète</td></tr>
-    <tr><td><strong>3 — Groupe WhatsApp</strong></td><td>Lecture d'un chat de groupe, quiz d'analyse</td><td>6–10 min</td><td>✅ Enrichi</td></tr>
+    <tr><td><strong>2 — Instaclasse de Clara</strong></td><td>Exploration d'un profil fictif, identification de types de harcèlement</td><td>10–15 min</td><td>✅ Refonte complète</td></tr>
+    <tr><td><strong>3 — Groupe Whatsupp</strong></td><td>Lecture d'un chat de groupe, quiz d'analyse</td><td>6–10 min</td><td>✅ Enrichi</td></tr>
     <tr><td><strong>4 — Convaincre Clara</strong></td><td>Conversation téléphonique, jeu d'empathie</td><td>6–10 min</td><td>✅ Ajustements</td></tr>
   </tbody>
 </table>
@@ -147,16 +148,16 @@ blockquote{border-left:3px solid var(--accent);padding:10px 18px;margin:14px 0;c
     <tr><td><span class="file-ref">1_Telephone_Ines.html</span></td><td>Interface téléphone iOS simulé (Partie 1)</td></tr>
     <tr><td><span class="file-ref">1_Telephone_Ines_textes.js</span></td><td>Tous les textes et données de dialogue (Partie 1) — modifiable sans toucher la logique</td></tr>
     <tr><td><span class="file-ref">1_Telephone_Ines_Structure.js</span></td><td>Moteur de jeu : jauge de confiance, branches, fins (Partie 1)</td></tr>
-    <tr><td><span class="file-ref">2_Insta_de_Clara.html</span></td><td>Interface Instagram fictive — profil, DMs, lightbox photos (Partie 2)</td></tr>
-    <tr><td><span class="file-ref">2_Insta_de_Clara_Structure.js</span></td><td>Moteur de jeu complet Partie 2 — données + logique</td></tr>
-    <tr><td><span class="file-ref">3_WhatsApp_Groupe.html</span></td><td>Interface WhatsApp groupe fictif (Partie 3)</td></tr>
-    <tr><td><span class="file-ref">3_WhatsApp_Groupe_textes.js</span></td><td>Messages, quiz et textes (Partie 3)</td></tr>
-    <tr><td><span class="file-ref">3_WhatsApp_Groupe_Structure.js</span></td><td>Moteur de lecture et quiz (Partie 3)</td></tr>
+    <tr><td><span class="file-ref">2_Compte_de_Clara.html</span></td><td>Interface Instaclasse fictive — profil, DMs, lightbox photos (Partie 2)</td></tr>
+    <tr><td><span class="file-ref">2_Compte_de_Clara_Structure.js</span></td><td>Moteur de jeu complet Partie 2 — données + logique</td></tr>
+    <tr><td><span class="file-ref">3_Groupe_Secret.html</span></td><td>Interface Whatsupp groupe fictif (Partie 3)</td></tr>
+    <tr><td><span class="file-ref">3_Groupe_Secret_textes.js</span></td><td>Messages, quiz et textes (Partie 3)</td></tr>
+    <tr><td><span class="file-ref">3_Groupe_Secret_Structure.js</span></td><td>Moteur de lecture et quiz (Partie 3)</td></tr>
     <tr><td><span class="file-ref">4_Convaincre_Clara.html</span></td><td>Interface appel téléphonique fictif (Partie 4)</td></tr>
     <tr><td><span class="file-ref">4_Convaincre_Clara_textes.js</span></td><td>Dialogues et scènes (Partie 4)</td></tr>
     <tr><td><span class="file-ref">4_Convaincre_Clara_Structure.js</span></td><td>Moteur de jeu Partie 4</td></tr>
     <tr><td><span class="file-ref">edit_textes.py</span></td><td>Outil interne (Python/tkinter) pour modifier les textes de la Partie 1 sans éditeur de code</td></tr>
-    <tr><td><span class="file-ref">images_clara/</span></td><td>Photos du profil Instagram de Clara (plage, concert, chat…)</td></tr>
+    <tr><td><span class="file-ref">images_clara/</span></td><td>Photos du profil Instaclasse de Clara (plage, concert, chat…)</td></tr>
   </tbody>
 </table>
 
@@ -253,7 +254,7 @@ blockquote{border-left:3px solid var(--accent);padding:10px 18px;margin:14px 0;c
 
 
 <!-- PARTIE 2 -->
-<h2 id="partie2" style="margin-top:32px;">Partie 2 — Instagram de Clara</h2>
+<h2 id="partie2" style="margin-top:32px;">Partie 2 — Instaclasse de Clara</h2>
 
 <div class="mod-block good">
   <h4>Refonte du système d'identification des types de harcèlement <span class="badge badge-new">nouveau</span></h4>
@@ -303,13 +304,13 @@ blockquote{border-left:3px solid var(--accent);padding:10px 18px;margin:14px 0;c
 
 <h4>Fichiers modifiés</h4>
 <ul>
-  <li><span class="file-ref">2_Insta_de_Clara.html</span> — CSS mode sélection, bouton flottant, overlay identification</li>
-  <li><span class="file-ref">2_Insta_de_Clara_Structure.js</span> — HARCEL_TYPES, HARCEL_MAP, getHarcelType(), toggleSelectMode(), showIdentifyQCM(), answerIdentify(), closeIdentify() + refonte showLb() + modification openThread()</li>
+  <li><span class="file-ref">2_Compte_de_Clara.html</span> — CSS mode sélection, bouton flottant, overlay identification</li>
+  <li><span class="file-ref">2_Compte_de_Clara_Structure.js</span> — HARCEL_TYPES, HARCEL_MAP, getHarcelType(), toggleSelectMode(), showIdentifyQCM(), answerIdentify(), closeIdentify() + refonte showLb() + modification openThread()</li>
 </ul>
 
 
 <!-- PARTIE 3 -->
-<h2 id="partie3" style="margin-top:32px;">Partie 3 — Groupe WhatsApp</h2>
+<h2 id="partie3" style="margin-top:32px;">Partie 3 — Groupe Whatsupp</h2>
 
 <div class="mod-block good">
   <h4>Phase 6 : la disparition de Clara <span class="badge badge-new">ajouté</span></h4>
@@ -333,8 +334,8 @@ blockquote{border-left:3px solid var(--accent);padding:10px 18px;margin:14px 0;c
 
 <h4>Fichiers modifiés</h4>
 <ul>
-  <li><span class="file-ref">3_WhatsApp_Groupe_textes.js</span> — Phase 6 (messages 40–58), endMessage enrichi</li>
-  <li><span class="file-ref">3_WhatsApp_Groupe_Structure.js</span> — setItem localStorage dans showEndState()</li>
+  <li><span class="file-ref">3_Groupe_Secret_textes.js</span> — Phase 6 (messages 40–58), endMessage enrichi</li>
+  <li><span class="file-ref">3_Groupe_Secret_Structure.js</span> — setItem localStorage dans showEndState()</li>
 </ul>
 
 
@@ -405,7 +406,7 @@ des fichiers du jeu</strong> : ils ne peuvent plus dériver.</p>
 <div class="mod-block fixed">
   <h4>Crédibilité <span class="badge">corrigé</span></h4>
   <ul>
-    <li>Le code du groupe est <strong>assumé comme un dispositif d'exercice</strong> : un groupe WhatsApp
+    <li>Le code du groupe est <strong>assumé comme un dispositif d'exercice</strong> : un groupe Whatsupp
     n'a pas de code d'accès. Le journal de Clara ne prétend plus l'avoir obtenu — elle écrit qu'elle ne
     peut ni y entrer ni rien prouver.</li>
     <li><strong>Chronologie unifiée</strong> : harcèlement depuis huit mois, exclusion du groupe depuis
@@ -439,7 +440,7 @@ des fichiers du jeu</strong> : ils ne peuvent plus dériver.</p>
   <p>La partie n'avait aucun objectif. Le joueur doit maintenant <strong>démasquer les cinq comptes
   anonymes</strong> que le groupe nomme à voix haute : un compteur suit sa progression, chaque @mention
   ouvre une carte, et les comptes portent ensuite le prénom de leur propriétaire quand on retourne sur
-  l'Instagram de la Partie 2. C'est l'asymétrie que le jeu raconte — le joueur sait, Clara jamais.</p>
+  l'Instaclasse de la Partie 2. C'est l'asymétrie que le jeu raconte — le joueur sait, Clara jamais.</p>
   <p>Les messages ne défilent plus tout seuls (55 messages en 95 secondes) : chacun attend un appui.</p>
 </div>
 
@@ -504,25 +505,67 @@ des fichiers du jeu</strong> : ils ne peuvent plus dériver.</p>
   remplacé. À relancer après chaque modification des textes.</p>
 </div>
 
-<!-- ═══ 6. FLUX NARRATIF ═══ -->
+<!-- ═══ 6. NOMS D'APPLICATIONS ═══ -->
 <div class="section-break"></div>
-<h2 id="flux-narratif">6. Flux narratif complet</h2>
+<h2 id="marques">6. Noms d'applications fictifs — 10 septembre 2026</h2>
+
+<p>Le jeu reprenait les noms et l'apparence de deux services réels. Ils sont remplacés par des
+noms inventés : le jeu ne se réclame plus d'aucune marque existante, ce qui est plus sûr
+juridiquement et évite de faire de la publicité en classe.</p>
+
+<div class="mod-block good">
+  <h4>Deux noms inventés <span class="badge badge-changed">modifié</span></h4>
+  <table>
+    <tr><th>Avant</th><th>Après</th></tr>
+    <tr><td>Instagram</td><td><strong>Instaclasse</strong></td></tr>
+    <tr><td>WhatsApp</td><td><strong>Whatsupp</strong></td></tr>
+  </table>
+  <p>Les deux noms sont identiques dans la version française et dans la version anglaise :
+  une marque ne se traduit pas.</p>
+</div>
+
+<div class="mod-block good">
+  <h4>Fichiers renommés <span class="badge badge-changed">modifié</span></h4>
+  <p>Les adresses affichées dans la barre du navigateur laissaient voir les marques. Les dix
+  fichiers concernés sont renommés, et tous les liens internes suivis :</p>
+  <ul>
+    <li><span class="file-ref">2_Insta_de_Clara*</span> → <span class="file-ref">2_Compte_de_Clara*</span> (5 fichiers)</li>
+    <li><span class="file-ref">3_WhatsApp_Groupe*</span> → <span class="file-ref">3_Groupe_Secret*</span> (5 fichiers)</li>
+  </ul>
+  <p><strong>Conséquence :</strong> les anciens signets et les liens partagés vers ces deux pages
+  ne fonctionnent plus. Il faut repartir de la page d'accueil.</p>
+</div>
+
+<div class="mod-block info">
+  <h4>Dans le code aussi</h4>
+  <p>Les noms de fonctions, de clés de données et d'attributs qui citaient les marques ont été
+  renommés (<code>goToInstagram</code> → <code>goToCompte</code>, <code>instagramCard</code> →
+  <code>postCard</code>, <code>instagram-card</code> → <code>post-card</code>, etc.). Le dépôt
+  étant public, le code source ne cite plus aucune marque non plus. Les classes CSS courtes
+  (<code>.ig-*</code>, <code>--wa-*</code>) sont conservées : elles n'écrivent aucun nom.</p>
+  <p>Vérifié après coup : plus aucune occurrence des deux marques dans les fichiers du jeu, et
+  les 109 contrôles automatiques passent toujours.</p>
+</div>
+
+<!-- ═══ 7. FLUX NARRATIF ═══ -->
+<div class="section-break"></div>
+<h2 id="flux-narratif">7. Flux narratif complet</h2>
 
 <div class="flow" style="flex-wrap:wrap;gap:4px;">
   <div class="flow-step"><strong>Menu</strong>index.html — présentation des 4 parties</div>
-  <div class="flow-step"><strong>Partie 1</strong>Appel à Inès → obtenir codes Instagram + révélations sur le harcèlement</div>
-  <div class="flow-step"><strong>Partie 2</strong>Explorer l'Instagram de Clara → identifier 4 types de harcèlement → débloquer le journal de Clara → code WhatsApp 4827</div>
-  <div class="flow-step"><strong>Partie 3</strong>Lire le groupe WhatsApp → comprendre l'organisation → voir Clara disparaître</div>
+  <div class="flow-step"><strong>Partie 1</strong>Appel à Inès → obtenir codes Instaclasse + révélations sur le harcèlement</div>
+  <div class="flow-step"><strong>Partie 2</strong>Explorer l'Instaclasse de Clara → identifier 4 types de harcèlement → débloquer le journal de Clara → code Whatsupp 4827</div>
+  <div class="flow-step"><strong>Partie 3</strong>Lire le groupe Whatsupp → comprendre l'organisation → voir Clara disparaître</div>
   <div class="flow-step"><strong>Retour Inès</strong>(discret) Saisir "havre secret" → obtenir n° de restaurant : 04 54 78 95 32</div>
   <div class="flow-step"><strong>Partie 4</strong>Appeler le restaurant → convaincre la tante → parler à Clara</div>
 </div>
 
-<p style="margin-top:14px;font-size:13px;color:var(--dim);">Note : le retour vers Inès entre la Partie 3 et la Partie 4 est volontairement non guidé — le joueur doit faire le lien par lui-même entre la mention du "havre secret" dans le groupe WhatsApp et l'idée de rappeler Inès.</p>
+<p style="margin-top:14px;font-size:13px;color:var(--dim);">Note : le retour vers Inès entre la Partie 3 et la Partie 4 est volontairement non guidé — le joueur doit faire le lien par lui-même entre la mention du "havre secret" dans le groupe Whatsupp et l'idée de rappeler Inès.</p>
 
 
 <!-- ═══ 6. PENDING ═══ -->
 <div class="section-break"></div>
-<h2 id="pending">7. Points en attente / Notes techniques</h2>
+<h2 id="pending">8. Points en attente / Notes techniques</h2>
 
 <div class="mod-block warn">
   <h4>Liens de contournement à retirer avant la classe <span class="badge badge-pending">en attente</span></h4>
@@ -530,7 +573,7 @@ des fichiers du jeu</strong> : ils ne peuvent plus dériver.</p>
   vide l'exercice de son sens en séance :</p>
   <ul>
     <li><strong>Partie 3</strong> — un lien « Accéder directement → » sous le champ du code
-    (<span class="file-ref">3_WhatsApp_Groupe.html</span> et <span class="file-ref">_en.html</span>,
+    (<span class="file-ref">3_Groupe_Secret.html</span> et <span class="file-ref">_en.html</span>,
     fonction <code>bypassGate()</code>). Le code <strong>4827</strong> lui-même fonctionne normalement.</li>
     <li><strong>Partie 4</strong> — un lien « Passer » qui n'apparaît qu'après trois tentatives ratées
     du numéro de téléphone (<span class="file-ref">4_Convaincre_Clara.html</span>, élément
@@ -551,7 +594,7 @@ des fichiers du jeu</strong> : ils ne peuvent plus dériver.</p>
   <h4>À vérifier en conditions réelles <span class="badge badge-pending">à tester</span></h4>
   <ul>
     <li>Partie 2 — mode sélection dans la lightbox sur smartphone (taille de la zone tactile des commentaires).</li>
-    <li>Partie 3 — la nouvelle mission « relier les comptes Instagram et WhatsApp » : vérifier que la
+    <li>Partie 3 — la nouvelle mission « relier les comptes Instaclasse et Whatsupp » : vérifier que la
     consigne est comprise sans aide de l'enseignant.</li>
     <li>Écran « Avant de continuer » (avertissement de contenu) — le ton peut être réécrit selon
     l'établissement.</li>
@@ -576,11 +619,11 @@ des fichiers du jeu</strong> : ils ne peuvent plus dériver.</p>
     <li><code>rc_p1_visited</code> — localStorage — Partie 1 visitée (bouton « Reprendre » sur l'accueil)</li>
     <li><code>rc_types</code> — localStorage — types de harcèlement identifiés en Partie 2</li>
     <li><code>rc_p3_done</code> — localStorage — Partie 3 terminée (0/1/2 : active la 2<sup>e</sup> conversation d'Inès)</li>
-    <li><code>rc_comptes</code> — localStorage — comptes Instagram reliés à leur auteur WhatsApp</li>
+    <li><code>rc_comptes</code> — localStorage — comptes Instaclasse reliés à leur auteur Whatsupp</li>
     <li><code>rc_p4</code> — localStorage — score et choix de la Partie 4</li>
     <li><code>rc_fin</code> — localStorage — fin obtenue</li>
     <li><code>rc_remarques</code> — localStorage — remarques en attente d'envoi</li>
-    <li><code>harcelement_wa_state</code> — sessionStorage — position dans la Partie 3 (retour depuis Instagram)</li>
+    <li><code>harcelement_wa_state</code> — sessionStorage — position dans la Partie 3 (retour depuis Instaclasse)</li>
     <li><code>harcelement_wa_from</code> — sessionStorage — provenance (bouton « Retour au groupe » en Partie 2)</li>
   </ul>
   <p>Ces repères ne quittent jamais le navigateur. Pour changer de poste, le joueur utilise le
@@ -610,7 +653,7 @@ des fichiers du jeu</strong> : ils ne peuvent plus dériver.</p>
 </div><!-- /page-body -->
 
 <div style="background:var(--text);color:#5a5040;font-family:-apple-system,'Segoe UI',sans-serif;font-size:11px;text-align:center;padding:18px;letter-spacing:.06em;">
-  Retrouver Clara — Document interne — mis à jour le 9 septembre 2026
+  Retrouver Clara — Document interne — mis à jour le 10 septembre 2026
 </div>
 
 </body>

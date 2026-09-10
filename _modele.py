@@ -45,8 +45,8 @@ bloc('note', "Ce document est produit automatiquement à partir des fichiers du 
 bloc('h2', 'Structure du jeu')
 bloc('table', ['Partie', 'Titre', 'Mécanique', 'Durée'], [
     ['1', "Le téléphone d'Inès", "Dialogue à choix, jauge de confiance", "5–8 min"],
-    ['2', "L'Instagram de Clara", "Exploration, identification de 6 types sur 9, signalement", "12–18 min"],
-    ['3', "Le groupe WhatsApp secret", "Lecture au rythme du joueur, 5 comptes à démasquer, 2 QCM", "8–12 min"],
+    ['2', "L'Instaclasse de Clara", "Exploration, identification de 6 types sur 9, signalement", "12–18 min"],
+    ['3', "Le groupe Whatsupp secret", "Lecture au rythme du joueur, 5 comptes à démasquer, 2 QCM", "8–12 min"],
     ['4', "Convaincre Clara", "Dialogue d'empathie, 8 scènes, 3 fins", "8–12 min"],
 ])
 bloc('p', "Le jeu se termine sur un récapitulatif imprimable (recapitulatif.html) qui reprend ce que "
@@ -102,7 +102,7 @@ for cle, kind in [('fragile', 'ok'), ('succes', 'good')]:
 
 bloc('h2', "Deuxième conversation avec Inès (après la Partie 3)")
 S = U1['secondConvo']
-bloc('p', "Elle s'ouvre quand le joueur revient sur la Partie 1 après avoir lu le groupe WhatsApp. "
+bloc('p', "Elle s'ouvre quand le joueur revient sur la Partie 1 après avoir lu le groupe Whatsupp. "
           "Le joueur écrit librement ; les mots acceptés sont « tante », « campagne », « havre » et "
           "« secret ».")
 bloc('dial', 'leo', 'Léo', net(S['playerMsg']))
@@ -116,7 +116,7 @@ for r in T1['REVELATIONS']:
 
 # ── PARTIE 2 ────────────────────────────────────────────────────────────────
 P2 = D['p2']; U2 = P2['UI']
-bloc('h1', 'Partie 2', "L'Instagram de Clara")
+bloc('h1', 'Partie 2', "L'Instaclasse de Clara")
 bloc('p', "Le joueur se connecte au compte de Clara avec les identifiants qu'Inès lui a donnés. Un "
           "avertissement de contenu s'affiche avant l'exploration. Après deux photos et deux "
           "conversations ouvertes, le jeu demande ce qu'il observe ; puis la mission commence.")
@@ -167,7 +167,7 @@ bloc('h2', 'Journal de Clara (se débloque à six types identifiés)')
 for m in j['messages']:
     bloc('dial', 'clara', 'Clara', net(m['text']))
 bloc('note', "Un bouton en bas du fil ouvre l'écran du code de l'exercice (4827), qui ouvre la "
-             "Partie 3. Ce code est présenté comme un dispositif d'exercice : un groupe WhatsApp "
+             "Partie 3. Ce code est présenté comme un dispositif d'exercice : un groupe Whatsupp "
              "n'a pas de code d'accès, et Clara n'a jamais pu entrer dans celui-là.")
 
 bloc('h2', 'Publications et commentaires')
@@ -200,7 +200,7 @@ bloc('p', net(U2['reportAfter']))
 
 # ── PARTIE 3 ────────────────────────────────────────────────────────────────
 W = D['p3']['WA_DATA']
-bloc('h1', 'Partie 3', 'Le groupe WhatsApp secret — « %s »' % W['group']['name'])
+bloc('h1', 'Partie 3', 'Le groupe Whatsupp secret — « %s »' % W['group']['name'])
 bloc('p', "Le joueur lit les échanges à son rythme : chaque message attend un appui. Membres : %s."
           % W['group']['subtitle'])
 bloc('h2', 'Avertissement puis mission')
@@ -219,9 +219,9 @@ for m in W['messages']:
         bloc('sep', net(m['text']))
     elif t == 'system':
         bloc('note', net(m['text']))
-    elif t == 'instagram-card':
-        bloc('note', "[ Publication Instagram partagée dans le groupe : « %s » ]"
-             % net(W['instagramCard']['caption']))
+    elif t == 'post-card':
+        bloc('note', "[ Publication Instaclasse partagée dans le groupe : « %s » ]"
+             % net(W['postCard']['caption']))
     elif t == 'quiz':
         q = W['quizzes'][m['quizId']]
         bloc('quiz', 'point d\'analyse « %s »' % m['quizId'], net(q['question']),
@@ -232,7 +232,7 @@ for m in W['messages']:
         bloc('dial', m['sender'].lower(), m['sender'], net(m['text']))
 
 bloc('h2', 'Commentaires qui envahissent la publication')
-for c in W['instagramComments']:
+for c in W['postComments']:
     bloc('dial', 'anon', c['user'], net(c['text']))
 
 bloc('h2', 'Fin de la Partie 3')

@@ -143,8 +143,8 @@ P("Le jeu se joue sur téléphone, tablette ou ordinateur, en individuel, en bin
 
 tableau(['Partie', 'Titre', 'Mécanique', 'Compétence', 'Durée'], [
     ['1', "Le téléphone d'Inès", "Dialogue à choix, jauge de confiance", "Écoute, formulation", "5–8 min"],
-    ['2', "L'Instagram de Clara", "Exploration, identification, signalement", "Analyse, reconnaissance", "12–18 min"],
-    ['3', "Le groupe WhatsApp secret", "Lecture au rythme du joueur, comptes à démasquer", "Déduction, esprit critique", "8–12 min"],
+    ['2', "L'Instaclasse de Clara", "Exploration, identification, signalement", "Analyse, reconnaissance", "12–18 min"],
+    ['3', "Le groupe Whatsupp secret", "Lecture au rythme du joueur, comptes à démasquer", "Déduction, esprit critique", "8–12 min"],
     ['4', "Convaincre Clara", "Dialogue d'empathie, %d scènes" % NB_SCENES, "Empathie, formulation", "8–12 min"],
 ])
 encart("Ce qui a changé récemment", [
@@ -181,7 +181,7 @@ for r in D['p1']['TEXTES']['REVELATIONS']:
 H2('Transition vers la Partie 2')
 P("Si la confiance est suffisante, Inès fait promettre deux choses au joueur — faire attention à "
   "ce qu'il lit, et respecter la vie privée de Clara — puis lui donne les identifiants du compte "
-  "Instagram de Clara. Elle explique pourquoi elle les a : elles se connectaient sur le même "
+  "Instaclasse de Clara. Elle explique pourquoi elle les a : elles se connectaient sur le même "
   "téléphone l'an dernier.")
 encart("À discuter en débrief", [
     "Inès fait promettre de respecter la vie privée de Clara, et l'écran suivant demande au joueur "
@@ -190,7 +190,7 @@ encart("À discuter en débrief", [
 ], coul='c09030', fill='FDFAF0')
 
 # ── PARTIE 2 ────────────────────────────────────────────────────────────────
-H1('Partie 2', "L'Instagram de Clara")
+H1('Partie 2', "L'Instaclasse de Clara")
 P('📸  Durée estimée : 12 à 18 minutes', size=9.5, color=GRIS, after=110)
 H2('Contexte narratif')
 P("Le joueur se connecte au compte de Clara et découvre %d publications et %d conversations "
@@ -235,7 +235,7 @@ encart("Avant de passer à la Partie 3", [
 ], coul='c09030', fill='FDFAF0')
 
 # ── PARTIE 3 ────────────────────────────────────────────────────────────────
-H1('Partie 3', 'Le groupe WhatsApp secret')
+H1('Partie 3', 'Le groupe Whatsupp secret')
 P('💬  Durée estimée : 8 à 12 minutes', size=9.5, color=GRIS, after=110)
 H2('Contexte narratif')
 P("Le joueur lit %d messages échangés par les cinq élèves qui ont organisé le harcèlement : %s. "
@@ -243,7 +243,7 @@ P("Le joueur lit %d messages échangés par les cinq élèves qui ont organisé 
   % (NB_MSG3, T3['group']['subtitle']))
 H2('Déroulement étape par étape')
 etape('1', "Code de l'exercice", "Le joueur saisit 4827. L'écran dit clairement qu'un vrai groupe "
-      "WhatsApp n'a pas de code d'accès et que ce verrou est celui de l'exercice — ce qui suit, en "
+      "Whatsupp n'a pas de code d'accès et que ce verrou est celui de l'exercice — ce qui suit, en "
       "revanche, est bien ce que le groupe a écrit.")
 etape('2', 'Avertissement', "Un rappel que les échanges sont fictifs mais montrent comment le "
       "harcèlement se coordonne en coulisse.")
@@ -258,7 +258,7 @@ H2('Les comptes à démasquer')
 for e_ in T3['comptes']['liste']:
     puce('@%s — %s' % (e_['handle'], e_['qui']))
 P("Une fois démasqués, ces comptes portent le prénom de leur propriétaire quand le joueur retourne "
-  "sur l'Instagram de Clara. C'est l'asymétrie que le jeu raconte : le joueur sait, Clara non.",
+  "sur l'Instaclasse de Clara. C'est l'asymétrie que le jeu raconte : le joueur sait, Clara non.",
   before=40)
 H2('Fin de la partie')
 P("La synthèse reprend les mécanismes du harcèlement de groupe, puis deux blocs de discussion.")

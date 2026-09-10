@@ -241,8 +241,8 @@ for i,txt in enumerate(['Partie','Titre','Mécanique']):
     r.font.color.rgb=RGBColor(0x44,0x44,0x44)
 rows_data=[
     ('1','Téléphone d\'Inès','Dialogue à choix multiples, jauge de confiance'),
-    ('2','Instagram de Clara','Exploration du profil, identification de types de harcèlement'),
-    ('3','Groupe WhatsApp secret','Lecture d\'un chat de groupe, quiz d\'analyse'),
+    ('2','Instaclasse de Clara','Exploration du profil, identification de types de harcèlement'),
+    ('3','Groupe Whatsupp secret','Lecture d\'un chat de groupe, quiz d\'analyse'),
     ('4','Convaincre Clara','Appel téléphonique, jeu d\'empathie'),
 ]
 for i,(num,tit,mec) in enumerate(rows_data,1):
@@ -358,7 +358,7 @@ dialogue_line('ines','Inès','Tu promets de respecter la vie privée de Clara ?'
 dialogue_line('leo','Léo','Oui.')
 dialogue_line('ines','Inès','Elle me l\'avait donné au cas où. Tu l\'utilises, t\'en parles à personne.')
 ending_block('ok','Jaune - Succès fragile',
-    'Inès transmet les identifiants Instagram de Clara.',
+    'Inès transmet les identifiants Instaclasse de Clara.',
     'Compte : @clara.fontaine  -  Mot de passe : nuit_rouge17',
     '« Sois prudent. »')
 
@@ -370,7 +370,7 @@ dialogue_line('ines','Inès','Tu promets de respecter la vie privée de Clara ?'
 dialogue_line('leo','Léo','Je le promets.')
 dialogue_line('ines','Inès','Elle me l\'avait donné au cas où. Tu l\'utilises, t\'en parles à personne.')
 ending_block('good','Vert - Inès te fait confiance',
-    'Inès transmet les identifiants Instagram de Clara.',
+    'Inès transmet les identifiants Instaclasse de Clara.',
     'Compte : @clara.fontaine  -  Mot de passe : nuit_rouge17',
     '« C\'est sa vie privée. Respecte-la. »')
 
@@ -392,10 +392,10 @@ footnote_line('Retrouver Clara - Partie 1 - Textes partenaires')
 # ═══════════════════════════════════════════════════════
 # PARTIE 2 - Page 1 : Intro + 9 types
 # ═══════════════════════════════════════════════════════
-part_header('Partie 2','Instagram de Clara')
+part_header('Partie 2','Instaclasse de Clara')
 pi2=doc.add_paragraph(); set_spacing(pi2,before=0,after=100); set_indent(pi2,left=200)
 left_border(pi2,'cccccc',sz=18)
-add_run(pi2,'Le joueur se connecte au compte Instagram de Clara (identifiants obtenus auprès d\'Inès). Il découvre une boîte de messages privés saturée de messages harcelants envoyés par des comptes anonymes. Des commentaires hostiles ont envahi ses photos. L\'objectif : identifier au moins 4 types de harcèlement différents, puis lire la synthèse finale.',
+add_run(pi2,'Le joueur se connecte au compte Instaclasse de Clara (identifiants obtenus auprès d\'Inès). Il découvre une boîte de messages privés saturée de messages harcelants envoyés par des comptes anonymes. Des commentaires hostiles ont envahi ses photos. L\'objectif : identifier au moins 4 types de harcèlement différents, puis lire la synthèse finale.',
         italic=True,size=9.5,color=C_GREY)
 
 heading2('Mécanique du jeu')
@@ -432,7 +432,7 @@ for i,txt in enumerate(['Catégorie','Label','Description']):
 for i,(cat,label,desc) in enumerate(types_data,1):
     row=t9.rows[i].cells; row[0].text=cat; row[1].text=label; row[2].text=desc
     for j in range(3): row[j].paragraphs[0].runs[0].font.size=Pt(9.5)
-footnote_line('Retrouver Clara - Partie 2 : Instagram de Clara - Textes partenaires')
+footnote_line('Retrouver Clara - Partie 2 : Instaclasse de Clara - Textes partenaires')
 
 # PARTIE 2 - Page 2 : DMs Aujourd'hui + Hier
 part_header('Partie 2 - suite','Messages directs - Aujourd\'hui & Hier')
@@ -567,7 +567,7 @@ lea_line('clara',"lea je crois que je vais partir chez ma tante")
 lea_line('clara',"y'a que la que je serai bien")
 
 heading2('Journal intime de Clara (message secret)',before=160)
-p('Ce message privé intitulé « Moi - Journal » est révélé après l\'identification de 4 types de harcèlement. Il contient le code d\'accès au groupe WhatsApp de la Partie 3.',
+p('Ce message privé intitulé « Moi - Journal » est révélé après l\'identification de 4 types de harcèlement. Il contient le code d\'accès au groupe Whatsupp de la Partie 3.',
   italic=True,size=9.5,color=C_GREY,after=80)
 jn=doc.add_paragraph(); set_spacing(jn,before=0,after=10); set_indent(jn,left=200)
 left_border(jn,'4a1a6a',sz=18); shading(jn,'F8F4FC')
@@ -651,7 +651,7 @@ dm_block('froid_comme_toi','il y a 8 mois - 13h30','Rumeurs / Surnom',[
 footnote_line('Retrouver Clara - Partie 2 - Textes partenaires')
 
 # PARTIE 2 - Page 5 : Photos
-part_header('Partie 2 - suite','Photos et commentaires sur le profil Instagram')
+part_header('Partie 2 - suite','Photos et commentaires sur le profil Instaclasse')
 p('Les 9 photos du profil de Clara ont chacune reçu des commentaires hostiles. Nombre de likes très faibles malgré 600+ abonnés.',
   italic=True,size=9.5,color=C_GREY,after=80)
 photos=[
@@ -774,10 +774,10 @@ footnote_line('Retrouver Clara - Partie 2 - Textes partenaires')
 # ═══════════════════════════════════════════════════════
 # PARTIE 3 - Page 1
 # ═══════════════════════════════════════════════════════
-part_header('Partie 3','Groupe WhatsApp secret - « les vrais 4B »')
+part_header('Partie 3','Groupe Whatsupp secret - « les vrais 4B »')
 pi3=doc.add_paragraph(); set_spacing(pi3,before=0,after=100); set_indent(pi3,left=200)
 left_border(pi3,'cccccc',sz=18)
-add_run(pi3,'Le joueur accède au groupe WhatsApp dans lequel le harcèlement de Clara est organisé. Il observe la conversation sans pouvoir intervenir. Deux quiz d\'analyse sont intégrés.',
+add_run(pi3,'Le joueur accède au groupe Whatsupp dans lequel le harcèlement de Clara est organisé. Il observe la conversation sans pouvoir intervenir. Deux quiz d\'analyse sont intégrés.',
         italic=True,size=9.5,color=C_GREY)
 members=doc.add_paragraph(); set_spacing(members,before=0,after=120)
 add_run(members,'Membres du groupe : ',bold=True,size=9.5,font='Arial')
@@ -798,7 +798,7 @@ dialogue_line('jade','Jade','on devrait aller lui flood ses commentaires')
 dialogue_line('kevin','Kevin','bonne idée, attendez qu\'elle poste quelque chose 👀')
 
 phase_sep('Phase 2 - Clara poste, 17h21')
-dialogue_line('narr','Système','Lucas a partagé une publication Instagram',italic_text=True)
+dialogue_line('narr','Système','Lucas a partagé une publication Instaclasse',italic_text=True)
 dialogue_line('lucas','Lucas','ALLEZ Y TOUS c\'est le moment 🔥🔥')
 dialogue_line('theo','Théo','j\'y vais maintenant')
 dialogue_line('jade','Jade','moi aussi, attendez je cherche mon compte anon')
@@ -824,7 +824,7 @@ dialogue_line('kevin','Kevin','ouais ok...')
 dialogue_line('marine','Marine','et aussi ses DMs ? on pourrait lui envoyer des trucs la nuit')
 dialogue_line('lucas','Lucas','oui avec des comptes anon encore, comme ça elle dort pas tranquille')
 dialogue_line('jade','Jade','genre la harceler pour qu\'elle finisse par partir d\'insta')
-footnote_line('Retrouver Clara - Partie 3 : Groupe WhatsApp - Textes partenaires')
+footnote_line('Retrouver Clara - Partie 3 : Groupe Whatsupp - Textes partenaires')
 
 # PARTIE 3 - Page 2
 part_header('Partie 3 - suite','Quiz & suite de la conversation')
@@ -847,7 +847,7 @@ dialogue_line('jade','Jade','et on flood ses DMs depuis les comptes anon, surtou
 
 quiz_block('Quiz 2 - Point d\'analyse',
     'Pourquoi créent-ils des comptes anonymes spécifiquement pour harceler Clara ?',
-    ['Pour tester les paramètres de confidentialité d\'Instagram',
+    ['Pour tester les paramètres de confidentialité d\'Instaclasse',
      'Pour éviter d\'être identifiés, multiplier les agresseurs apparents et rendre le blocage impossible',
      'Parce que leurs vrais comptes ont déjà été bloqués par Clara',
      'Pour jouer un rôle fictif sans conséquences réelles'],

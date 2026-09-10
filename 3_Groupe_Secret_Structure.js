@@ -63,12 +63,12 @@ function init() {
   sb.textContent = WA_DATA.startLabel;
   sb.addEventListener('click', startPlay);
 
-  // Modal Instagram
-  document.getElementById('ig-modal-photo').src = WA_DATA.instagramCard.photo;
-  document.getElementById('ig-modal-cap-text').textContent = ' ' + WA_DATA.instagramCard.caption;
+  // Modal Instaclasse
+  document.getElementById('ig-modal-photo').src = WA_DATA.postCard.photo;
+  document.getElementById('ig-modal-cap-text').textContent = ' ' + WA_DATA.postCard.caption;
   document.getElementById('ig-modal-likes').textContent    = UI.likes;
 
-  // Retour depuis Instagram ? → sauter les overlays, reprendre où on en était
+  // Retour depuis Instaclasse ? → sauter les overlays, reprendre où on en était
   var saved = sessionStorage.getItem('harcelement_wa_state');
   if (saved !== null) {
     sessionStorage.removeItem('harcelement_wa_state');
@@ -78,7 +78,7 @@ function init() {
   }
 }
 
-// ── Fast-forward au retour d'Instagram ────────────────────────────────────
+// ── Fast-forward au retour d'Instaclasse ────────────────────────────────────
 
 function fastForwardTo(targetIndex) {
   document.getElementById('start-screen').style.display = 'none';
@@ -92,7 +92,7 @@ function fastForwardTo(targetIndex) {
   for (var i = 0; i < targetIndex && i < WA_DATA.messages.length; i++) {
     var m = WA_DATA.messages[i];
     if      (m.type === 'system')         appendSystem(m.text);
-    else if (m.type === 'instagram-card') appendInstagramCard(m.sender, true);
+    else if (m.type === 'post-card') appendPostCard(m.sender, true);
     else if (m.type === 'time-sep')       appendTimeSep(m.text);
     else if (!m.type)                     appendMessage(m.sender, m.text, m.time, true);
     // quiz / end ignorés
@@ -145,7 +145,7 @@ function majComptes() {
 
 function ouvrirCompte(handle) {
   var qui = COMPTES[handle];
-  if (!qui) { goToInstagram(); return; }
+  if (!qui) { goToCompte(); return; }
   comptesTrouves[handle] = qui;
   try { localStorage.setItem('rc_comptes', JSON.stringify(comptesTrouves)); } catch (e) {}
   document.getElementById('cb-handle').textContent = '@' + handle;
@@ -154,9 +154,9 @@ function ouvrirCompte(handle) {
   majComptes();
 }
 
-// ── Naviguer vers Instagram (sauvegarde l'état avant de partir) ───────────
+// ── Naviguer vers Instaclasse (sauvegarde l'état avant de partir) ───────────
 
-function goToInstagram() {
+function goToCompte() {
   sessionStorage.setItem('harcelement_wa_state', String(msgIndex));
   sessionStorage.setItem('harcelement_wa_from', '1');
   window.location.href = WA_DATA.navigation.prev.url;
@@ -202,7 +202,7 @@ function processNext() {
   // Les messages n'enchaînent plus tout seuls (55 messages en 95 s, personne
   // ne suivait) : chacun attend un appui du joueur. Le « écrit… » reste,
   // court, pour le rythme.
-  var typingMs = (msg.type === 'instagram-card')
+  var typingMs = (msg.type === 'post-card')
     ? 800
     : Math.min(800, Math.max(250, (msg.text || '').length * 10));
 
@@ -210,8 +210,8 @@ function processNext() {
   scrollChat();
   wait(typingMs, function () {
     typingEl.remove();
-    if (msg.type === 'instagram-card') {
-      appendInstagramCard(msg.sender, false);
+    if (msg.type === 'post-card') {
+      appendPostCard(msg.sender, false);
     } else {
       appendMessage(msg.sender, msg.text, msg.time, false);
     }
@@ -236,7 +236,7 @@ function awaitTap() {
 
 function onTap(e) {
   if (!waitingTap) return;
-  // Les @mentions, la carte Instagram et les boutons gardent leur propre rôle.
+  // Les @mentions, la carte Instaclasse et les boutons gardent leur propre rôle.
   if (e.target.closest('.mention, .ig-card-btn, button, a')) return;
   waitingTap = false;
   var f = document.querySelector('.wa-input-field');
@@ -311,9 +311,9 @@ function appendTimeSep(text) {
   document.getElementById('messages-container').appendChild(el);
 }
 
-function appendInstagramCard(sender, instant) {
+function appendPostCard(sender, instant) {
   var color = WA_DATA.senderColors[sender] || '#8696a0';
-  var card  = WA_DATA.instagramCard;
+  var card  = WA_DATA.postCard;
   var container = document.getElementById('messages-container');
 
   var row = document.createElement('div');
@@ -328,7 +328,7 @@ function appendInstagramCard(sender, instant) {
       '<div class="ig-card-avatar"><img src="images_clara/clara_profil.png" alt=""></div>' +
       '<div>' +
         '<div class="ig-card-name">' + esc(card.account) + '</div>' +
-        '<div class="ig-card-app">📷 Instagram</div>' +
+        '<div class="ig-card-app">📷 Instaclasse</div>' +
       '</div>' +
     '</div>' +
     '<img class="ig-card-photo" src="' + esc(card.photo) + '" alt="">' +
@@ -349,7 +349,7 @@ function formatText(str) {
     return '<span class="mention' + (comptesTrouves[username] ? ' trouve' : '') + '" ' +
            'style="cursor:pointer;text-decoration:underline dotted" ' +
            'title="' + UI.mentionTooltip + '" data-handle="' + username + '" ' +
-           (connu ? 'data-compte="1"' : 'data-goto-instagram="1"') + '>@' + username + '</span>';
+           (connu ? 'data-compte="1"' : 'data-goto-compte="1"') + '>@' + username + '</span>';
   });
 }
 
@@ -361,7 +361,7 @@ function esc(s) {
     .replace(/"/g, '&quot;');
 }
 
-// ── Modal Instagram ────────────────────────────────────────────────────────
+// ── Modal Instaclasse ────────────────────────────────────────────────────────
 
 var igCommentsPlayed = false;
 
@@ -380,7 +380,7 @@ function closeIgModal() {
 function playIgComments() {
   var container = document.getElementById('ig-modal-comments');
   var note      = document.getElementById('ig-note');
-  var comments  = WA_DATA.instagramComments;
+  var comments  = WA_DATA.postComments;
   var accum     = 0;
   comments.forEach(function (c) {
     accum += c.delay;
@@ -524,7 +524,7 @@ document.getElementById('ig-modal-back').addEventListener('click', closeIgModal)
 document.getElementById('messages-container').addEventListener('click', function (e) {
   var c = e.target.closest('[data-compte]');
   if (c) { ouvrirCompte(c.dataset.handle); return; }
-  if (e.target.closest('[data-goto-instagram]')) goToInstagram();
+  if (e.target.closest('[data-goto-compte]')) goToCompte();
 });
 document.getElementById('cb-close').addEventListener('click', function () {
   document.getElementById('compte-overlay').style.display = 'none';
@@ -532,7 +532,7 @@ document.getElementById('cb-close').addEventListener('click', function () {
 document.getElementById('cb-see').addEventListener('click', function (e) {
   e.preventDefault();
   document.getElementById('compte-overlay').style.display = 'none';
-  goToInstagram();
+  goToCompte();
 });
 
 // ── Démarrage ─────────────────────────────────────────────────────────────

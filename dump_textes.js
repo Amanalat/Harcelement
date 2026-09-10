@@ -11,8 +11,8 @@ function charger(fichier, noms) {
 }
 const out = {
   p1: charger('1_Telephone_Ines_textes.js', ['TEXTES', 'UI']),
-  p2: charger('2_Insta_de_Clara_textes.js', ['CONVOS', 'photoData', 'HARCEL_TYPES', 'HARCEL_MAP', 'QUIZZES', 'PHOTO_QUIZZES', 'UI']),
-  p3: charger('3_WhatsApp_Groupe_textes.js', ['WA_DATA', 'UI']),
+  p2: charger('2_Compte_de_Clara_textes.js', ['CONVOS', 'photoData', 'HARCEL_TYPES', 'HARCEL_MAP', 'QUIZZES', 'PHOTO_QUIZZES', 'UI']),
+  p3: charger('3_Groupe_Secret_textes.js', ['WA_DATA', 'UI']),
   p4: charger('4_Convaincre_Clara_textes.js', ['TEXTES', 'UI']),
   ressources: charger('ressources.js', []) && (() => { const c = { window: {} }; vm.createContext(c); vm.runInContext(fs.readFileSync('ressources.js', 'utf8'), c); return c.window.RESSOURCES; })()
 };

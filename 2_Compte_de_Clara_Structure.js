@@ -20,7 +20,7 @@ let currentIdentifyData = null;
 
 // ─── UTILITAIRES ─────────────────────────────────────────────────────────────
 
-// Comptes démasqués dans la Partie 3 : au retour sur l'Instagram, ils portent
+// Comptes démasqués dans la Partie 3 : au retour sur l'Instaclasse, ils portent
 // le prénom de qui se cache derrière. Clara ne le saura jamais ; le joueur si.
 let COMPTES_CONNUS = {};
 try { COMPTES_CONNUS = JSON.parse(localStorage.getItem('rc_comptes') || '{}') || {}; } catch (e) {}
@@ -377,7 +377,7 @@ let observeBtn = null;
 const FALLBACK_S = 120;
 
 function gateOpen() { return window.igGateOpen === true; }
-function fromWhatsApp() {
+function fromGroupe() {
   try { return !!sessionStorage.getItem('harcelement_wa_from'); } catch (e) { return false; }
 }
 function overlayOpen() {
@@ -385,7 +385,7 @@ function overlayOpen() {
       || document.getElementById('screen-thread').classList.contains('active');
 }
 function canAsk() {
-  return gamePhase === 0 && !initialAsked && !gateOpen() && !fromWhatsApp();
+  return gamePhase === 0 && !initialAsked && !gateOpen() && !fromGroupe();
 }
 function askInitial() {
   if (!canAsk()) return;
@@ -601,7 +601,7 @@ function showLb() {
   commDiv.scrollTop = 0;
 }
 
-// ─── RETOUR WHATSAPP ─────────────────────────────────────────────────────────
+// ─── RETOUR WHATSUPP ─────────────────────────────────────────────────────────
 
 (function () {
   if (!sessionStorage.getItem('harcelement_wa_from')) return;

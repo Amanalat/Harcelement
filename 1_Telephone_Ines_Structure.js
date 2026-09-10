@@ -364,7 +364,7 @@ function openSecondConvo(){
 
     var n = val.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
     // « chez sa tante » est la réponse naturelle : on l'accepte, avec les
-    // mots du groupe WhatsApp (« havre secret ») et leurs équivalents anglais.
+    // mots du groupe Whatsupp (« havre secret ») et leurs équivalents anglais.
     var accepted = ['tante','campagne','havre','secret','aunt','countryside','haven','safe'];
     var correct = accepted.some(function(w){ return n.includes(w); });
 

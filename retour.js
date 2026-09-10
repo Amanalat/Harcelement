@@ -52,13 +52,13 @@
 
   var ETAPES_FR = ['Accueil',
     'Partie 1 — Le téléphone d’Inès',
-    'Partie 2 — L’Instagram de Clara',
-    'Partie 3 — Le groupe WhatsApp',
+    'Partie 2 — L’Instaclasse de Clara',
+    'Partie 3 — Le groupe Whatsupp',
     'Partie 4 — Convaincre Clara'];
   var ETAPES_EN = ['Home',
     'Part 1 — Inès’s phone',
-    'Part 2 — Clara’s Instagram',
-    'Part 3 — The WhatsApp group',
+    'Part 2 — Clara’s Instaclasse',
+    'Part 3 — The Whatsupp group',
     'Part 4 — Convincing Clara'];
   var etape = (EN ? ETAPES_EN : ETAPES_FR)[partie];
 

@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
 <title>Simulation – Online Harassment</title>
-<script src="2_Insta_de_Clara_textes_en.js" defer></script>
+<script src="2_Compte_de_Clara_textes_en.js" defer></script>
 <script src="prenom.js" defer></script>
-<script src="2_Insta_de_Clara_Structure.js" defer></script>
+<script src="2_Compte_de_Clara_Structure.js" defer></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -568,7 +568,7 @@ body {
     <p class="i1-line" style="animation-delay:.7s">I need to understand what Clara went through...</p>
     <p class="i1-line" style="animation-delay:2.6s">...by looking at her social media, the photo comments and messages.</p>
     <span class="i1-sep"></span>
-    <button id="intro2-btn" class="i1-btn" style="animation-delay:5s">See her Instagram →</button>
+    <button id="intro2-btn" class="i1-btn" style="animation-delay:5s">See her Instaclasse →</button>
     <span class="i1-skip" style="animation-delay:5.5s">tap to continue</span>
   </div>
 </div>
@@ -585,7 +585,7 @@ body {
   <!-- SCREEN 1: Profile -->
   <div class="screen active" id="screen-profile">
     <div class="nav-bar">
-      <span style="font-size:.9rem;font-weight:700">📷 Instagram</span>
+      <span style="font-size:.9rem;font-weight:700">📷 Instaclasse</span>
       <div class="icons">
         <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
         <svg id="dm-icon" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" style="cursor:pointer">
@@ -730,11 +730,11 @@ body {
     <p>You have just read every private message Clara ever received. She doesn't know, and she never agreed to it.<br><br>
     Inès made you promise to respect her privacy. Léo was frightened for her — that doesn't make it normal. Going into someone else's account is not allowed, even when you are worried.<br><br>
     What you can do instead: talk to an adult. Léo hasn't done that yet.</p>
-    <a href="3_WhatsApp_Groupe_en.html" class="box-btn" id="privacy-go" style="display:block;text-decoration:none;text-align:center;">I understand →</a>
+    <a href="3_Groupe_Secret_en.html" class="box-btn" id="privacy-go" style="display:block;text-decoration:none;text-align:center;">I understand →</a>
   </div>
 </div>
 
-<!-- ── INSTAGRAM LOGIN GATE ── -->
+<!-- ── INSTACLASSE LOGIN GATE ── -->
 <style>
 /* Sur mobile, le clavier réduit la zone visible : la boîte est centrée par
    margin:auto tant qu'il y a de la place, et l'overlay défile sinon. */
@@ -756,7 +756,7 @@ body {
 </style>
 <div id="ig-gate">
   <div class="ig-gate-box">
-    <div class="ig-gate-logo">Instagram</div>
+    <div class="ig-gate-logo">Instaclasse</div>
     <div class="ig-gate-sub">Inès has given you Clara's login details.<br>Log in to access her account.</div>
     <input id="ig-user" class="ig-gate-input" type="text" placeholder="Username" autocomplete="off" spellcheck="false">
     <div class="ig-gate-pw">
@@ -771,8 +771,8 @@ body {
 <script>
 (function(){
   var USER='clara.fontaine', PASS='nuit_rouge17';
-  window.igGateOpen=true; // lu par 2_Insta_de_Clara_Structure.js : rien ne se déclenche avant la connexion
-  // Retour depuis le groupe WhatsApp (clic sur une @mention) : déjà connecté.
+  window.igGateOpen=true; // lu par 2_Compte_de_Clara_Structure.js : rien ne se déclenche avant la connexion
+  // Retour depuis le groupe Whatsupp (clic sur une @mention) : déjà connecté.
   try{if(sessionStorage.getItem('harcelement_wa_from')){document.getElementById('ig-gate').style.display='none';window.igGateOpen=false;}}catch(e){}
   function dismiss(){
     var g=document.getElementById('ig-gate');
@@ -841,7 +841,7 @@ body {
   <div class="iq-box">
     <div class="iq-icon">👁</div>
     <div class="iq-title">What do you observe?</div>
-    <p class="iq-text">You just discovered Clara's Instagram profile.<br><br>
+    <p class="iq-text">You just discovered Clara's Instaclasse profile.<br><br>
     Based on what you have read… <strong style="color:#e94560">What is Clara experiencing?</strong></p>
     <input class="iq-input" id="iq-input" type="text" placeholder="Write your answer…" autocomplete="off">
     <button class="iq-btn">Submit</button>
@@ -872,10 +872,10 @@ body {
   <div class="code-box">
     <div style="font-size:1.8rem;margin-bottom:8px;">🔐</div>
     <h2 style="color:#2dcc6f;font-size:1rem;margin-bottom:10px;">Exercise code</h2>
-    <p style="font-size:.83rem;color:#ccc;line-height:1.6;margin-bottom:8px;">A WhatsApp group has no access code, and Clara was never able to get into this one. This code belongs to the exercise — remember it, it opens Part 3:</p>
+    <p style="font-size:.83rem;color:#ccc;line-height:1.6;margin-bottom:8px;">A Whatsupp group has no access code, and Clara was never able to get into this one. This code belongs to the exercise — remember it, it opens Part 3:</p>
     <div class="code-display">4827</div>
     <p style="font-size:.78rem;color:#4a7a5a;margin-bottom:20px;">What you read next, however, is exactly what the group wrote.</p>
-    <a href="3_WhatsApp_Groupe_en.html" style="display:block;background:#2dcc6f;color:#000;border:none;border-radius:8px;padding:12px;font-size:.9rem;font-weight:700;text-decoration:none;text-align:center;">Move on to Part 3 →</a>
+    <a href="3_Groupe_Secret_en.html" style="display:block;background:#2dcc6f;color:#000;border:none;border-radius:8px;padding:12px;font-size:.9rem;font-weight:700;text-decoration:none;text-align:center;">Move on to Part 3 →</a>
     <button type="button" id="code-close" style="display:block;width:100%;margin-top:10px;background:none;border:none;color:#4a7a5a;font-size:.8rem;cursor:pointer;text-decoration:underline;text-underline-offset:2px;">← Back to the journal</button>
   </div>
 </div>

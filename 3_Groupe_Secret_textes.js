@@ -39,13 +39,13 @@ const WA_DATA = {
 
   // ─── Les comptes anonymes nommés dans le groupe ─────────────────────────────
   // Ce sont les mêmes identifiants que dans la Partie 2 : une fois repérés ici,
-  // ils portent le prénom de leur propriétaire quand on retourne sur l'Instagram.
+  // ils portent le prénom de leur propriétaire quand on retourne sur l'Instaclasse.
   comptes: {
     label:      "comptes identifiés",
     cardTitle:  "Compte démasqué",
     cardIntro:  "Derrière ce compte, il y a :",
     cardNote:   "Clara ne peut pas le savoir. Toi si — parce que tu lis un groupe où tu n'es pas.",
-    cardSee:    "Voir ses messages sur l'Instagram de Clara →",
+    cardSee:    "Voir ses messages sur l'Instaclasse de Clara →",
     cardClose:  "Fermer",
     already:    "Déjà repéré.",
     liste: [
@@ -59,9 +59,9 @@ const WA_DATA = {
 
   startLabel: "▶ Voir ce qui se dit dans le groupe",
 
-  // ─── Carte Instagram partagée dans le groupe ─────────────────────────────────
+  // ─── Carte Instaclasse partagée dans le groupe ─────────────────────────────────
 
-  instagramCard: {
+  postCard: {
     account: "clara.fontaine",
     caption: "lever de soleil ce matin 🌅",
     photo:   "images_clara/plage.png",
@@ -69,7 +69,7 @@ const WA_DATA = {
   },
 
   // Commentaires qui "arrivent" — mêmes comptes que dans le jeu 2
-  instagramComments: [
+  postComments: [
     { user: "utilisateur_4729", text: "quelle qualite de photo lol",                   delay:  400 },
     { user: "anonymous_x0",     text: "ta photo elle est floue t'as meme pas de talent",delay: 1600 },
     { user: "_noreply_ghost_",  text: "elle est trop moche ta photo serieusement",      delay: 2800 }
@@ -78,7 +78,7 @@ const WA_DATA = {
   // ─── Séquence de messages ────────────────────────────────────────────────────
   // type absent     = message normal (sender + text + time requis)
   // type "system"   = encart centré (pas de bulle)
-  // type "instagram-card" = carte de publication partagée
+  // type "post-card" = carte de publication partagée
   // type "time-sep" = séparateur temporel
   // type "quiz"     = déclenche quiz (quizId requis)
   // type "end"      = fin de la séquence
@@ -98,8 +98,8 @@ const WA_DATA = {
     { id: 10, sender: "Kevin",  text: "bonne idée, attendez qu'elle poste quelque chose 👀",                                   time: "17:19", delay:  700 },
 
     // — Phase 2 : Clara poste (~17h21) —
-    { id: 11, type: "system",         text:   "Enzo a partagé une publication Instagram", time: "17:21", delay: 1500 },
-    { id: 12, type: "instagram-card", sender: "Enzo",                                     time: "17:21", delay:  600 },
+    { id: 11, type: "system",         text:   "Enzo a partagé une publication Instaclasse", time: "17:21", delay: 1500 },
+    { id: 12, type: "post-card", sender: "Enzo",                                     time: "17:21", delay:  600 },
     { id: 13, sender: "Enzo",  text: "ALLEZ Y TOUS c'est le moment 🔥🔥",                                                     time: "17:21", delay:  600 },
     { id: 14, sender: "Théo",   text: "j'y vais maintenant",                                                                  time: "17:22", delay:  500 },
     { id: 15, sender: "Jade",   text: "moi aussi, attendez je cherche mon compte anon",                                       time: "17:22", delay:  800 },
@@ -189,7 +189,7 @@ const WA_DATA = {
       label:    "Point d'analyse",
       question: "Pourquoi créent-ils des comptes anonymes spécifiquement pour harceler Clara ?",
       options: [
-        "Pour tester les paramètres de confidentialité d'Instagram",
+        "Pour tester les paramètres de confidentialité d'Instaclasse",
         "Pour éviter d'être identifiés, multiplier les agresseurs apparents et rendre le blocage impossible",
         "Parce que leurs vrais comptes ont déjà été bloqués par Clara",
         "Pour jouer un rôle fictif sans conséquences réelles"
@@ -268,7 +268,7 @@ const WA_DATA = {
   // ─── Navigation ──────────────────────────────────────────────────────────────
 
   navigation: {
-    prev: { label: "← Instagram de Clara", url: "2_Insta_de_Clara.html" },
+    prev: { label: "← Instaclasse de Clara", url: "2_Compte_de_Clara.html" },
     next: { label: "Retour à l'enquête →", url: "index.html" }
   }
 
@@ -277,7 +277,7 @@ const WA_DATA = {
 const UI = {
   today: "Aujourd'hui",
   likes: "3 J'aime",
-  mentionTooltip: "Voir ses messages sur l'Instagram de Clara",
+  mentionTooltip: "Voir ses messages sur l'Instaclasse de Clara",
   correct: "✓ Bonne réponse !",
   wrong: "✗ Pas tout à fait.",
   tapHint: "▼ Appuie pour lire la suite",

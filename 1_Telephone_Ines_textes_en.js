@@ -278,10 +278,10 @@ var TEXTES = {
       "p2ines": "Do you promise to respect Clara's privacy?",
       "p2leo": "I promise.",
       "codesMsg": "She gave it to me just in case. You use it, you don't tell anyone.",
-      "nextPartBtn": "▶ View Clara's Instagram",
+      "nextPartBtn": "▶ View Clara's Instaclasse",
       "copied": "✓ Copied!",
       "ig": {
-        "label": "📱 Clara's Instagram",
+        "label": "📱 Clara's Instaclasse",
         "compteLabel": "account:",
         "compte": "@clara.fontaine",
         "mdpLabel": "password:",
@@ -296,10 +296,10 @@ var TEXTES = {
       "p2ines": "Do you promise to respect Clara's privacy?",
       "p2leo": "Yes.",
       "codesMsg": "She gave it to me just in case. You use it, you don't tell anyone.",
-      "nextPartBtn": "▶ View Clara's Instagram",
+      "nextPartBtn": "▶ View Clara's Instaclasse",
       "copied": "✓ Copied!",
       "ig": {
-        "label": "📱 Clara's Instagram",
+        "label": "📱 Clara's Instaclasse",
         "compteLabel": "account:",
         "compte": "@clara.fontaine",
         "mdpLabel": "password:",
@@ -316,7 +316,7 @@ var TEXTES = {
 };
 
 const UI = {
-  nextPartUrl: "2_Insta_de_Clara_en.html",
+  nextPartUrl: "2_Compte_de_Clara_en.html",
   secondConvo: {
     statusOnline: "online",
     statusTyping: "typing…",

@@ -36,7 +36,7 @@ const WA_DATA = {
     cardTitle:  "Account unmasked",
     cardIntro:  "Behind this account:",
     cardNote:   "Clara cannot know this. You can — because you are reading a group you are not in.",
-    cardSee:    "See their messages on Clara's Instagram →",
+    cardSee:    "See their messages on Clara's Instaclasse →",
     cardClose:  "Close",
     already:    "Already spotted.",
     liste: [
@@ -76,16 +76,16 @@ const WA_DATA = {
 
   startLabel: "▶ See what is being said in the group",
 
-  // ─── Instagram card shared in the group ─────────────────────────────────────
+  // ─── Instaclasse card shared in the group ─────────────────────────────────────
 
-  instagramCard: {
+  postCard: {
     account: "clara.fontaine",
     caption: "sunrise this morning 🌅",
     photo:   "images_clara/plage.png",
     seeBtn:  "👁 See the comments flood her post"
   },
 
-  instagramComments: [
+  postComments: [
     { user: "utilisateur_4729", text: "what photo quality lol",                         delay:  400 },
     { user: "anonymous_x0",     text: "your photo is blurry you have no talent at all", delay: 1600 },
     { user: "_noreply_ghost_",  text: "your photo is seriously so ugly",                delay: 2800 }
@@ -106,8 +106,8 @@ const WA_DATA = {
     { id:  9, sender: "Jade",   text: "we should flood her comments",                                                         time: "17:18", delay:  800 },
     { id: 10, sender: "Kevin",  text: "good idea, wait until she posts something 👀",                                          time: "17:19", delay:  700 },
 
-    { id: 11, type: "system",         text:   "Enzo shared an Instagram post", time: "17:21", delay: 1500 },
-    { id: 12, type: "instagram-card", sender: "Enzo",                          time: "17:21", delay:  600 },
+    { id: 11, type: "system",         text:   "Enzo shared an Instaclasse post", time: "17:21", delay: 1500 },
+    { id: 12, type: "post-card", sender: "Enzo",                          time: "17:21", delay:  600 },
     { id: 13, sender: "Enzo",  text: "EVERYONE GO NOW this is the moment 🔥🔥",                                          time: "17:21", delay:  600 },
     { id: 14, sender: "Théo",   text: "I'm going now",                                                                  time: "17:22", delay:  500 },
     { id: 15, sender: "Jade",   text: "me too, wait I'm looking for my anon account",                                    time: "17:22", delay:  800 },
@@ -192,7 +192,7 @@ const WA_DATA = {
       label:    "Analysis point",
       question: "Why do they create anonymous accounts specifically to harass Clara?",
       options: [
-        "To test Instagram's privacy settings",
+        "To test Instaclasse's privacy settings",
         "To avoid being identified, multiply the apparent number of attackers, and make blocking impossible",
         "Because their real accounts have already been blocked by Clara",
         "To play a fictional role with no real consequences"
@@ -248,7 +248,7 @@ const WA_DATA = {
   // ─── Navigation ─────────────────────────────────────────────────────────────
 
   navigation: {
-    prev: { label: "← Clara's Instagram", url: "2_Insta_de_Clara_en.html" },
+    prev: { label: "← Clara's Instaclasse", url: "2_Compte_de_Clara_en.html" },
     next: { label: "Back to the investigation →", url: "index_en.html" }
   }
 
@@ -257,7 +257,7 @@ const WA_DATA = {
 const UI = {
   today: "Today",
   likes: "3 likes",
-  mentionTooltip: "See their messages on Clara's Instagram",
+  mentionTooltip: "See their messages on Clara's Instaclasse",
   correct: "✓ Correct!",
   wrong: "✗ Not quite.",
   tapHint: "▼ Tap to read on",

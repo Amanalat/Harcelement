@@ -597,7 +597,7 @@ const UI = {
   synthBtn:        "📋 Voir la synthèse — Ce qui est arrivé à Clara",
   synthNote:       "Ces formes de harcèlement sont réelles. Chacune laisse des traces sur la victime — même sans contact physique.",
   backToWA:        "← Retour au groupe",
-  backToWAUrl:     "3_WhatsApp_Groupe.html",
+  backToWAUrl:     "3_Groupe_Secret.html",
   correct:         "Bonne réponse !",
   wrong:           "Pas tout à fait.",
   demasqueSub:     "Démasqué dans le groupe : ",

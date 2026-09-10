@@ -1,0 +1,11 @@
+# Fichiers intermédiaires, réécrits à chaque régénération des documents.
+# Les recréer : node dump_textes.js
+_textes_dump.json
+
+# Python
+__pycache__/
+*.pyc
+
+# Sorties de scripts
+log.txt
+lancement.txt

@@ -501,8 +501,9 @@ des fichiers du jeu</strong> : ils ne peuvent plus dériver.</p>
     <li><span class="file-ref">python gen_doc.py</span> — écrit doc_textes_partenaires.docx et .html</li>
     <li><span class="file-ref">python gen_guide.py</span> — écrit le guide pédagogique</li>
   </ul>
-  <p>L'ancien <span class="file-ref">gen_docx.py</span>, où les 9 500 mots étaient recopiés à la main, est
-  remplacé. À relancer après chaque modification des textes.</p>
+  <p>À relancer après chaque modification des textes. L'ancien
+  <span class="file-ref">gen_docx.py</span>, où les 9 500 mots étaient recopiés à la main, a été
+  supprimé du dépôt le 10 septembre 2026.</p>
 </div>
 
 <!-- ═══ 6. NOMS D'APPLICATIONS ═══ -->
@@ -545,6 +546,18 @@ juridiquement et évite de faire de la publicité en classe.</p>
   (<code>.ig-*</code>, <code>--wa-*</code>) sont conservées : elles n'écrivent aucun nom.</p>
   <p>Vérifié après coup : plus aucune occurrence des deux marques dans les fichiers du jeu, et
   les 109 contrôles automatiques passent toujours.</p>
+</div>
+
+<div class="mod-block info">
+  <h4>Ménage dans le dépôt</h4>
+  <ul>
+    <li><span class="file-ref">gen_docx.py</span> (68 Ko) supprimé : c'était l'ancien générateur où
+    les textes étaient recopiés à la main, remplacé par <span class="file-ref">gen_doc.py</span>.</li>
+    <li><span class="file-ref">_textes_dump.json</span> retiré du suivi git et ajouté au
+    <span class="file-ref">.gitignore</span> : c'est un fichier intermédiaire réécrit à chaque
+    régénération, il encombrait les comparaisons de versions. Il continue d'être produit
+    normalement par <code>node dump_textes.js</code>.</li>
+  </ul>
 </div>
 
 <!-- ═══ 7. FLUX NARRATIF ═══ -->
@@ -637,7 +650,7 @@ juridiquement et évite de faire de la publicité en classe.</p>
   <p>Les deux documents de contenu sont produits à partir des fichiers du jeu, dans le dossier
   <span class="file-ref">Harcèlement Croatie/</span> :</p>
   <ul>
-    <li><code>node dump_textes.js</code> → <span class="file-ref">_textes_dump.json</span> (extrait tous les textes)</li>
+    <li><code>node dump_textes.js</code> → <span class="file-ref">_textes_dump.json</span> (extrait tous les textes ; fichier intermédiaire, non suivi par git)</li>
     <li><code>python gen_doc.py</code> → <span class="file-ref">doc_textes_partenaires.docx</span> + <span class="file-ref">.html</span></li>
     <li><code>python gen_guide.py</code> → <span class="file-ref">Retrouver_Clara_Guide_Pedagogique.docx</span></li>
   </ul>
